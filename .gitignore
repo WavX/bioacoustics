@@ -74,3 +74,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+data/*
+inst/doc/*
+man/*
+.Rproj.user/*
+spectrograms/*
+windows/*
+.Rproj.user

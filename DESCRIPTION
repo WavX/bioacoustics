@@ -1,0 +1,35 @@
+Package: bioacoustics
+Type: Package
+Title: Analyse audio recordings and automatically extract animal vocalizations
+Version: 0.1.0
+Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c("aut","cre")),
+             person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
+             person("Christopher", "Scott", role = "aut"),
+             person("WavX", role = c("cph", "fnd")))
+Maintainer: Jean Marchal <jean.marchal@wavx.ca>
+Description: The bioacoustics package contains all the necessary tools to process
+    audio recordings of various formats (e.g., WAV, WAC, MP3, ZC), filter noisy
+    files, display audio signals, detect and extract automatically acoustic
+    features for further analysis such as classification.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+SystemRequirements: C++11
+Depends: R (>= 3.3.0)
+LinkingTo: Rcpp
+Imports: 
+  htmltools,
+  graphics,
+  grDevices,
+  methods,
+  moments,
+  Rcpp (>= 0.12.13),
+  stringr,
+  tools,
+  tuneR (>= 1.3.0)
+Suggests: knitr, rmarkdown
+URL: https://github.com/wavx/bioacoutics/
+BugReports: https://github.com/wavx/bioacoutics/issues/
+NeedsCompilation: yes
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr

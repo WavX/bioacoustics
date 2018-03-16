@@ -1,0 +1,15 @@
+PKG_CPPFLAGS = -I../windows/include/ -I../windows/include/ -O3 -Wall
+
+PKG_CXX_STD = CXX11
+
+PKG_LIBS = -L../windows/lib/${R_ARCH} -lfftw3 -lsamplerate -s
+
+all: clean winlibs
+
+clean:
+	rm -f $(SHLIB) $(OBJECTS)
+
+winlibs:
+	"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" --vanilla "../tools/winlibs.R"
+
+.PHONY: all winlibs clean
