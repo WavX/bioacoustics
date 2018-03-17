@@ -22,8 +22,8 @@ install.packages("bioacoustics")
 
 * Install development version from GitHub:
 ```r
-library(devtools)
-install_github("wavx/bioacoustics")
+# install.packages("devtools")
+devtools::install_github("wavx/bioacoustics", build_vignettes = TRUE)
 ```
 
 ### Windows
