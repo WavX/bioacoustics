@@ -28,9 +28,6 @@
 #include "bc_blob_finder.h"
 #include "bc_features.h"
 
-// std::unordered_map<int, Rcpp::List> priority_blobs(std::unordered_map<int, Rcpp::List>& blobs, size_t n);
-// std::unordered_map<int, Rcpp::List> priority_blobs(std::unordered_map<int, Rcpp::List>& blobs);
-// bool comp_mag (std::pair<int,Rcpp::List> a, std::pair<int,Rcpp::List> b);
 bool sort_blobs (std::pair<int,Rcpp::List> lhs, std::pair<int,Rcpp::List> rhs);
 
 // [[Rcpp::export]]
@@ -58,56 +55,20 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
   int width  = spectro.ncol();
   int height = spectro.nrow();
 
-  // High-pass filter
-  // for (int x = 0; x < width; x++)
-  // {
-  //   for (int y = height - HPF_bin; y < height; y++)
-  //   {
-  //     spectro(y,x) = 0;
-  //   }
-  // }
-  // std::vector< Rcpp::NumericMatrix > pixels_list;
-  // Rcpp::NumericMatrix m_copy = Rcpp::clone(spectro);
-
-  // pixels_list.push_back(m_copy);
-  blur(spectro, blur_f); //Rcpp::NumericMatrix m_copy2 = Rcpp::clone(spectro); pixels_list.push_back(m_copy2);
-  background_subtract(spectro, bg_substract);//Rcpp::NumericMatrix m_copy3 = Rcpp::clone(spectro); pixels_list.push_back(m_copy3);
-  post_mask(spectro, EDG);//Rcpp::NumericMatrix m_copy4 = Rcpp::clone(spectro); pixels_list.push_back(m_copy4);
-  contrast_boost(spectro, boost);// Rcpp::NumericMatrix m_copy5 = Rcpp::clone(spectro); pixels_list.push_back(m_copy5);
+  blur(spectro, blur_f);
+  background_subtract(spectro, bg_substract);
+  post_mask(spectro, EDG);
+  contrast_boost(spectro, boost);
 
   Rcpp::NumericMatrix label (height, width);
 
   auto blob_map = blob_finder(spectro, label);
 
-//   std::vector<std::pair<int, Rcpp::List>> blobs(blob_map.begin(), blob_map.end());
-//   std::sort(blobs.begin(), blobs.end(), comp_mag);
-
-  // auto blobs = blob_map;
-
   std::vector<std::pair<int, Rcpp::List> > blobs(blob_map.begin(), blob_map.end());
   std::sort(blobs.begin(), blobs.end(), sort_blobs);
 
-//   for (size_t i = 0; i < blob_map.size(); i++)
-//   {
-//     if (Rf_isNull(blob_map[i].attr("names"))) continue;
-//     Rprintf("%u\n", Rcpp::as<size_t> (blob_map[i]["area"]));
-//   }
-
-  // Time between event implementation
-  // double duration = audio_samples.size() / sample_rate;
-  // int k = (duration + 1) * 4;
-
-  // throw 20;
-
-  // auto blobs = priority_blobs(blob_map, k);
-  // auto blobs = priority_blobs(blob_map);
-
- // pixels_list.push_back(spectro);
- // pixels_list.push_back(label);
 
   size_t FFT_step = (double)FFT_size * (1 - FFT_overlap);
-  // int min_dur = ((double)min_d / 1000) * (double)sample_rate / (double)FFT_step;
-  // int max_dur = ceil((double)max_d / 1000) * (double)sample_rate / (double)FFT_step;
 
   std::vector<std::string> start_times;
   std::vector<double> durations;
@@ -136,12 +97,8 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
 
   for (auto& blob: blobs)
   {
-    //    Rprintf("%d\n", blob.second.Area());
     if (Rcpp::as<size_t> (blob.second["area"]) > area)
     {
-      // Rprintf("blob_id = %d\n", Rcpp::as<int>(blob.second["blob_id"]));
-      // Rprintf("min = %d\n", Rcpp::as<int>(blob.second["min_offset"]));
-      // Rprintf("max = %d\n", Rcpp::as<int>(blob.second["max_offset"]));
       Rcpp::NumericMatrix segment = mask(spectro, label, blob);
 
       double duration = ((double)segment.ncol() * FFT_step / (double)sample_rate) * 1000;
@@ -159,7 +116,6 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
       min_offsets.push_back(min_offset);
       max_offsets.push_back(max_offset);
       pixel_map.push_back(clone(segment));
-      //printf("%d", pixels_list.size());
     }
   }
 
@@ -188,17 +144,12 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
         min_offsets.erase(std::next(min_offsets.begin(), i));
         max_offsets.erase(std::next(max_offsets.begin(), i));
         pixel_map.erase(std::next(pixel_map.begin(), i));
-        // del.erase(std::next(del.begin(), i));
       }
     }
   }
 
   if (start_times.empty())
     return Rcpp::List();
-
-  // std::vector <double> duration (n_events);
-  // std::transform(max_offsets.begin(), max_offsets.end(), min_offsets.begin(), duration.begin(), std::minus<int>());
-  // std::transform(duration.begin(), duration.end(), duration.begin(), std::bind1st(std::divides<double>(), (double)sample_rate));
 
   event_data[0] = Rcpp::StringVector(n_events);
 
@@ -236,56 +187,9 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
   return out;
 }
 
-// std::unordered_map<int, Rcpp::List> priority_blobs(std::unordered_map<int, Rcpp::List>& blobs, size_t n)
-// std::unordered_map<int, Rcpp::List> priority_blobs(std::unordered_map<int, Rcpp::List>& blobs)
-// {
-//   // n = n > blobs.size() ? blobs.size() : n;
-//   typedef std::pair<double, int> Element;
-//   std::priority_queue< Element, std::vector<Element>, std::greater<Element> > priority_blobs;
-//   auto first = std::begin(blobs);
-//   auto last = std::end(blobs);
-//   // auto last = std::begin(blobs);
-//   // std::advance(last, n);
-//   while (first != last)
-//   {
-//     // Rprintf("%f\n", Rcpp::as<double>(first->second["magnitude"]));
-//     // Rprintf("%d\n", Rcpp::as<size_t>(first->first));
-//     Element element = Element(first->second["magnitude"], first->first);
-//     priority_blobs.push(element);
-//     ++first;
-//   }
-//
-//   // last = std::end(blobs);
-//   while (first != last)
-//   {
-//     Element element = Element(first->second["magnitude"], first->first);
-//     if (priority_blobs.top() < element)
-//     {
-//       priority_blobs.pop();
-//       priority_blobs.push(element);
-//     }
-//     ++first;
-//   }
-//
-//   size_t size = priority_blobs.size();
-//
-//   std::unordered_map<int, Rcpp::List> result;
-//   for (size_t i = 0; i < size; i++)
-//   {
-//     auto blob = blobs[priority_blobs.top().second];
-//     result[priority_blobs.top().second] = blob;
-//     priority_blobs.pop();
-//   }
-//   return result;
-// }
-
 bool sort_blobs (std::pair<int, Rcpp::List> lhs, std::pair<int, Rcpp::List> rhs)
 {
   return Rcpp::as<int>(lhs.second["min_offset"]) < Rcpp::as<double>(rhs.second["min_offset"]);
 }
 
-// bool comp_mag (std::pair<int,Rcpp::List> a, std::pair<int,Rcpp::List> b)
-// {
-//   return Rcpp::as<double>(a.second["magnitude"]) > Rcpp::as<double>(b.second["magnitude"]);
-// }
 

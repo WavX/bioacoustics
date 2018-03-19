@@ -29,7 +29,7 @@ void calc_features(Rcpp::List& event_data, Rcpp::NumericMatrix& segment, const s
   std::vector<double> temporal_envelope(width, 0);
   std::vector<double> histogram(2 * height, 0);
 
-  double area = 0;
+  size_t area = 0;
   int prev_peak = 0;
 
   for (int x = 0; x < width; x++)
