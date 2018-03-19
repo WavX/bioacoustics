@@ -5,7 +5,7 @@ if(getRversion() < "3.3.0")
 
 if (!file.exists("../windows/include/fftw3.h"))
 {
-  download.file("https://github.com/wavx/rpkg-libs/raw/master/fftw3/fftw3.zip", "lib.zip", method = "libcurl", quiet = TRUE)
+  download.file("https://github.com/wavx/rpkg-libs/raw/master/fftw3/fftw3.zip", "lib.zip", quiet = TRUE)
 
   dir.create("../windows", showWarnings = FALSE)
   unzip("lib.zip", exdir = "../windows", files = c("include/fftw3.h", paste0("lib/", .Platform$r_arch, "/libfftw3.a")))
@@ -14,7 +14,7 @@ if (!file.exists("../windows/include/fftw3.h"))
 
 if (!file.exists("../windows/include/samplerate.h"))
 {
-  download.file("https://github.com/wavx/rpkg-libs/raw/master/libsamplerate/libsamplerate.zip", "lib.zip", method = "libcurl", quiet = TRUE)
+  download.file("https://github.com/wavx/rpkg-libs/raw/master/libsamplerate/libsamplerate.zip", "lib.zip", quiet = TRUE)
 
   dir.create("../windows", showWarnings = FALSE)
   unzip("lib.zip", exdir = "../windows", files = c("include/samplerate.h", paste0("lib/", .Platform$r_arch, "/libsamplerate.a")))
