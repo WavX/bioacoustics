@@ -65,7 +65,6 @@ inline
   void FFT::impl(int seek, const std::vector<int> &samples)
   {
     int N = samples.size();
-    original.clear();
 
     for (size_t i = 0; i < size; i++, seek++)
     {

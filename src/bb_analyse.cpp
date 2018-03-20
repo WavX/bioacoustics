@@ -70,8 +70,6 @@ Audio_Event Analyse::impl(const size_t &fft_size,
   forward_analyse(audio_event, seek, background_noise, noise, signal);
   backward_analyse(audio_event, seek, peak_location, background_noise, noise, signal);
 
-  // fft.destroy_plan();
-
   return audio_event;
 }
 
@@ -216,8 +214,6 @@ bool Analyse::is_end (Audio_Event &audio_event,
 {
   if (amp_diff > end_t || angl_diff > angl_t || SNR < snr_t)
   {
-    // audio_event.end = std::min(seek - 2 * step, (int)audio_samples.size());
-    // audio_event.end = seek - 2 * step;
     audio_event.end = seek - step - 1;
     return true;
   }
@@ -233,7 +229,6 @@ bool Analyse::is_start (Audio_Event &audio_event,
 {
   if (amp_diff > start_t || angl_diff > angl_t || SNR < snr_t)
   {
-    // audio_event.start = std::max(seek + 2 * step, (int)0);
     audio_event.start = seek + 2 * step;
     return true;
   }
