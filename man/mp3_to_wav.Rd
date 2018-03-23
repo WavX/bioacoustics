@@ -4,13 +4,15 @@
 \alias{mp3_to_wav}
 \title{Convert MP3 to WAV}
 \usage{
-mp3_to_wav(file, output_dir = dirname(file))
+mp3_to_wav(file, output_dir = dirname(file), delete = FALSE)
 }
 \arguments{
 \item{file}{path to a MP3 file.}
 
 \item{output_dir}{where to save the converted Wave file.
 The Wave file is saved by default to the MP3 file location.}
+
+\item{delete}{delete the original MP3 file ?}
 }
 \description{
 Convert an MP3 file to a Wave file
