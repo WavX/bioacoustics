@@ -7,17 +7,22 @@
 #' @param output_dir where to save the converted Wave file.
 #' The Wave file is saved by default to the MP3 file location.
 #'
+#' @param delete delete the original MP3 file ?
+#'
 #' @export
 #'
 #' @rdname mp3_to_wav
 #'
 
-mp3_to_wav <- function(file, output_dir = dirname(file))
+mp3_to_wav <- function(file, output_dir = dirname(file), delete = FALSE)
 {
   tuneR::writeWave(
     object = tuneR::readMP3(file),
     filename = file.path(output_dir, basename(paste0(tools::file_path_sans_ext(file), ".wav")))
   )
+
+  if (delete)
+    file.remove(file)
 }
 
 
