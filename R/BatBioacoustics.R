@@ -218,7 +218,6 @@ threshold_detection <- function(wave,
               offset <- floor( c(audio_events[['event_start']][[i]] - start, end - audio_events[['event_end']][[i]]) / fft_step )
 
               LPF <- min(LPF, sample_rate / 2)
-              # LPF_bin <- FFT_size / 2 - 1
               LPF_bin <- min(ceiling(LPF * FFT_size / sample_rate), FFT_size / 2 - 1)
 
               spec <- .fspec_impl(
@@ -296,6 +295,8 @@ threshold_detection <- function(wave,
 
     # Add info about filename if available
     if (!is.null(filename)) audio_events$event_data <- cbind(data.frame(filename = basename(filename)), audio_events$event_data)
+
+    class(audio_events) <- c(class(audio_events), "threshold_detection")
 
     return(audio_events)
   }

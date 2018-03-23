@@ -191,6 +191,8 @@ blob_detection <- function(wave,
     if (!is.null(filename))
       audio_events$event_data <- cbind(data.frame(filename = filename), audio_events$event_data)
 
+    class(audio_events) <- c(class(audio_events), "blob_detection")
+
     return(audio_events)
   }
 }
