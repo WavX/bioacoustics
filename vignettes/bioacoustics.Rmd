@@ -3,13 +3,17 @@ title: 'Introduction to bioacoustics'
 author: 'Jean Marchal, Francois Fabianek, Christopher Scott'
 date: '`r Sys.Date()`'
 output:
-  #rmarkdown::pdf_document:
+  rmarkdown::pdf_document:
+    toc: yes
+    toc_depth: 4
+    number_sections: yes
+    fig_caption: yes
   rmarkdown::html_vignette:
-    toc: true
+    toc: yes
     toc_depth: 4
     #theme: united
-    number_sections: true
-    figure_caption: yes
+    number_sections: yes
+    fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{bioacoustics}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,13 +24,13 @@ body {
 text-align: justify}
 </style>
 
-# bioacoustics
+# Bioacoustics
 
-The `bioacoustics` package contains all the necessary R functions to read audio recordings of various formats (e.g., WAV, WAC, MP3, Zero-Crossing), filter noisy files, display audio signals, detect and extract automatically acoustic features for further analysis such as species identification based on classification of animal vocalizations. This package DOES NOT provide R functions to perform classification tasks. Other packages such as `randomForest`, `extraTrees`, `mclust`, `seqHMM`, `tensorflow` or `keras` can be used in addition with the `bioacoustics` package to perform these tasks. Complementary functions for audio processing in R are also available in the `monitorR` , `warbleR`, and `seewave` packages.
+The **bioacoustics** package contains all the necessary R functions to read audio recordings of various formats (*e.g.*, WAV, WAC, MP3, Zero-Crossing), filter noisy files, display audio signals, detect and extract automatically acoustic features for further analysis such as species identification based on classification of animal vocalizations. This package does not provide R functions to perform classification tasks. Other packages such as **randomForest**, **extraTrees**, **mclust**, or **keras** can be used in addition with the **bioacoustics** package to perform these tasks. Complementary functions for audio processing in R are also available in the **tuneR**, **monitorR**, **warbleR**, and **seewave** packages.
 
-This package was originally built for bat bioacoustics, and thus the default parameters for all the available functions are set for bats. Users will have to set the parameters according to the group of animal vocalizations they which to study^[Table 1]. The `bioacoustics` package can be used to display and extract acoustic features from recordings of birds, frogs, insects, marine and other terrestrial mammals as long as their vocalizations can be recorded.
+This package was originally built for bat bioacoustics, and thus the default parameters for all the available functions are set for bats. Users will have to set the parameters according to the group of animal vocalizations they which to study^[See Table 1 for examples of extraction parameters for different species groups]. The **bioacoustics** package can be used to display and extract acoustic features from recordings of birds, frogs, insects, marine and other terrestrial mammals as long as their vocalizations can be recorded.
 
-This package is subdivided into three main components containing R functions acccessible to users and internal functions that will also be defined bellow for the sake of comprehension. The three main components with the current functions are as follow:
+This package is subdivided into three main components containing R functions acccessible to users and internal functions that will also be defined bellow for the sake of clarity. The three main components with the current functions are as follow:
 
 - Read, extract data (not yet implemented), display, and write Zero-Crossing files: `read_zc`, `plot`, `write_zc`
 
@@ -35,11 +39,11 @@ This package is subdivided into three main components containing R functions acc
 - Read, display, MP3, WAV or WAC files, filter, and extract automatically acoustic features: `fspec`, `spectro`, `threshold_detection`, `blob_detection`
 
 
-## read Zero-Crossing file
+## Read Zero-Crossing file
 
 The `read_zc` function can read into R a Zero-Crossing file generated from various bat recorders and by the Kaleidoscope software (Wildlife Acoustics, Inc). This function is a modified version of Peter Wilson's [Anabat Tools](http://www.peterwilson.id.au/Rcode/AnabatTools.R) (2013) and the [C++ source code](http://users.lmi.net/corben/loader.txt) provided by Chris Corben.
 
-## plot Zero-Crossing file
+## Plot Zero-Crossing file
 
 The `plot` function can be used to plot the content of a Zero-Crossing file previously loaded with the `read_zc` function. This function is a modified version of Peter Wilson's [Anabat Tools](http://www.peterwilson.id.au/Rcode/AnabatTools.R) (2013).
 
@@ -48,63 +52,63 @@ The `plot` function can be used to plot the content of a Zero-Crossing file prev
 The `metadata_zc` function automatically extracts file header from a Zero-Crossing file previously loaded with the `read_zc` function.-->
 
 
-## write Zero-Crossing file
+## Write Zero-Crossing file
 
 The `write_zc` function writes or re-writes a Zero-Crossing file loaded with the `write_zc` function.
 
 
-## read WAC file
+## Read WAC file
 
 The `read_wac` function can load into R a proprietary compressed WAC file from Wildlife Acoustics recorders. This function includes only the information from the wac2wavcmd-1.1 (provided by Wildlife Acoustics under the MIT open software license) that is necesary to decode a WAC file.
 
 
-## resampling audio
+## Resampling audio
 
 The `resample` function up- or down-sample the sample rate of the audio recording. 
 
 
-## convert WAV to MP3
+## Convert WAV to MP3
 
 The `mp3_to_wav` function converts MP3 to Wave files. 
 
 
-## convert energy to dB
+## Convert energy to dB
 
 The `to_dB` function converts raw energy (or amplitude) values from the `threshold_detection` function to decibel values (dB).
 
-## extract spectrogram data
+## Extract spectrogram data
 
 The `fspec` function returns as an array the frequency spectrum representation of a time wave using the Fast Fourrier Transform (FFT). Values are expressed in decibels (dB).
 
 
-## display spectrogram
+## Display spectrogram
 
 The `spectro` function generates a spectrographic representation of a time wave using the Fast Fourrier Transform (FFT).
 
 
-## threshold detection
+## Threshold detection
 
 The `threshold_detection` function is a modified version of the Bat Bioacoustics software developed by Christopher Scott (2012). It combines several detection, filtering and audio feature extraction functions. 
 
-### audio event detection
+### Audio event detection
 
 The proposed audio event detection function is a modified spectral sum function for peak-picking, with background noise reduction and echo suppression (Scott, 2012).
 
-A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an 'audio event'. Under this definition, an audio event may include animal vocalizations, call echoes (e.g. for bats), and other noise sources either biotic (e.g. stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).
+A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an 'audio event'. Under this definition, an audio event may include animal vocalizations, call echoes (*e.g.*, for bats), and other noise sources either biotic (*e.g.*, stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).
 
 Audio events can be detected in a recording by its energy content, and defining a threshold rule for selecting discrete portions of the recording containing energy (dB) above a fixed threshold. The spectral energy content of a recording is typicaly revealed by applying a Short-Time Fourier Transform (STFT), a technique that slides an analysis window of fixed size through the recording. The output from the windowed FFT analysis is a discrete set of values from which the locations of audio events can be identified through simple energy thresholding and peak-picking.
 
 The two conventional methods of bioacoustic signal detection are the spectral peak and the spectral sum functions. For a signal $x$ at time $n$, $X[n]$ is defined as its STFT, where $|Xk[n]|$ is the spectral magnitude of the $Kth$ FFT bin at $n$. The spectral sum function calculates the sum of the STFT magnitudes (the total energy over the entire spectrum) at each consecutive window through the recording to create the following detection function:
 
-<center>$Dsum[n] = sum|Xk[n]|$ </center>
+<center> $Dsum[n] = sum|Xk[n]|$ </center>
 
 This conventional signal detection function depends on both levels of gain and background noise in the recording. This complicates the setting of a consistent detection threshold value, as recordings may be at different levels. Thus, requiring different threshold levels to detect the exact same audio events.
 
 To resolve this problem, the detection function should be normalised for each recording by substracting the median value over all analysis windows from each detection function data point (Skowronski & Fenton, 2009). The median value is an estimate of the noise floor of the recording, and this process of median offsetting allows the use of a fixed threshold parameter, that is then independent of the recording level. However, the process of normalisation requires that the entire recording must be acquired prior to processing, ruling out real-time analysis.
 
-This is why the `threshold_detection` function estimates the noise floor using only past values of the recording (i.e., fixed windows of previous analysis frames). Prior knowledge is therefore not required for the normalisation of the detection function, and real-time analysis remains a possibility. In addition, by estimating the noise floor locally, the function can dynamically react to changes in the magnitude of background noise winthin the recording. The size of the noise estimation window can be set using the `NWS` parameter. We recommend a time window of 100 ms for short recordings (typically < 1 min length) containing bat echolocation calls. However, we have found that a time window of 5000 ms is ideal in long recordings (typically > 60 min length) containing bird vocalizations.
+This is why the `threshold_detection` function estimates the noise floor using only past values of the recording (*i.e.*, fixed windows of previous analysis frames). Prior knowledge is therefore not required for the normalisation of the detection function, and real-time analysis remains a possibility. In addition, by estimating the noise floor locally, the function can dynamically react to changes in the magnitude of background noise winthin the recording. The size of the noise estimation window can be set using the `NWS` parameter. We recommend a time window of 100 ms for short recordings (typically < 1 min length) containing bat echolocation calls. However, we have found that a time window of 5000 ms is ideal in long recordings (typically > 60 min length) containing bird vocalizations.
 
-The noise floor is estimated and subtracted independently for each spectral bin of the FFT spectrum. Environmental noise and microphone self noise is rarely white in nature (i.e., equal power at all frequencies), and is typically weighted more heavily at the low end of the frequency spectrum. Frequency-specific noise substraction can attenuate the noisier low-frequency regions of the spectrum more heavily than the higher frequency and lower noise parts. This process increases the sensitivity of the audio event detection at higher frequency regions of the spectrum, as signals in those regions consequently have a higher Signal to Noise Ratio (SNR).
+The noise floor is estimated and subtracted independently for each spectral bin of the FFT spectrum. Environmental noise and microphone self noise is rarely white in nature (*i.e.*, equal power at all frequencies), and is typically weighted more heavily at the low end of the frequency spectrum. Frequency-specific noise substraction can attenuate the noisier low-frequency regions of the spectrum more heavily than the higher frequency and lower noise parts. This process increases the sensitivity of the audio event detection at higher frequency regions of the spectrum, as signals in those regions consequently have a higher Signal to Noise Ratio (SNR).
 
 A threshold function then selects candidate audio event locations from the detection function normalised outputs. This threshold function works by first marking the location at which the detection function crosses the trigger threshold level. The value (in dB above SNR) of this trigger threshold can be set using the `threshold` parameter available in the `threshold_detection` function. 
 
@@ -114,23 +118,23 @@ Candidate audio events are subsequently filtered using the following rule: if th
 
 A temporal masking is also employed to reduce the influence of echoes on the detection function: an exponential decay curve is applied to the output of the detection function, which acts as an adaptive threshold. Echoes falling below the threshold do not contribute to the detection function as they are masked by the louder preceding audio event. The exponential decay curve is defined as:
 
-<center>$F[n]=max(D[n],a*F[n-1]+(1-a)*D[n])$</center>
+<center> $F[n]=max(D[n],a*F[n-1]+(1-a)*D[n])$ </center>
 
 where $F[n]$ is the threshold function, $D[n]$ is the detection function and $a$ is the exponential decay gain. This echo suppression function aims to reduce the false alarms caused by echoes exceeding the energy threshold that triggers the detection. Exponential Decay Gain (EDG) values > 0.8 worked well in practice and are set by default at 0.996. The exponential decay gain can be set using the `EDG` parameter in the `threshold_detection` function.
 
 The detection function $D[n]$ is generated by first summing all spectral magnitudes in frequency bands that are greater than both their local median values, and the temporal masking threshold. This value is considered to be the audio event content as defined above. A noise estimate is then taken as the sum of all local median values. Finally, the detection function is expressed as SNR in dB as:
 
-<center>$SNR = 20*log10(signal/noise)$</center>
+<center> $SNR = 20*log10(signal/noise)$ </center>
 
-The function uses by default a FFT window size of 256 points (which can be set using the `FFT_size` parameter), with a Blackman-Harris 7-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (i.e., an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor's uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (which can be set using the `FFT_overlap` parameter). The `bioacoustics` package rely on the [FFTW library](http://www.fftw.org/) for efficient Fourier transforms.
+The function uses by default a FFT window size of 256 points (which can be set using the `FFT_size` parameter), with a Blackman-Harris 7-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (*i.e.*, an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor's uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (which can be set using the `FFT_overlap` parameter). The **bioacoustics** package rely on the [FFTW library](http://www.fftw.org/) for efficient Fourier transforms.
 
-The above mentioned functions has been tested and their performances evaluated on bat echolocation calls in Scott (2012). Tests on a real-world dataset of field recordings confirmed that the modified spectral sum function with background noise reduction and echo suppression outperformed the two conventional approaches (i.e., spectral sum and spectral peak functions) in terms of accuracy. The noise substraction function performed well with all signal types across a broad range of thresholds, making it simpler to apply in practice where the recording content is not known a priori. As normalisation is applied in real time through local background noise substraction, the length of the recording to be analysed has no effect on function efficiency (Scott, 2012).
+The above mentioned functions has been tested and their performances evaluated on bat echolocation calls in Scott (2012). Tests on a real-world dataset of field recordings confirmed that the modified spectral sum function with background noise reduction and echo suppression outperformed the two conventional approaches (*i.e.*, spectral sum and spectral peak functions) in terms of accuracy. The noise substraction function performed well with all signal types across a broad range of thresholds, making it simpler to apply in practice where the recording content is not known a priori. As normalisation is applied in real time through local background noise substraction, the length of the recording to be analysed has no effect on function efficiency (Scott, 2012).
 
-### extraction with filtering and smoothing
+### Extraction with filtering and smoothing
 
 High Pass (HPF) and Low Pass filters (LPF) can be employed to reduce the amount of unwanted noise in the recording or to track particuliar audio events within a narrower frequency bandwith than the recording sampling rate. Frequencies below the HPF and above the LPF cutoff are greatly attenuated. These frequency filters can be set using the `HPF` and `LPF` parameters in the `threshold_detection` function. Note that these filters are described in this section, but are used by the `threshold_detection` function just after the conversion of the recording in the time / frequency domain using the Fast Fourier transform (FFT).
 
-After the recording has been filtered and that the candidate audio events have been located, a second series of functions are employed to filter, extract and smooth the audio event in the time / frequency domain. The audio event extraction function starts a search for the next FFT windows from right-to-left (start) and from left-to-right (end) from each audio event centroid (i.e., location of the audio event at the peak of its maximum energy content), in search for the start and the end of the audio event, respectivelly. 
+After the recording has been filtered and that the candidate audio events have been located, a second series of functions are employed to filter, extract and smooth the audio event in the time / frequency domain. The audio event extraction function starts a search for the next FFT windows from right-to-left (start) and from left-to-right (end) from each audio event centroid (*i.e.*, location of the audio event at the peak of its maximum energy content), in search for the start and the end of the audio event, respectivelly. 
 
 <center>
 ```{r, echo=FALSE,message=FALSE,warning=FALSE}
@@ -176,7 +180,7 @@ The audio event extraction function relies on three different thresholds to eith
 
 The extracted audio event sequence is smoothed with a Kalman filtering function, whose parameters can also be set using the `KPE` (Kalman Process Error) and `KME` (Kalman Measurement Error) parameters. Another series of filtering thresholds are applied to the Kalman filtered outputs such as minimum duration (`min_dur`), maximum duration (`max_dur`), minimum time between two audio events (`TBE`). Acoustic features are then extracted from the filtered frequency (Hz) and energy (dB) outputs.
 
-### acoustic features and metadata
+### Acoustic features and metadata
 
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(as.data.frame(cbind(
@@ -228,25 +232,25 @@ The detection and extraction settings used with the `threshold_detection` and `b
 The `metadata` function is a helper to extract metadata encapsulated in audio files and objects created with the `threshold_detection` and `blob_detection` functions. <!--is a modified version of the wa_meta-1.0 Wildlife Acoustics metadata reader. The metadata encapsulated in a Wave file produced by some of their bioacoustics recorders, including (with the latest firmware) the SM2, SM2+, SM2BAT192x2, SM2BAT384, SM2BAT+, SM3, SM3BAT, EM3, EM3+ and Echo Meter Touch, can be read and extracted with this function.--> GUANO metadata extraction is not yet implemented with this function.
 
 
-## blob detection
+## Blob detection
 
-The `blob_detection` function is a modified version of the Bat classify software developed by Christopher Scott (2014). It combines several image processing, filtering and image feature extraction.
+The `blob_detection` function is a modified version of the Bat Classify software developed by Christopher Scott (2014). It combines several image processing, filtering and image feature extraction.
 
-A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an 'audio event'. Under this definition, an audio event may include animal vocalizations, call echoes (e.g. for bats), and other noise sources, either biotic (e.g. stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).
+A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an 'audio event'. Under this definition, an audio event may include animal vocalizations, call echoes (*e.g.*, for bats), and other noise sources, either biotic (*e.g.*, stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).
 
 The spectral energy content of a recording is typicaly revealed by applying a Short-Time Fourier Transform (STFT). This technique slides an analysis window of fixed size through the recording. The output from the windowed FFT analysis is a discrete set of values from which the locations of the audio events can be identified through simple thresholding after background noise substraction (Scott, 2012). 
 
-The `blob_detection` function uses by default a FFT window size of 256 points (can be changed using the `FFT_size` parameter), with a Blackman Harris 4-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor's uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (can be changed using the `FFT_overlap` parameter). The `bioacoustics` package rely on the [FFTW library](http://www.fftw.org/) for efficient Fourier transforms.
+The `blob_detection` function uses by default a FFT window size of 256 points (can be changed using the `FFT_size` parameter), with a Blackman Harris 4-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor's uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (can be changed using the `FFT_overlap` parameter). The **bioacoustics** package rely on the [FFTW library](http://www.fftw.org/) for efficient Fourier transforms.
 
 FFT values are used to display the spectrogram representation of the audio event for image processing. A blur is applied to smooth the spectrogram with a Gaussian function and the level of blur can be changed using the `blur` parameter. This function reduces the level of Gaussian noise in the spectrogram. The background noise is then substracted. The background substraction uses a local average of the energy spectrum intensity to estimate the amount of noise to substract from each spectrogram. This estimate is then multiplied by the value of the `bg_substract` parameter. By estimating the noise floor locally, the function can dynamically react to local variations in the noise floor intensity. A contrast boost function is finally applied on the normalised spectrogram values to increase the definition of the audio event contour against the background noise. The level of contrast boost can be set with the `contrast_boost` parameter.
 
-A 'blob detection' algorithm is applied on the processed spectrogram to detect a Region Of Interest (ROI). This function relies on the linear-time connected component labelling algorithm described in Chang et al. (2004), and adapted from Andrew Brampton (2011). The resulting function  simultaneously labels the connected FFT values (or 'blob') and their contours in the spectrogram. Both external, and possibly internal contours of each blob are detected and labeled. Labeling is done in a single pass over the spectrogram, while contour points are revisited more than once and up to four times (Chang et al., 2004). Moreover, the detection function extracts a blob in a sequential order of contour points, i.e. a 'segment', which is useful in the case of animal vocalizations.
+A 'blob detection' algorithm is applied on the processed spectrogram to detect a Region Of Interest (ROI). This function relies on the linear-time connected component labelling algorithm described in Chang et al. (2004), and adapted from Andrew Brampton (2011). The resulting function  simultaneously labels the connected FFT values (or 'blob') and their contours in the spectrogram. Both external, and possibly internal contours of each blob are detected and labeled. Labeling is done in a single pass over the spectrogram, while contour points are revisited more than once and up to four times (Chang et al., 2004). Moreover, the detection function extracts a blob in a sequential order of contour points, *i.e.* a 'segment', which is useful in the case of animal vocalizations.
 
 The `blob_detection` function then discards any extracted segment which area is < n pixels. This can be set using the `min_area` parameter, and is set by default at 40 pixels to best extract bat echolocation calls. The values of these filtering parameters may be set differently to extract vocalizations from other group of animals. The segment is finally log-compressed, to convert magnitude into dB, before feature extraction.
 
 A serie of filtering functions are also applied to the segments such as minimum duration (`min_dur`), maximum duration (`max_dur`), minimum time between two segments (`TBE`) to reduce the amount of unwanted noise or to track particuliar segments within a narrower temporal window. Like temporal filters, High Pass (HPF) and Low Pass frequency filters (LPF) can also be set using the `HPF` and `LPF` parameters in the `blob_detection` function. Frequencies below the HPF and above the LPF cutoff are greatly attenuated. Acoustic features are then extracted from these filtered segments.
 
-### acoustic features and metadata
+### Acoustic features and metadata
 
 The spectral and temporal moments are extracted from the audio event contour points (called 'segment'), and a gradient histogram is built from the sequence of frequencies (Hz) and energy (expressed in dB) stored in each pixel values (for each extracted audio event). These sequences are available to users in addition to the other acoustic features from the function's output.
 
@@ -288,15 +292,15 @@ c('Location of the audio event in the recording',
 
 ```
 
-## datasets
+## Datasets
 
-### myotis
-The myotis dataset is a Wave file of 19.73 seconds, 16 bits, mono, with a sampling rate at 500 kHz. It contains 20 echolocation calls of several species from the Myotis genus. The recording was made in United-Kingdom with a D500X bat detector from Pettersson Elektronik AB.
+### Myotis
+The myotis dataset is a Wave file of 10 seconds, 16 bits, mono, with an original sampling rate at 500 kHz (time expanded by 10). It contains 11 echolocation calls of bats from the *Myotis* genus. The recording was made in United-Kingdom with a D500X bat detector from Pettersson Elektronik AB.
 
 ### zc
-The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (Lasiurus cinereus). This ZC recording was made in Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.
+The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (*Lasiurus cinereus*). This ZC recording was made in Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.
 
-## references
+## References
 
 > Chang, F., Chen, C.-J., & Lu, C.J. (2004). A linear-time component-labeling algorithm using contour tracing technique. computer vision and image understanding, 93(2), 206-220. [Link](https://www.iis.sinica.edu.tw/papers/fchang/1362-F.pdf)
 

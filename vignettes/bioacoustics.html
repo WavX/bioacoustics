@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Jean Marchal, Francois Fabianek, Christopher Scott" />
+
+<meta name="date" content="2018-03-19" />
+
+<title>Introduction to bioacoustics</title>
+
+
+
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to bioacoustics</h1>
+<h4 class="author"><em>Jean Marchal, Francois Fabianek, Christopher Scott</em></h4>
+<h4 class="date"><em>2018-03-19</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#bioacoustics"><span class="toc-section-number">1</span> Bioacoustics</a><ul>
+<li><a href="#read-zero-crossing-file"><span class="toc-section-number">1.1</span> Read Zero-Crossing file</a></li>
+<li><a href="#plot-zero-crossing-file"><span class="toc-section-number">1.2</span> Plot Zero-Crossing file</a></li>
+<li><a href="#write-zero-crossing-file"><span class="toc-section-number">1.3</span> Write Zero-Crossing file</a></li>
+<li><a href="#read-wac-file"><span class="toc-section-number">1.4</span> Read WAC file</a></li>
+<li><a href="#resampling-audio"><span class="toc-section-number">1.5</span> Resampling audio</a></li>
+<li><a href="#convert-wav-to-mp3"><span class="toc-section-number">1.6</span> Convert WAV to MP3</a></li>
+<li><a href="#convert-energy-to-db"><span class="toc-section-number">1.7</span> Convert energy to dB</a></li>
+<li><a href="#extract-spectrogram-data"><span class="toc-section-number">1.8</span> Extract spectrogram data</a></li>
+<li><a href="#display-spectrogram"><span class="toc-section-number">1.9</span> Display spectrogram</a></li>
+<li><a href="#threshold-detection"><span class="toc-section-number">1.10</span> Threshold detection</a><ul>
+<li><a href="#audio-event-detection"><span class="toc-section-number">1.10.1</span> Audio event detection</a></li>
+<li><a href="#extraction-with-filtering-and-smoothing"><span class="toc-section-number">1.10.2</span> Extraction with filtering and smoothing</a></li>
+<li><a href="#acoustic-features-and-metadata"><span class="toc-section-number">1.10.3</span> Acoustic features and metadata</a></li>
+</ul></li>
+<li><a href="#metadata-extraction"><span class="toc-section-number">1.11</span> Metadata extraction</a></li>
+<li><a href="#blob-detection"><span class="toc-section-number">1.12</span> Blob detection</a><ul>
+<li><a href="#acoustic-features-and-metadata-1"><span class="toc-section-number">1.12.1</span> Acoustic features and metadata</a></li>
+</ul></li>
+<li><a href="#datasets"><span class="toc-section-number">1.13</span> Datasets</a><ul>
+<li><a href="#myotis"><span class="toc-section-number">1.13.1</span> Myotis</a></li>
+<li><a href="#zc"><span class="toc-section-number">1.13.2</span> zc</a></li>
+</ul></li>
+<li><a href="#references"><span class="toc-section-number">1.14</span> References</a></li>
+</ul></li>
+</ul>
+</div>
+
+<style>
+body {
+text-align: justify}
+</style>
+<div id="bioacoustics" class="section level1">
+<h1><span class="header-section-number">1</span> Bioacoustics</h1>
+<p>The <strong>bioacoustics</strong> package contains all the necessary R functions to read audio recordings of various formats (<em>e.g.</em>, WAV, WAC, MP3, Zero-Crossing), filter noisy files, display audio signals, detect and extract automatically acoustic features for further analysis such as species identification based on classification of animal vocalizations. This package does not provide R functions to perform classification tasks. Other packages such as <strong>randomForest</strong>, <strong>extraTrees</strong>, <strong>mclust</strong>, or <strong>keras</strong> can be used in addition with the <strong>bioacoustics</strong> package to perform these tasks. Complementary functions for audio processing in R are also available in the <strong>tuneR</strong>, <strong>monitorR</strong>, <strong>warbleR</strong>, and <strong>seewave</strong> packages.</p>
+<p>This package was originally built for bat bioacoustics, and thus the default parameters for all the available functions are set for bats. Users will have to set the parameters according to the group of animal vocalizations they which to study<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The <strong>bioacoustics</strong> package can be used to display and extract acoustic features from recordings of birds, frogs, insects, marine and other terrestrial mammals as long as their vocalizations can be recorded.</p>
+<p>This package is subdivided into three main components containing R functions acccessible to users and internal functions that will also be defined bellow for the sake of comprehension. The three main components with the current functions are as follow:</p>
+<ul>
+<li><p>Read, extract data (not yet implemented), display, and write Zero-Crossing files: <code>read_zc</code>, <code>plot</code>, <code>write_zc</code></p></li>
+<li><p>Stand-alone tools to convert or resample MP3, WAV, and WAC files:<code>read_wac</code>, <code>resample</code>, <code>mp3_to_wav</code>, <code>to_dB</code></p></li>
+<li><p>Read, display, MP3, WAV or WAC files, filter, and extract automatically acoustic features: <code>fspec</code>, <code>spectro</code>, <code>threshold_detection</code>, <code>blob_detection</code></p></li>
+</ul>
+<div id="read-zero-crossing-file" class="section level2">
+<h2><span class="header-section-number">1.1</span> Read Zero-Crossing file</h2>
+<p>The <code>read_zc</code> function can read into R a Zero-Crossing file generated from various bat recorders and by the Kaleidoscope software (Wildlife Acoustics, Inc). This function is a modified version of Peter Wilson’s <a href="http://www.peterwilson.id.au/Rcode/AnabatTools.R">Anabat Tools</a> (2013) and the <a href="http://users.lmi.net/corben/loader.txt">C++ source code</a> provided by Chris Corben.</p>
+</div>
+<div id="plot-zero-crossing-file" class="section level2">
+<h2><span class="header-section-number">1.2</span> Plot Zero-Crossing file</h2>
+<p>The <code>plot</code> function can be used to plot the content of a Zero-Crossing file previously loaded with the <code>read_zc</code> function. This function is a modified version of Peter Wilson’s <a href="http://www.peterwilson.id.au/Rcode/AnabatTools.R">Anabat Tools</a> (2013).</p>
+<!-- ## extract Zero-Crossing file header
+
+The `metadata_zc` function automatically extracts file header from a Zero-Crossing file previously loaded with the `read_zc` function.-->
+</div>
+<div id="write-zero-crossing-file" class="section level2">
+<h2><span class="header-section-number">1.3</span> Write Zero-Crossing file</h2>
+<p>The <code>write_zc</code> function writes or re-writes a Zero-Crossing file loaded with the <code>write_zc</code> function.</p>
+</div>
+<div id="read-wac-file" class="section level2">
+<h2><span class="header-section-number">1.4</span> Read WAC file</h2>
+<p>The <code>read_wac</code> function can load into R a proprietary compressed WAC file from Wildlife Acoustics recorders. This function includes only the information from the wac2wavcmd-1.1 (provided by Wildlife Acoustics under the MIT open software license) that is necesary to decode a WAC file.</p>
+</div>
+<div id="resampling-audio" class="section level2">
+<h2><span class="header-section-number">1.5</span> Resampling audio</h2>
+<p>The <code>resample</code> function up- or down-sample the sample rate of the audio recording.</p>
+</div>
+<div id="convert-wav-to-mp3" class="section level2">
+<h2><span class="header-section-number">1.6</span> Convert WAV to MP3</h2>
+<p>The <code>mp3_to_wav</code> function converts MP3 to Wave files.</p>
+</div>
+<div id="convert-energy-to-db" class="section level2">
+<h2><span class="header-section-number">1.7</span> Convert energy to dB</h2>
+<p>The <code>to_dB</code> function converts raw energy (or amplitude) values from the <code>threshold_detection</code> function to decibel values (dB).</p>
+</div>
+<div id="extract-spectrogram-data" class="section level2">
+<h2><span class="header-section-number">1.8</span> Extract spectrogram data</h2>
+<p>The <code>fspec</code> function returns as an array the frequency spectrum representation of a time wave using the Fast Fourrier Transform (FFT). Values are expressed in decibels (dB).</p>
+</div>
+<div id="display-spectrogram" class="section level2">
+<h2><span class="header-section-number">1.9</span> Display spectrogram</h2>
+<p>The <code>spectro</code> function generates a spectrographic representation of a time wave using the Fast Fourrier Transform (FFT).</p>
+</div>
+<div id="threshold-detection" class="section level2">
+<h2><span class="header-section-number">1.10</span> Threshold detection</h2>
+<p>The <code>threshold_detection</code> function is a modified version of the Bat Bioacoustics software developed by Christopher Scott (2012). It combines several detection, filtering and audio feature extraction functions.</p>
+<div id="audio-event-detection" class="section level3">
+<h3><span class="header-section-number">1.10.1</span> Audio event detection</h3>
+<p>The proposed audio event detection function is a modified spectral sum function for peak-picking, with background noise reduction and echo suppression (Scott, 2012).</p>
+<p>A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an ‘audio event’. Under this definition, an audio event may include animal vocalizations, call echoes (<em>e.g.</em>, for bats), and other noise sources either biotic (<em>e.g.</em>, stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).</p>
+<p>Audio events can be detected in a recording by its energy content, and defining a threshold rule for selecting discrete portions of the recording containing energy (dB) above a fixed threshold. The spectral energy content of a recording is typicaly revealed by applying a Short-Time Fourier Transform (STFT), a technique that slides an analysis window of fixed size through the recording. The output from the windowed FFT analysis is a discrete set of values from which the locations of audio events can be identified through simple energy thresholding and peak-picking.</p>
+<p>The two conventional methods of bioacoustic signal detection are the spectral peak and the spectral sum functions. For a signal <span class="math inline">\(x\)</span> at time <span class="math inline">\(n\)</span>, <span class="math inline">\(X[n]\)</span> is defined as its STFT, where <span class="math inline">\(|Xk[n]|\)</span> is the spectral magnitude of the <span class="math inline">\(Kth\)</span> FFT bin at <span class="math inline">\(n\)</span>. The spectral sum function calculates the sum of the STFT magnitudes (the total energy over the entire spectrum) at each consecutive window through the recording to create the following detection function:</p>
+<center>
+<span class="math inline">\(Dsum[n] = sum|Xk[n]|\)</span>
+</center>
+<p>This conventional signal detection function depends on both levels of gain and background noise in the recording. This complicates the setting of a consistent detection threshold value, as recordings may be at different levels. Thus, requiring different threshold levels to detect the exact same audio events.</p>
+<p>To resolve this problem, the detection function should be normalised for each recording by substracting the median value over all analysis windows from each detection function data point (Skowronski &amp; Fenton, 2009). The median value is an estimate of the noise floor of the recording, and this process of median offsetting allows the use of a fixed threshold parameter, that is then independent of the recording level. However, the process of normalisation requires that the entire recording must be acquired prior to processing, ruling out real-time analysis.</p>
+<p>This is why the <code>threshold_detection</code> function estimates the noise floor using only past values of the recording (<em>i.e.</em>, fixed windows of previous analysis frames). Prior knowledge is therefore not required for the normalisation of the detection function, and real-time analysis remains a possibility. In addition, by estimating the noise floor locally, the function can dynamically react to changes in the magnitude of background noise winthin the recording. The size of the noise estimation window can be set using the <code>NWS</code> parameter. We recommend a time window of 100 ms for short recordings (typically &lt; 1 min length) containing bat echolocation calls. However, we have found that a time window of 5000 ms is ideal in long recordings (typically &gt; 60 min length) containing bird vocalizations.</p>
+<p>The noise floor is estimated and subtracted independently for each spectral bin of the FFT spectrum. Environmental noise and microphone self noise is rarely white in nature (<em>i.e.</em>, equal power at all frequencies), and is typically weighted more heavily at the low end of the frequency spectrum. Frequency-specific noise substraction can attenuate the noisier low-frequency regions of the spectrum more heavily than the higher frequency and lower noise parts. This process increases the sensitivity of the audio event detection at higher frequency regions of the spectrum, as signals in those regions consequently have a higher Signal to Noise Ratio (SNR).</p>
+<p>A threshold function then selects candidate audio event locations from the detection function normalised outputs. This threshold function works by first marking the location at which the detection function crosses the trigger threshold level. The value (in dB above SNR) of this trigger threshold can be set using the <code>threshold</code> parameter available in the <code>threshold_detection</code> function.</p>
+<p>If the detection function does not fall below the threshold level (in dB above SNR) after a certain audio event duration, the noise estimation is resumed from this location. This duration threshold can be set using the <code>duration_thr</code> parameter. The <code>duration_thr</code> length is usually set at the maximum audio event duration of the targeted group of species. For bats in eastern Canada this parameter is set by default at 80 ms. For calls of Bicknell’s Thrush (<em>Catharus bicknelii</em>), it is recommended to set it at 440 ms (see Table 1).</p>
+<p>Candidate audio events are subsequently filtered using the following rule: if the duration of the detected audio event is less than <span class="math inline">\(x\)</span> milliseconds (ms) it is removed. This minimum duration filter is set with the <code>min_dur</code> parameter available in the <code>threshold_detection</code> function. This duration threshold is set to help remove spurious detections caused by transient noise. For bats in eastern Canada this parameter is set by default at 1.5 ms.</p>
+<p>A temporal masking is also employed to reduce the influence of echoes on the detection function: an exponential decay curve is applied to the output of the detection function, which acts as an adaptive threshold. Echoes falling below the threshold do not contribute to the detection function as they are masked by the louder preceding audio event. The exponential decay curve is defined as:</p>
+<center>
+<span class="math inline">\(F[n]=max(D[n],a*F[n-1]+(1-a)*D[n])\)</span>
+</center>
+<p>where <span class="math inline">\(F[n]\)</span> is the threshold function, <span class="math inline">\(D[n]\)</span> is the detection function and <span class="math inline">\(a\)</span> is the exponential decay gain. This echo suppression function aims to reduce the false alarms caused by echoes exceeding the energy threshold that triggers the detection. Exponential Decay Gain (EDG) values &gt; 0.8 worked well in practice and are set by default at 0.996. The exponential decay gain can be set using the <code>EDG</code> parameter in the <code>threshold_detection</code> function.</p>
+<p>The detection function <span class="math inline">\(D[n]\)</span> is generated by first summing all spectral magnitudes in frequency bands that are greater than both their local median values, and the temporal masking threshold. This value is considered to be the audio event content as defined above. A noise estimate is then taken as the sum of all local median values. Finally, the detection function is expressed as SNR in dB as:</p>
+<center>
+<span class="math inline">\(SNR = 20*log10(signal/noise)\)</span>
+</center>
+<p>The function uses by default a FFT window size of 256 points (which can be set using the <code>FFT_size</code> parameter), with a Blackman-Harris 7-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (<em>i.e.</em>, an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor’s uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (which can be set using the <code>FFT_overlap</code> parameter). The <strong>bioacoustics</strong> package rely on the <a href="http://www.fftw.org/">FFTW library</a> for efficient Fourier transforms.</p>
+<p>The above mentioned functions has been tested and their performances evaluated on bat echolocation calls in Scott (2012). Tests on a real-world dataset of field recordings confirmed that the modified spectral sum function with background noise reduction and echo suppression outperformed the two conventional approaches (<em>i.e.</em>, spectral sum and spectral peak functions) in terms of accuracy. The noise substraction function performed well with all signal types across a broad range of thresholds, making it simpler to apply in practice where the recording content is not known a priori. As normalisation is applied in real time through local background noise substraction, the length of the recording to be analysed has no effect on function efficiency (Scott, 2012).</p>
+</div>
+<div id="extraction-with-filtering-and-smoothing" class="section level3">
+<h3><span class="header-section-number">1.10.2</span> Extraction with filtering and smoothing</h3>
+<p>High Pass (HPF) and Low Pass filters (LPF) can be employed to reduce the amount of unwanted noise in the recording or to track particuliar audio events within a narrower frequency bandwith than the recording sampling rate. Frequencies below the HPF and above the LPF cutoff are greatly attenuated. These frequency filters can be set using the <code>HPF</code> and <code>LPF</code> parameters in the <code>threshold_detection</code> function. Note that these filters are described in this section, but are used by the <code>threshold_detection</code> function just after the conversion of the recording in the time / frequency domain using the Fast Fourier transform (FFT).</p>
+<p>After the recording has been filtered and that the candidate audio events have been located, a second series of functions are employed to filter, extract and smooth the audio event in the time / frequency domain. The audio event extraction function starts a search for the next FFT windows from right-to-left (start) and from left-to-right (end) from each audio event centroid (<em>i.e.</em>, location of the audio event at the peak of its maximum energy content), in search for the start and the end of the audio event, respectivelly.</p>
+<center>
+<img src="data:image/png;base64,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" /><!-- -->
+</center>
+<p>The audio event extraction function relies on three different thresholds to either pursue or stop its search for the next FFT window: the energy content (expressed in dB), the SNR (dB), and the angle of the next FFT window. These thresholds can be set using the <code>start_thr</code>, <code>end_thr</code>, <code>SNR_thr</code> and <code>angle_thr</code> parameters respectively. The extraction stops as soon as the next FFT falls under the minimum threshold value of any of these thresholds. Note that the start and the end thresholds can be set independently, because audio events may have a louder part before (start) or after (end) their peak of maximum energy (dB). A function is then verifying on the temporal X-axis of the recording, if an audio event has been extracted twice, and if so, it keeps only the longest audio event.</p>
+<p>The extracted audio event sequence is smoothed with a Kalman filtering function, whose parameters can also be set using the <code>KPE</code> (Kalman Process Error) and <code>KME</code> (Kalman Measurement Error) parameters. Another series of filtering thresholds are applied to the Kalman filtered outputs such as minimum duration (<code>min_dur</code>), maximum duration (<code>max_dur</code>), minimum time between two audio events (<code>TBE</code>). Acoustic features are then extracted from the filtered frequency (Hz) and energy (dB) outputs.</p>
+</div>
+<div id="acoustic-features-and-metadata" class="section level3">
+<h3><span class="header-section-number">1.10.3</span> Acoustic features and metadata</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Unit</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">starting_time</td>
+<td align="left">sec</td>
+<td align="left">Location of the audio event in the recording</td>
+</tr>
+<tr class="even">
+<td align="left">duration</td>
+<td align="left">msec</td>
+<td align="left">Duration of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_max_amp</td>
+<td align="left">Hz</td>
+<td align="left">Frequency of the maximum energy of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">freq_max</td>
+<td align="left">Hz</td>
+<td align="left">Highest frequency of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_min</td>
+<td align="left">Hz</td>
+<td align="left">Lowest frequency of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">bandwidth</td>
+<td align="left">Hz</td>
+<td align="left">Difference between the highest (freq_max) and lowest (freq_min) frequencies</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_start</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at the start of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">freq_center</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at the half of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_end</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at the end of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">freq_knee</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at which the slope is the steepest (knee)</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_c</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at which the slope is the flatest (caracteristic frequency)</td>
+</tr>
+<tr class="even">
+<td align="left">freq_bw_knee_fc</td>
+<td align="left">Hz</td>
+<td align="left">Frequency bandwith between the knee and caracteristic frequency</td>
+</tr>
+<tr class="odd">
+<td align="left">bin_max_energy</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at the maximum of energy where the slope is the flatest</td>
+</tr>
+<tr class="even">
+<td align="left">pc_freq_max_amp</td>
+<td align="left">Hz</td>
+<td align="left">Location of the frequency with the maximum of energy</td>
+</tr>
+<tr class="odd">
+<td align="left">pc_freq_min</td>
+<td align="left">%</td>
+<td align="left">Location of the minimum frequency</td>
+</tr>
+<tr class="even">
+<td align="left">pc_fmax</td>
+<td align="left">%</td>
+<td align="left">Location of the maximum frequency</td>
+</tr>
+<tr class="odd">
+<td align="left">pc_knee</td>
+<td align="left">%</td>
+<td align="left">Location of the frequency at which the slope is the steepest</td>
+</tr>
+<tr class="even">
+<td align="left">temp_bw_knee_fc</td>
+<td align="left">%</td>
+<td align="left">Temporal bandwith between the knee and caracteristic frequency</td>
+</tr>
+<tr class="odd">
+<td align="left">slope</td>
+<td align="left">ms</td>
+<td align="left">Raw slope estimate (frequency bandwith against duration)</td>
+</tr>
+<tr class="even">
+<td align="left">kalman_slope</td>
+<td align="left">Hz / ms</td>
+<td align="left">Smoothed slope estimate after Kalman filtering</td>
+</tr>
+<tr class="odd">
+<td align="left">curve_pos_start</td>
+<td align="left">Hz / ms</td>
+<td align="left">Slope estimate at the begining of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">curve_pos_end</td>
+<td align="left">Hz / ms</td>
+<td align="left">Slope estimate at the end of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">curve_neg</td>
+<td align="left">Hz / ms</td>
+<td align="left">Slope negative antropy</td>
+</tr>
+<tr class="even">
+<td align="left">mid_offset</td>
+<td align="left">dB</td>
+<td align="left">Mid-offset</td>
+</tr>
+<tr class="odd">
+<td align="left">snr</td>
+<td align="left">dB</td>
+<td align="left">Signal to noise ratio</td>
+</tr>
+<tr class="even">
+<td align="left">harmonic_distortion</td>
+<td align="left">dB</td>
+<td align="left">Level of harmonic distortion</td>
+</tr>
+<tr class="odd">
+<td align="left">smoothness</td>
+<td align="left"></td>
+<td align="left">Time / frequency regularity</td>
+</tr>
+</tbody>
+</table>
+<p>The metadata embeded in the Wave file header can be extracted by setting the <code>metadata</code> parameter to <code>TRUE</code>. <!--Note that the metadata can also be extracted independently from the `threshold_detection` function by using the `metadata` function.--></p>
+<p>The detection and extraction settings used with the <code>threshold_detection</code> and <code>blob_detection</code> functions can be saved along with the metadata by setting the <code>settings</code> parameter to <code>TRUE</code>.</p>
+</div>
+</div>
+<div id="metadata-extraction" class="section level2">
+<h2><span class="header-section-number">1.11</span> Metadata extraction</h2>
+<p>The <code>metadata</code> function is a helper to extract metadata encapsulated in audio files and objects created with the <code>threshold_detection</code> and <code>blob_detection</code> functions. <!--is a modified version of the wa_meta-1.0 Wildlife Acoustics metadata reader. The metadata encapsulated in a Wave file produced by some of their bioacoustics recorders, including (with the latest firmware) the SM2, SM2+, SM2BAT192x2, SM2BAT384, SM2BAT+, SM3, SM3BAT, EM3, EM3+ and Echo Meter Touch, can be read and extracted with this function.--> GUANO metadata extraction is not yet implemented with this function.</p>
+</div>
+<div id="blob-detection" class="section level2">
+<h2><span class="header-section-number">1.12</span> Blob detection</h2>
+<p>The <code>blob_detection</code> function is a modified version of the Bat Classify software developed by Christopher Scott (2014). It combines several image processing, filtering and image feature extraction.</p>
+<p>A recording typically contains broadband continuous background noise, and discrete pulses of acoustic energy expressed in dB. Any discrete portion of a recorded signal above the level of background noise in a recording is defined here as an ‘audio event’. Under this definition, an audio event may include animal vocalizations, call echoes (<em>e.g.</em>, for bats), and other noise sources, either biotic (<em>e.g.</em>, stridulating insects) or abiotic (flowing water, rain, wind, and wind-induced vegetation noise).</p>
+<p>The spectral energy content of a recording is typicaly revealed by applying a Short-Time Fourier Transform (STFT). This technique slides an analysis window of fixed size through the recording. The output from the windowed FFT analysis is a discrete set of values from which the locations of the audio events can be identified through simple thresholding after background noise substraction (Scott, 2012).</p>
+<p>The <code>blob_detection</code> function uses by default a FFT window size of 256 points (can be changed using the <code>FFT_size</code> parameter), with a Blackman Harris 4-term window to reduce spectral leakage (Harris, 1978). Larger FFT windows produce finer frequency resolution (an increased number of FFT bins, each with a narrower frequency span), but increase computation time and reduce temporal resolution due to Gabor’s uncertainty principle (Gabor, 1946). The overlap between two consecutives FFT windows is set by default at 87.5 % (can be changed using the <code>FFT_overlap</code> parameter). The <strong>bioacoustics</strong> package rely on the <a href="http://www.fftw.org/">FFTW library</a> for efficient Fourier transforms.</p>
+<p>FFT values are used to display the spectrogram representation of the audio event for image processing. A blur is applied to smooth the spectrogram with a Gaussian function and the level of blur can be changed using the <code>blur</code> parameter. This function reduces the level of Gaussian noise in the spectrogram. The background noise is then substracted. The background substraction uses a local average of the energy spectrum intensity to estimate the amount of noise to substract from each spectrogram. This estimate is then multiplied by the value of the <code>bg_substract</code> parameter. By estimating the noise floor locally, the function can dynamically react to local variations in the noise floor intensity. A contrast boost function is finally applied on the normalised spectrogram values to increase the definition of the audio event contour against the background noise. The level of contrast boost can be set with the <code>contrast_boost</code> parameter.</p>
+<p>A ‘blob detection’ algorithm is applied on the processed spectrogram to detect a Region Of Interest (ROI). This function relies on the linear-time connected component labelling algorithm described in Chang et al. (2004), and adapted from Andrew Brampton (2011). The resulting function simultaneously labels the connected FFT values (or ‘blob’) and their contours in the spectrogram. Both external, and possibly internal contours of each blob are detected and labeled. Labeling is done in a single pass over the spectrogram, while contour points are revisited more than once and up to four times (Chang et al., 2004). Moreover, the detection function extracts a blob in a sequential order of contour points, <em>i.e.</em> a ‘segment’, which is useful in the case of animal vocalizations.</p>
+<p>The <code>blob_detection</code> function then discards any extracted segment which area is &lt; n pixels. This can be set using the <code>min_area</code> parameter, and is set by default at 40 pixels to best extract bat echolocation calls. The values of these filtering parameters may be set differently to extract vocalizations from other group of animals. The segment is finally log-compressed, to convert magnitude into dB, before feature extraction.</p>
+<p>A serie of filtering functions are also applied to the segments such as minimum duration (<code>min_dur</code>), maximum duration (<code>max_dur</code>), minimum time between two segments (<code>TBE</code>) to reduce the amount of unwanted noise or to track particuliar segments within a narrower temporal window. Like temporal filters, High Pass (HPF) and Low Pass frequency filters (LPF) can also be set using the <code>HPF</code> and <code>LPF</code> parameters in the <code>blob_detection</code> function. Frequencies below the HPF and above the LPF cutoff are greatly attenuated. Acoustic features are then extracted from these filtered segments.</p>
+<div id="acoustic-features-and-metadata-1" class="section level3">
+<h3><span class="header-section-number">1.12.1</span> Acoustic features and metadata</h3>
+<p>The spectral and temporal moments are extracted from the audio event contour points (called ‘segment’), and a gradient histogram is built from the sequence of frequencies (Hz) and energy (expressed in dB) stored in each pixel values (for each extracted audio event). These sequences are available to users in addition to the other acoustic features from the function’s output.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Unit</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">starting_time</td>
+<td align="left">sec</td>
+<td align="left">Location of the audio event in the recording</td>
+</tr>
+<tr class="even">
+<td align="left">duration</td>
+<td align="left">msec</td>
+<td align="left">Duration of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">area</td>
+<td align="left">pixels</td>
+<td align="left">Estimated area of the audio event (in pixels)</td>
+</tr>
+<tr class="even">
+<td align="left">freq_centroid</td>
+<td align="left">Hz</td>
+<td align="left">Frequency at the centroid of the extracted audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_bandwith</td>
+<td align="left">Hz</td>
+<td align="left">Difference between the highest (freq_max) and lowest (freq_min) frequencies</td>
+</tr>
+<tr class="even">
+<td align="left">freq_skew</td>
+<td align="left">Hz</td>
+<td align="left">Skewness of the frequency distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_kurtosis</td>
+<td align="left">Hz</td>
+<td align="left">Kurtosis of the frequency distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">q</td>
+<td align="left">Hz</td>
+<td align="left">Centroid frequency divided by the frequency bandwith of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_gini_impurity</td>
+<td align="left">Hz</td>
+<td align="left">Degree of smoothness of the frequency distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">quant_2.5</td>
+<td align="left">Hz</td>
+<td align="left">2.5 percentile of the frequency distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">quant_25</td>
+<td align="left">Hz</td>
+<td align="left">25 percentile of the frequency distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">quant_50</td>
+<td align="left">Hz</td>
+<td align="left">50 percentile of the frequency distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">quant_75</td>
+<td align="left">Hz</td>
+<td align="left">75 percentile of the frequency distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">quant_97.5</td>
+<td align="left">Hz</td>
+<td align="left">97.5 percentile of the frequency distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">freq_bw_95_ci</td>
+<td align="left">Hz</td>
+<td align="left">Frequency bandwith between the 97.5 and the 2.5 percentiles</td>
+</tr>
+<tr class="even">
+<td align="left">freq_bw_75_ci</td>
+<td align="left">Hz</td>
+<td align="left">Frequency bandwith between the 75 and the 25 percentiles</td>
+</tr>
+<tr class="odd">
+<td align="left">temp_centroid</td>
+<td align="left">msec</td>
+<td align="left">Time at the centroid of the extracted audio event</td>
+</tr>
+<tr class="even">
+<td align="left">temp_bandwith</td>
+<td align="left">msec</td>
+<td align="left">Time difference between the begining and the end of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">temp_skew</td>
+<td align="left">msec</td>
+<td align="left">Skewness of the time distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">temp_kurtosis</td>
+<td align="left">msec</td>
+<td align="left">Kurtosis of the time distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">temp_gini_impurity</td>
+<td align="left">msec</td>
+<td align="left">Degree of smoothness of the temporal distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">grad_centroid</td>
+<td align="left"></td>
+<td align="left">Gradient at the centroid of the extracted audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">grad_bandwith</td>
+<td align="left"></td>
+<td align="left">Gradient difference between the begining and the end of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">grad_skew</td>
+<td align="left"></td>
+<td align="left">Skewness of the gradient distribution of the audio event</td>
+</tr>
+<tr class="odd">
+<td align="left">grad_kurtosis</td>
+<td align="left"></td>
+<td align="left">Kurtosis of the gradient distribution of the audio event</td>
+</tr>
+<tr class="even">
+<td align="left">grad_gini_impurity</td>
+<td align="left"></td>
+<td align="left">Degree of smoothness of the gradient distribution of the audio event</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="datasets" class="section level2">
+<h2><span class="header-section-number">1.13</span> Datasets</h2>
+<div id="myotis" class="section level3">
+<h3><span class="header-section-number">1.13.1</span> Myotis</h3>
+<p>The myotis dataset is a time expansed (x10) Wave file of 10 seconds, 16 bits, mono, with an original sampling rate at 500 kHz. It contains 11 echolocation calls of bats from the <em>Myotis</em> genus. The recording was made in United-Kingdom with a D500X bat detector from Pettersson Elektronik AB.</p>
+</div>
+<div id="zc" class="section level3">
+<h3><span class="header-section-number">1.13.2</span> zc</h3>
+<p>The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (Lasiurus cinereus). This ZC recording was made in Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2><span class="header-section-number">1.14</span> References</h2>
+<blockquote>
+<p>Chang, F., Chen, C.-J., &amp; Lu, C.J. (2004). A linear-time component-labeling algorithm using contour tracing technique. computer vision and image understanding, 93(2), 206-220. <a href="https://www.iis.sinica.edu.tw/papers/fchang/1362-F.pdf">Link</a></p>
+</blockquote>
+<blockquote>
+<p>Gabor, D. (1946). Theory of communication. Part 1: The analysis of information. Engineers-Part III: Radio and Communication. <a href="http://ieeexplore.ieee.org/xpl/tocresult.jsp?isnumber=5298484">Link</a></p>
+</blockquote>
+<blockquote>
+<p>Harris, F. J. (1978). On then use of windows with the discrete for harmonic analysis Fourier transform. Proceedings of the IEEE, 66(1), 51-83. <a href="https://www.ak.tu-berlin.de/fileadmin/a0135/Unterrichtsmaterial/EDS_WS0910/Harris_1978_On_the_use_of_windows_for_harmonic_analysis_with_the_discrete_fourier_transform_IEEE.pdf">Link</a></p>
+</blockquote>
+<blockquote>
+<p>Scott, C. D. (2012). Automated techniques for bat echolocation call analysis. PhD thesis. The University of Leeds Institute of Integrative and Comparative Biology, University of Leeds, Leeds, UK. 166 pages.</p>
+</blockquote>
+<blockquote>
+<p>Skowronski, M. D., &amp; Fenton, M. B (2009). Detecting bat calls: An analysis of automated methods. Acta Chiropterologica, 11(1), 191-203.</p>
+</blockquote>
+<p>Table 1. Example of detection, filtering and extraction settings with the <code>threshold_detection</code> function for eastern canadian bats and calls of Bicknell’s Thrush (<em>Catharus bicknelii</em>).</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Parameters</th>
+<th align="left">Eastern canadian bats</th>
+<th align="left">Bicknell’s Thrush calls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">threshold</td>
+<td align="left">14</td>
+<td align="left">12</td>
+</tr>
+<tr class="even">
+<td align="left">time_exp</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">min_dur</td>
+<td align="left">1.5</td>
+<td align="left">140</td>
+</tr>
+<tr class="even">
+<td align="left">max_dur</td>
+<td align="left">80</td>
+<td align="left">440</td>
+</tr>
+<tr class="odd">
+<td align="left">TBE</td>
+<td align="left">30</td>
+<td align="left">300</td>
+</tr>
+<tr class="even">
+<td align="left">EDG</td>
+<td align="left">0.996</td>
+<td align="left">0.996</td>
+</tr>
+<tr class="odd">
+<td align="left">LPF</td>
+<td align="left">250000</td>
+<td align="left">8000</td>
+</tr>
+<tr class="even">
+<td align="left">HPF</td>
+<td align="left">16000</td>
+<td align="left">2000</td>
+</tr>
+<tr class="odd">
+<td align="left">FFT_size</td>
+<td align="left">256</td>
+<td align="left">256</td>
+</tr>
+<tr class="even">
+<td align="left">FFT_overlap</td>
+<td align="left">0.875</td>
+<td align="left">0.875</td>
+</tr>
+<tr class="odd">
+<td align="left">start_thr</td>
+<td align="left">40</td>
+<td align="left">25</td>
+</tr>
+<tr class="even">
+<td align="left">end_thr</td>
+<td align="left">20</td>
+<td align="left">30</td>
+</tr>
+<tr class="odd">
+<td align="left">SNR_thr</td>
+<td align="left">10</td>
+<td align="left">10</td>
+</tr>
+<tr class="even">
+<td align="left">angle_thr</td>
+<td align="left">40</td>
+<td align="left">45</td>
+</tr>
+<tr class="odd">
+<td align="left">duration_thr</td>
+<td align="left">80</td>
+<td align="left">440</td>
+</tr>
+<tr class="even">
+<td align="left">NWS</td>
+<td align="left">100</td>
+<td align="left">1000</td>
+</tr>
+<tr class="odd">
+<td align="left">KPE</td>
+<td align="left">1e-05</td>
+<td align="left">1e-05</td>
+</tr>
+<tr class="even">
+<td align="left">KME</td>
+<td align="left">1e-05</td>
+<td align="left">1e-04</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Table 1<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
