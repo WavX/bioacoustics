@@ -26,6 +26,7 @@ AC_PROG_CPP
 AC_MSG_NOTICE([CC: ${CC}])
 AC_MSG_NOTICE([CXX: ${CXX}])
 
+
 #
 # fftw
 #
@@ -44,7 +45,6 @@ else
      FFTW_CPPFLAGS="-I. -I${FFTW_INCLUDE}"
   fi
 fi
-
 
 AC_CHECK_HEADERS(fftw3.h,,
     AC_MSG_ERROR([fftw3.h not found in standard or given locations]))
@@ -76,15 +76,16 @@ if test -n "${FFTW_CONFIG}"; then
   FFTW_CPPFLAGS=`fftw_config --cflags`
 fi
 
+
 #
-# libsamplerate
+# libsoxr-lsr
 #
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
-AC_ARG_WITH([libsamplerate-include],
-            AC_HELP_STRING([--with-libsamplerate-include=INCLUDE_PATH],
-                           [the location of libsamplerate header file]),
+AC_ARG_WITH([libsoxr-lsr-include],
+            AC_HELP_STRING([--with-libsoxr-lsr-include=INCLUDE_PATH],
+                           [the location of libsoxr-lsr header file]),
             [lsr_include_path=$withval])
 LSR_CPPFLAGS="-I."
 if test [ -n "$lsr_include_path" ] ; then
@@ -95,13 +96,13 @@ else
   fi
 fi
 
-AC_CHECK_HEADERS(samplerate.h,,
-   AC_MSG_ERROR([samplerate.h not found in standard or given locations]))
+AC_CHECK_HEADERS(soxr-lsr.h,,
+   AC_MSG_ERROR([soxr-lsr.h not found in standard or given locations]))
 
 # dnl ditto for a library path
-AC_ARG_WITH([libsamplerate-lib],
-            AC_HELP_STRING([--with-libsamplerate-lib=LIB_PATH],
-                           [the location of libsamplerate library]),
+AC_ARG_WITH([libsoxr-lsr-lib],
+            AC_HELP_STRING([--with-libsoxr-lsr-lib=LIB_PATH],
+                           [the location of libsoxr-lsr library]),
             [lsr_lib_path=$withval])
 if test [ -n "$lsr_lib_path" ] ; then
    LIBS="-L$lsr_lib_path ${LIBS}"
@@ -110,18 +111,19 @@ else
      LIBS="-L${LSR_LIBS} ${LIBS}"
   else
     if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=`lsr_config --libs | sed s/-lsamplerate//`
+      lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
       LIBS="${lsr_lib_path} ${LIBS}"
     fi
   fi
 fi
 
-AC_SEARCH_LIBS(src_simple, samplerate, ,
-    AC_MSG_ERROR("Library libsamplerate not found in standard or given locations"))
+AC_SEARCH_LIBS(src_simple, soxr-lsr, ,
+    AC_MSG_ERROR("Library libsoxr-lsr not found in standard or given locations"))
 
 if test -n "${LSR_CONFIG}"; then
   LSR_CPPFLAGS=`lsr_config --cflags`
 fi
+
 CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 

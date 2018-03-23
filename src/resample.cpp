@@ -16,8 +16,8 @@
 //------------------------------------------------------------------------------
 
 #include <vector>
-#include <samplerate.h>
 #include <Rcpp.h>
+#include <soxr-lsr.h>
 
 // [[Rcpp::export]]
 std::vector<float> resample_impl(std::vector<float> &audio_samples, double ratio)

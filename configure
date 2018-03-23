@@ -673,8 +673,8 @@ ac_user_opts='
 enable_option_checking
 with_fftw_include
 with_fftw_lib
-with_libsamplerate_include
-with_libsamplerate_lib
+with_libsoxr_lsr_include
+with_libsoxr_lsr_lib
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1297,10 +1297,10 @@ Optional Packages:
                           the location of fftw3 header file
   --with-fftw-lib=LIB_PATH
                           the location of fftw library
-  --with-libsamplerate-include=INCLUDE_PATH
-                          the location of libsamplerate header file
-  --with-libsamplerate-lib=LIB_PATH
-                          the location of libsamplerate library
+  --with-libsoxr-lsr-include=INCLUDE_PATH
+                          the location of libsoxr-lsr header file
+  --with-libsoxr-lsr-lib=LIB_PATH
+                          the location of libsoxr-lsr library
 
 Some influential environment variables:
   CC          C compiler command
@@ -2973,6 +2973,7 @@ $as_echo "$as_me: CC: ${CC}" >&6;}
 { $as_echo "$as_me:${as_lineno-$LINENO}: CXX: ${CXX}" >&5
 $as_echo "$as_me: CXX: ${CXX}" >&6;}
 
+
 #
 # fftw
 #
@@ -2991,7 +2992,6 @@ else
      FFTW_CPPFLAGS="-I. -I${FFTW_INCLUDE}"
   fi
 fi
-
 
 
 
@@ -3354,14 +3354,15 @@ if test -n "${FFTW_CONFIG}"; then
   FFTW_CPPFLAGS=`fftw_config --cflags`
 fi
 
+
 #
-# libsamplerate
+# libsoxr-lsr
 #
 
 
-# Check whether --with-libsamplerate-include was given.
-if test "${with_libsamplerate_include+set}" = set; then :
-  withval=$with_libsamplerate_include; lsr_include_path=$withval
+# Check whether --with-libsoxr-lsr-include was given.
+if test "${with_libsoxr_lsr_include+set}" = set; then :
+  withval=$with_libsoxr_lsr_include; lsr_include_path=$withval
 fi
 
 LSR_CPPFLAGS="-I."
@@ -3373,16 +3374,16 @@ else
   fi
 fi
 
-for ac_header in samplerate.h
+for ac_header in soxr-lsr.h
 do :
-  ac_fn_c_check_header_mongrel "$LINENO" "samplerate.h" "ac_cv_header_samplerate_h" "$ac_includes_default"
-if test "x$ac_cv_header_samplerate_h" = xyes; then :
+  ac_fn_c_check_header_mongrel "$LINENO" "soxr-lsr.h" "ac_cv_header_soxr_lsr_h" "$ac_includes_default"
+if test "x$ac_cv_header_soxr_lsr_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_SAMPLERATE_H 1
+#define HAVE_SOXR_LSR_H 1
 _ACEOF
 
 else
-  as_fn_error $? "samplerate.h not found in standard or given locations" "$LINENO" 5
+  as_fn_error $? "soxr-lsr.h not found in standard or given locations" "$LINENO" 5
 fi
 
 done
@@ -3390,9 +3391,9 @@ done
 
 # dnl ditto for a library path
 
-# Check whether --with-libsamplerate-lib was given.
-if test "${with_libsamplerate_lib+set}" = set; then :
-  withval=$with_libsamplerate_lib; lsr_lib_path=$withval
+# Check whether --with-libsoxr-lsr-lib was given.
+if test "${with_libsoxr_lsr_lib+set}" = set; then :
+  withval=$with_libsoxr_lsr_lib; lsr_lib_path=$withval
 fi
 
 if test  -n "$lsr_lib_path"  ; then
@@ -3402,7 +3403,7 @@ else
      LIBS="-L${LSR_LIBS} ${LIBS}"
   else
     if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=`lsr_config --libs | sed s/-lsamplerate//`
+      lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
       LIBS="${lsr_lib_path} ${LIBS}"
     fi
   fi
@@ -3432,7 +3433,7 @@ return src_simple ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' samplerate; do
+for ac_lib in '' soxr-lsr; do
   if test -z "$ac_lib"; then
     ac_res="none required"
   else
@@ -3463,13 +3464,14 @@ if test "$ac_res" != no; then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
 
 else
-  as_fn_error $? "\"Library libsamplerate not found in standard or given locations\"" "$LINENO" 5
+  as_fn_error $? "\"Library libsoxr-lsr not found in standard or given locations\"" "$LINENO" 5
 fi
 
 
 if test -n "${LSR_CONFIG}"; then
   LSR_CPPFLAGS=`lsr_config --cflags`
 fi
+
 CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 

@@ -15,7 +15,7 @@ It can be subdivided into three main components:
 
 ## Installing
 
-* Install stable version from CRAN:
+* Install stable version from CRAN (upcomming):
 ```r
 install.packages("bioacoustics")
 ```
@@ -32,7 +32,7 @@ Installing bioacoustics from source works under windows when [Rtools](https://cr
 
 ### Linux
 
-For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1), [libsamplerate](http://www.mega-nerd.com/SRC/) (>= 0.1.9) are required.
+For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1), [libsoxr-lsr](https://sourceforge.net/p/soxr/wiki/Home/) (>= 0.1.3) are required.
 
 ### Contributing
 
