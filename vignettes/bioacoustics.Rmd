@@ -30,7 +30,7 @@ The **bioacoustics** package contains all the necessary R functions to read audi
 
 This package was originally built for bat bioacoustics, and thus the default parameters for all the available functions are set for bats. Users will have to set the parameters according to the group of animal vocalizations they which to study^[See Table 1 for examples of extraction parameters for different species groups]. The **bioacoustics** package can be used to display and extract acoustic features from recordings of birds, frogs, insects, marine and other terrestrial mammals as long as their vocalizations can be recorded.
 
-This package is subdivided into three main components containing R functions acccessible to users and internal functions that will also be defined bellow for the sake of clarity. The three main components with the current functions are as follow:
+This package is subdivided into three main components containing R functions acccessible to users and internal functions that will also be defined below for the sake of clarity and ease of comprehension. The three main components with the current functions are as follow:
 
 - Read, extract data (not yet implemented), display, and write Zero-Crossing files: `read_zc`, `plot`, `write_zc`
 
