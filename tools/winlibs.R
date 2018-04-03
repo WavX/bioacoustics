@@ -13,8 +13,8 @@ if (!file.exists("../windows/include/fftw3.h") ||
   unlink("lib.zip")
 }
 
-if (!file.exists("../windows/include/samplerate.h") ||
-    !file.exists(paste0("../windows/lib/", .Platform$r_arch, "/libsamplerate.a")))
+if (!file.exists("../windows/include/soxr-lsr.h") ||
+    !file.exists(paste0("../windows/lib/", .Platform$r_arch, "/libsoxr-lsr.a")))
 {
   download.file("https://github.com/wavx/rpkg-libs/raw/master/libsoxr-lsr/libsoxr-lsr.zip", "lib.zip", quiet = TRUE)
 
