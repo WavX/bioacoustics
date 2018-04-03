@@ -15,7 +15,7 @@ resample(wave, to)
 a \link[tuneR]{Wave} object.
 }
 \description{
-Resample a wave object to a given sampling frequency.
+Resample a Wave object to a given sampling frequency.
 }
 \examples{
 \dontrun{

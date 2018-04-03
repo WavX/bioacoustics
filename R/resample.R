@@ -1,6 +1,6 @@
 #' Resample
 #'
-#' Resample a wave object to a given sampling frequency.
+#' Resample a Wave object to a given sampling frequency.
 #'
 #' @param wave a \link[tuneR]{Wave} object.
 #' @param to target frequency in Hz

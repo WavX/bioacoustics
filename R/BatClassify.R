@@ -1,4 +1,4 @@
-#' Blob detection of a region into a spectrogram representation of the recording
+#' Blob detection of a region of interest into a spectrographic representation of the recording
 #'
 #' This function is a modified version of the Bat classify software developed by Christopher Scott (2014).
 #' It combines several detection, filtering and audio feature extraction processes.

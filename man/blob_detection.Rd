@@ -2,7 +2,7 @@
 % Please edit documentation in R/BatClassify.R
 \name{blob_detection}
 \alias{blob_detection}
-\title{Blob detection of a region into a spectrogram representation of the recording}
+\title{Blob detection of a region of interest into a spectrographic representation of the recording}
 \usage{
 blob_detection(wave, channel = "left", time_exp = 1, min_dur = 1.5,
   max_dur = 80, min_area = 40, TBE = 20, EDG = 0.9, LPF, HPF = 16000,
