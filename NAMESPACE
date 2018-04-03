@@ -3,8 +3,6 @@
 S3method(metadata,blob_detection)
 S3method(metadata,threshold_detection)
 S3method(plot,zc)
-S3method(print,blob_detection)
-S3method(print,threshold_detection)
 export(blob_detection)
 export(fspec)
 export(metadata)
