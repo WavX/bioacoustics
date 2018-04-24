@@ -34,7 +34,7 @@ Rcpp::NumericMatrix fspec_impl(const std::vector<int>& audio_samples,
 {
   FFT::WIN_TYPE win_type = fft_win_str_to_enum(win);
   FFT fft(fft_size, win_type);
-  size_t seek_step = (double)fft_size * (1 - fft_overlap);
+  size_t seek_step = std::max((double)fft_size * (1 - fft_overlap), 1);
 
   int n_rows = FUL_bin - FLL_bin + 1;
   int k = FLL_bin - 1;
