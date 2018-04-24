@@ -39,7 +39,7 @@ Default setting is \code{FALSE}.}
 A matrix of decibel (dB) values in the time / frequency domain.
 }
 \description{
-This function returns the frequency spectrum representation of a time wave in decibels (dB) using the Fast Fourier transform (FFT).
+This function returns the spectrographic representation of a time wave in decibels (dB) using the Fast Fourier transform (FFT).
 }
 \examples{
 data(myotis)
