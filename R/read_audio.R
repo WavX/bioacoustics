@@ -235,7 +235,6 @@ read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
 #' read_wav("recording.wav")
 #' }
 #'
-#'
 #' @rdname read_wav
 
 read_wav <- function(filename, time_exp = 1, from = NULL, to = NULL)
