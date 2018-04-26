@@ -5,15 +5,16 @@
 #' @param wave a \link[tuneR]{Wave} object.
 #' @param to target frequency in Hz
 #' @return a \link[tuneR]{Wave} object.
+#'
 #' @export
+#'
 #' @importFrom methods slot
 #' @importClassesFrom tuneR Wave
+#'
 #' @examples
-#' \dontrun{
 #' data(myotis)
 #' myotis_192 <- resample(myotis, to = 192000)
 #' spectro(myotis_192, tlim = c(1, 1.5))
-#'}
 #'
 #' @rdname resample
 #'
