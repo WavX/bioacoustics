@@ -27,5 +27,4 @@ A thin wrapped around \link[tuneR]{readWave} from the package tuneR.
 read_wav("recording.wav")
 }
 
-
 }

@@ -2,11 +2,12 @@
 
 S3method(metadata,blob_detection)
 S3method(metadata,threshold_detection)
-S3method(plot,zc)
 export(blob_detection)
 export(fspec)
 export(metadata)
+export(metadata_zc)
 export(mp3_to_wav)
+export(plot_zc)
 export(read_audio)
 export(read_mp3)
 export(read_wac)

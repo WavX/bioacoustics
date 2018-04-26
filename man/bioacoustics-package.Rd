@@ -41,7 +41,10 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item WavX [copyright holder, funder]
+  \item Chris Corben \email{chris@hoarybat.com} (Read ZC files, original C code) [contributor, copyright holder]
+  \item Peter Wilson \email{peter@peterwilson.id.au} (Read ZC files, original R code) [contributor, copyright holder]
+  \item  Wildlife Acoustics, Inc. (Read WAC files, original C code) [contributor, copyright holder]
+  \item  WavX Inc. [copyright holder]
 }
 
 }

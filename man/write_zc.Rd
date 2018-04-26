@@ -16,6 +16,7 @@ Write Zero-Crossing files (.zc, .#)
 }
 \examples{
 data(zc)
-write_zc(zc, filename = "zc.#")
+filename <- tempfile()
+write_zc(zc, filename = filename)
 
 }

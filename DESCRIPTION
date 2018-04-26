@@ -5,7 +5,10 @@ Version: 0.1.0
 Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c("aut","cre")),
              person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
              person("Christopher", "Scott", role = "aut"),
-             person("WavX", role = c("cph", "fnd")))
+             person("Chris", "Corben", role = c("ctb", "cph"), email = "chris@hoarybat.com", comment = "Read ZC files, original C code"),
+             person("Peter", "Wilson", role = c("ctb", "cph"), email = "peter@peterwilson.id.au", comment = "Read ZC files, original R code"),
+             person(family = "Wildlife Acoustics, Inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
+             person(family = "WavX Inc.", role = "cph"))
 Maintainer: Jean Marchal <jean.marchal@wavx.ca>
 Description: The bioacoustics package contains all the necessary tools to process
     audio recordings of various formats (e.g., WAV, WAC, MP3, ZC), filter noisy
@@ -33,3 +36,4 @@ BugReports: https://github.com/wavx/bioacoustics/issues/
 NeedsCompilation: yes
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
+Biarch: TRUE

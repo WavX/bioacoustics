@@ -18,10 +18,8 @@ a \link[tuneR]{Wave} object.
 Resample a Wave object to a given sampling frequency.
 }
 \examples{
-\dontrun{
 data(myotis)
 myotis_192 <- resample(myotis, to = 192000)
 spectro(myotis_192, tlim = c(1, 1.5))
-}
 
 }
