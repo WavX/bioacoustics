@@ -56,25 +56,20 @@ AC_ARG_WITH([fftw-lib],
                            [the location of fftw library]),
             [fftw_lib_path=$withval])
 if test [ -n "$fftw_lib_path" ] ; then
-   LIBS="-L$fftw_lib_path ${LIBS}"
+   FFTW_LIBS="-L$fftw_lib_path"
 else
   if test [ -n "${FFTW_LIBS}" ] ; then
-     LIBS="-L${FFTW_LIBS} ${LIBS}"
+     FFTW_LIBS="-L${FFTW_LIBS}"
   else
     if test -n "${FFTW_CONFIG}"; then
       fftw_lib_path=`fftw_config --libs | sed s/-lfftw//`
-      LIBS="${fftw_lib_path} ${LIBS}"
+      FFTW_LIBS="${fftw_lib_path}"
     fi
   fi
 fi
 
 AC_SEARCH_LIBS(fftw_plan_r2r_1d, fftw3, ,
     AC_MSG_ERROR("Library fftw3 not found in standard or given locations"))
-
-
-if test -n "${FFTW_CONFIG}"; then
-  FFTW_CPPFLAGS=`fftw_config --cflags`
-fi
 
 
 #
@@ -96,8 +91,7 @@ else
   fi
 fi
 
-AC_CHECK_HEADERS(soxr-lsr.h,,
-   AC_MSG_ERROR([soxr-lsr.h not found in standard or given locations]))
+AC_CHECK_HEADERS(soxr-lsr.h, [lsr_ok="yes"], [lsr_ok="no"])
 
 # dnl ditto for a library path
 AC_ARG_WITH([libsoxr-lsr-lib],
@@ -105,27 +99,74 @@ AC_ARG_WITH([libsoxr-lsr-lib],
                            [the location of libsoxr-lsr library]),
             [lsr_lib_path=$withval])
 if test [ -n "$lsr_lib_path" ] ; then
-   LIBS="-L$lsr_lib_path ${LIBS}"
+   LSR_LIBS="-L$lsr_lib_path"
 else
   if test [ -n "${LSR_LIBS}" ] ; then
-     LIBS="-L${LSR_LIBS} ${LIBS}"
+     LSR_LIBS="-L${LSR_LIBS}"
   else
     if test -n "${LSR_CONFIG}"; then
       lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
-      LIBS="${lsr_lib_path} ${LIBS}"
+      LSR_LIBS="${lsr_lib_path}"
     fi
   fi
 fi
 
-AC_SEARCH_LIBS(src_simple, soxr-lsr, ,
-    AC_MSG_ERROR("Library libsoxr-lsr not found in standard or given locations"))
+AC_SEARCH_LIBS(src_simple, soxr-lsr, [lsr_ok="yes"], [lsr_ok="no"])
 
-if test -n "${LSR_CONFIG}"; then
-  LSR_CPPFLAGS=`lsr_config --cflags`
+## If libsoxr-lsr is not found, download libsoxr and build it locally
+if test x"${lsr_ok}" = x"no"; then
+   AC_MSG_NOTICE([Need to download and build libsoxr])
+
+   ## define LSR version
+   LSR_VERSION=0.1.3
+
+   ## define LSR file and download URL
+   LSR_TGZ="${LSR_VERSION}.tar.gz"
+   LSR_URL="https://github.com/WavX/soxr/archive/${LSR_TGZ}"
+
+   ## C Compiler options
+   LSR_CFLAGS=
+
+   ## additional C Compiler options for linking
+   LSR_CLINKFLAGS=
+
+   ## Libraries necessary to link with the package
+   LSR_LIBS="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\" -lsoxr -lsoxr-lsr"
+   LIBS="${LSR_LIBS} ${LIBS}"
+
+   ## Necessary Include dirs
+   LSR_INCL="-I\"$(pwd)/soxr-${LSR_VERSION}/include\""
+
+   ## Download NLopt source code
+   ## curl -O https://github.com/WavX/soxr/archive/${LSR_TGZ}
+   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
+
+   ## Extract libsoxr source code and remove .tar.gz
+   ## tar -xzvf soxr-${LSR_VERSION}.tar.gz
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}')")
+   $(rm -rf ${LSR_TGZ})
+
+   ## Compile libsoxr source code and clean up
+   AC_MSG_NOTICE([Starting to install soxr-lsr library])
+   cd soxr-${LSR_VERSION};
+   cmake . -Wno-dev -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=. \
+                    -DBUILD_SHARED_LIBS=OFF \
+                    -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null 2>&1;
+   make > /dev/null 2>&1;
+   make install > /dev/null 2>&1;
+   ls | grep -v "^include$" | grep -v "^lib$" | xargs rm -rf;
+   cd ..;
+
+   AC_MSG_NOTICE([Done installing soxr-lsr library])
+
+   LSR_CPPFLAGS="${LSR_INCL}"
+else
+   AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
 fi
 
-CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
-
+LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
+CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -s -march=native -mtune=native"
 
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
@@ -133,3 +174,4 @@ AC_SUBST(LIBS)
 dnl and do substitution in the src/Makevars.in
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
+

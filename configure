@@ -649,6 +649,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -723,6 +724,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -975,6 +977,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1112,7 +1123,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1265,6 +1276,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -3278,14 +3290,14 @@ if test "${with_fftw_lib+set}" = set; then :
 fi
 
 if test  -n "$fftw_lib_path"  ; then
-   LIBS="-L$fftw_lib_path ${LIBS}"
+   FFTW_LIBS="-L$fftw_lib_path"
 else
   if test  -n "${FFTW_LIBS}"  ; then
-     LIBS="-L${FFTW_LIBS} ${LIBS}"
+     FFTW_LIBS="-L${FFTW_LIBS}"
   else
     if test -n "${FFTW_CONFIG}"; then
       fftw_lib_path=`fftw_config --libs | sed s/-lfftw//`
-      LIBS="${fftw_lib_path} ${LIBS}"
+      FFTW_LIBS="${fftw_lib_path}"
     fi
   fi
 fi
@@ -3350,11 +3362,6 @@ fi
 
 
 
-if test -n "${FFTW_CONFIG}"; then
-  FFTW_CPPFLAGS=`fftw_config --cflags`
-fi
-
-
 #
 # libsoxr-lsr
 #
@@ -3381,9 +3388,9 @@ if test "x$ac_cv_header_soxr_lsr_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_SOXR_LSR_H 1
 _ACEOF
-
+ lsr_ok="yes"
 else
-  as_fn_error $? "soxr-lsr.h not found in standard or given locations" "$LINENO" 5
+  lsr_ok="no"
 fi
 
 done
@@ -3397,14 +3404,14 @@ if test "${with_libsoxr_lsr_lib+set}" = set; then :
 fi
 
 if test  -n "$lsr_lib_path"  ; then
-   LIBS="-L$lsr_lib_path ${LIBS}"
+   LSR_LIBS="-L$lsr_lib_path"
 else
   if test  -n "${LSR_LIBS}"  ; then
-     LIBS="-L${LSR_LIBS} ${LIBS}"
+     LSR_LIBS="-L${LSR_LIBS}"
   else
     if test -n "${LSR_CONFIG}"; then
       lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
-      LIBS="${lsr_lib_path} ${LIBS}"
+      LSR_LIBS="${lsr_lib_path}"
     fi
   fi
 fi
@@ -3462,18 +3469,70 @@ $as_echo "$ac_cv_search_src_simple" >&6; }
 ac_res=$ac_cv_search_src_simple
 if test "$ac_res" != no; then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
+  lsr_ok="yes"
 else
-  as_fn_error $? "\"Library libsoxr-lsr not found in standard or given locations\"" "$LINENO" 5
+  lsr_ok="no"
 fi
 
 
-if test -n "${LSR_CONFIG}"; then
-  LSR_CPPFLAGS=`lsr_config --cflags`
+## If libsoxr-lsr is not found, download libsoxr and build it locally
+if test x"${lsr_ok}" = x"no"; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Need to download and build libsoxr" >&5
+$as_echo "$as_me: Need to download and build libsoxr" >&6;}
+
+   ## define LSR version
+   LSR_VERSION=0.1.3
+
+   ## define LSR file and download URL
+   LSR_TGZ="${LSR_VERSION}.tar.gz"
+   LSR_URL="https://github.com/WavX/soxr/archive/${LSR_TGZ}"
+
+   ## C Compiler options
+   LSR_CFLAGS=
+
+   ## additional C Compiler options for linking
+   LSR_CLINKFLAGS=
+
+   ## Libraries necessary to link with the package
+   LSR_LIBS="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\" -lsoxr -lsoxr-lsr"
+   LIBS="${LSR_LIBS} ${LIBS}"
+
+   ## Necessary Include dirs
+   LSR_INCL="-I\"$(pwd)/soxr-${LSR_VERSION}/include\""
+
+   ## Download NLopt source code
+   ## curl -O https://github.com/WavX/soxr/archive/${LSR_TGZ}
+   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
+
+   ## Extract libsoxr source code and remove .tar.gz
+   ## tar -xzvf soxr-${LSR_VERSION}.tar.gz
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}')")
+   $(rm -rf ${LSR_TGZ})
+
+   ## Compile libsoxr source code and clean up
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install soxr-lsr library" >&5
+$as_echo "$as_me: Starting to install soxr-lsr library" >&6;}
+   cd soxr-${LSR_VERSION};
+   cmake . -Wno-dev -DCMAKE_BUILD_TYPE=Release \
+                    -DCMAKE_INSTALL_PREFIX=. \
+                    -DBUILD_SHARED_LIBS=OFF \
+                    -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null 2>&1;
+   make > /dev/null 2>&1;
+   make install > /dev/null 2>&1;
+   ls | grep -v "^include$" | grep -v "^lib$" | xargs rm -rf;
+   cd ..;
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Done installing soxr-lsr library" >&5
+$as_echo "$as_me: Done installing soxr-lsr library" >&6;}
+
+   LSR_CPPFLAGS="${LSR_INCL}"
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Suitable libsoxr-lsr library found." >&5
+$as_echo "$as_me: Suitable libsoxr-lsr library found." >&6;}
 fi
 
-CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
-
+LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
+CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -s -march=native -mtune=native"
 
 
 
@@ -4633,4 +4692,5 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
+
 
