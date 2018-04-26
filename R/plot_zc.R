@@ -34,9 +34,9 @@
 #'
 #' @examples
 #' data(zc)
-#' plot(zc)
+#' plot_zc(zc)
 
-plot.zc <- function(x, LPF = 125000, HPF = 16000, tlim = c(0, Inf),
+plot_zc <- function(x, LPF = 125000, HPF = 16000, tlim = c(0, Inf),
                     flim = c(HPF, LPF), ybar = TRUE, ybar.lty = 2,
                     ybar.col = "gray", dot.size = .3, dot.col = "red",  ...)
 {
