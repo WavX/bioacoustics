@@ -21,12 +21,12 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#' read_audio("recording.wav")
+#' \donttest{
+#' filepath <- system.file("extdata", "recording.wav", package = "bioacoustics")
+#' read_audio(filepath)
 #' }
 #'
 #' @rdname read_audio
-#'
 
 read_audio <- function(filename, time_exp = 1, from = NULL, to = NULL)
 {
@@ -62,12 +62,12 @@ read_audio <- function(filename, time_exp = 1, from = NULL, to = NULL)
 #' @importFrom methods slot slot<-
 #'
 #' @examples
-#' \dontrun{
-#' read_mp3("recording.mp3")
+#' \donttest{
+#' filepath <- system.file("extdata", "recording.mp3", package = "bioacoustics")
+#' read_mp3(filepath)
 #' }
 #'
 #' @rdname read_mp3
-#'
 
 read_mp3 <- function(filename, time_exp = 1, ...)
 {
@@ -97,8 +97,9 @@ read_mp3 <- function(filename, time_exp = 1, ...)
 #' @import tools
 #'
 #' @examples
-#' \dontrun{
-#' read_wac("recording.wac")
+#' \donttest{
+#' filepath <- system.file("extdata", "recording_20170716_230503.wac", package = "bioacoustics")
+#' read_wac(filepath)
 #' }
 #'
 #' @rdname read_wac
@@ -231,8 +232,9 @@ read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
 #' @importFrom methods slot slot<-
 #'
 #' @examples
-#' \dontrun{
-#' read_wav("recording.wav")
+#' \donttest{
+#' filepath <- system.file("extdata", "recording.wav", package = "bioacoustics")
+#' read_wav(filepath)
 #' }
 #'
 #' @rdname read_wav

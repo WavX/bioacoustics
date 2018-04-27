@@ -25,8 +25,9 @@ currently supported.
 }
 \examples{
 
-\dontrun{
-read_audio("recording.wav")
+\donttest{
+filepath <- system.file("extdata", "recording.wav", package = "bioacoustics")
+read_audio(filepath)
 }
 
 }

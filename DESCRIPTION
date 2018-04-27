@@ -10,10 +10,10 @@ Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c(
              person(family = "Wildlife Acoustics, Inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
              person(family = "WavX Inc.", role = "cph"))
 Maintainer: Jean Marchal <jean.marchal@wavx.ca>
-Description: The bioacoustics package contains all the necessary tools to process
-    audio recordings of various formats (e.g., WAV, WAC, MP3, ZC), filter noisy
-    files, display audio signals, detect and extract automatically acoustic
-    features for further analysis such as classification.
+Description: Contains all the necessary tools to process audio recordings of
+             various formats (e.g., WAV, WAC, MP3, ZC), filter noisy files, 
+             display audio signals, detect and extract automatically acoustic
+             features for further analysis such as classification.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

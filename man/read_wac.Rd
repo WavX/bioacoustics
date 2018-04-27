@@ -23,8 +23,9 @@ A \link[tuneR]{Wave} object.
 Convert a Wildlife Acoustics' proprietary compressed WAC file into a \link[tuneR]{Wave} object
 }
 \examples{
-\dontrun{
-read_wac("recording.wac")
+\donttest{
+filepath <- system.file("extdata", "recording_20170716_230503.wac", package = "bioacoustics")
+read_wac(filepath)
 }
 
 }

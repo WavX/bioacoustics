@@ -21,8 +21,9 @@ A \link[tuneR]{Wave} object.
 A thin wrapped around \link[tuneR]{readMP3} from the package tuneR.
 }
 \examples{
-\dontrun{
-read_mp3("recording.mp3")
+\donttest{
+filepath <- system.file("extdata", "recording.mp3", package = "bioacoustics")
+read_mp3(filepath)
 }
 
 }
