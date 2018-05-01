@@ -181,6 +181,8 @@ threshold_detection <- function(wave,
       if ( !dir.exists(file.path(spectro_dir, 'spectrograms')) )
         stopifnot(dir.create(file.path(spectro_dir, 'spectrograms'), recursive = TRUE)) # Stop if directory creation fails
 
+      spectro_dir <- tools::file_path_as_absolute(spectro_dir)
+
       if (is.logical(ticks))
       {
         if (ticks)
