@@ -15,7 +15,7 @@ It can be subdivided into three main components:
 
 ## Installing
 
-* Install stable version from CRAN (upcoming):
+* Install stable version from CRAN:
 ```r
 install.packages("bioacoustics")
 ```
