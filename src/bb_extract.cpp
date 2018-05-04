@@ -37,32 +37,32 @@ void extract_impl (Audio_Event &audio_event,
   Kalman amp_track (KPE, KME, audio_event.amp_track[0]);
   Kalman harmonic_amp_track (KPE, KME, audio_event.harmonic_amp_track[0]);
 
-  freq_track._P = 0;
+  freq_track.p_error_prev = 0;
   freq_track.data.clear();
   freq_track.data.resize(audio_event.freq_track.size());
-  freq_track.data[0] = freq_track._X;
+  freq_track.data[0] = freq_track.p_state_prev;
 
-  amp_track._P = 0;
+  amp_track.p_error_prev = 0;
   amp_track.data.clear();
   amp_track.data.resize(audio_event.amp_track.size());
-  amp_track.data[0] = amp_track._X;
+  amp_track.data[0] = amp_track.p_state_prev;
 
-  harmonic_amp_track._P = 0;
+  harmonic_amp_track.p_error_prev = 0;
   harmonic_amp_track.data.clear();
   harmonic_amp_track.data.resize(audio_event.harmonic_amp_track.size());
-  harmonic_amp_track.data[0] = harmonic_amp_track._X;
+  harmonic_amp_track.data[0] = harmonic_amp_track.p_state_prev;
 
 
   for (int i = 1; i < audio_event.freq_track.size(); i++)
   {
     freq_track.impl(audio_event.freq_track[i]);
-    freq_track.data[i] = freq_track._X;
+    freq_track.data[i] = freq_track.p_state_prev;
 
     amp_track.impl(audio_event.amp_track[i]);
-    amp_track.data[i] = amp_track._X;
+    amp_track.data[i] = amp_track.p_state_prev;
 
     harmonic_amp_track.impl(audio_event.harmonic_amp_track[i]);
-    harmonic_amp_track.data[i] = harmonic_amp_track._X;
+    harmonic_amp_track.data[i] = harmonic_amp_track.p_state_prev;
   }
 
   double bin2freq = (double)sample_rate / (double)(fft_size);

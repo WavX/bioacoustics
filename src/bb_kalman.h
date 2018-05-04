@@ -25,12 +25,12 @@ class Kalman
 {
 public:
   Kalman();
-  Kalman(double Q, double R, double _X);
+  Kalman(double Q, double R, double p_state_prev);
 
-  double _X, _P;
+  double p_state_prev, p_error_prev;
   std::vector<double> data;
 
-  void impl(const double &x);
+  void impl(const double &p_state_cur);
   double Q;// = 0.00001; // process
   double R;// = 0.000001; // measurement
 private:
@@ -38,30 +38,30 @@ private:
 };
 
 inline
-  Kalman::Kalman(double Q, double R, double _X)
+  Kalman::Kalman(double Q, double R, double p_state_prev)
   {
-    _P = 1;
+    p_error_prev = 1;
     this->Q = Q;
     this->R = R;
-    this->_X = _X;
+    this->p_state_prev = p_state_prev;
   }
 
 inline
   Kalman::Kalman()
   {
-    _P = 1;
+    p_error_prev = 1;
     Q = 0.00001;
     R = 0.0001;
   }
 
 inline
-  void Kalman::impl(const double &x)
+  void Kalman::impl(const double &p_state_cur)
   {
-    double P = _P + Q;
-    double K = P / (P + R);
+    double p_error_cur = p_error_prev + Q;
+    double K = p_error_cur / (p_error_cur + R);
 
-    _P = (1 - K) * P;
-    _X = _X + K * (x - _X);
+    p_error_prev = (1 - K) * p_error_cur;
+    p_state_prev = p_state_prev + K * (p_state_cur - p_state_prev);
   }
 
 

@@ -123,8 +123,8 @@ void Analyse::backward_analyse (Audio_Event &audio_event,
 {
   seek = peak_location - step;
 
-  kalman._P = 1;
-  kalman._X = bin_centroid;
+  kalman.p_error_prev = 1;
+  kalman.p_state_prev = bin_centroid;
   kalman.data.clear();
 
   size_t win_size = 5;
@@ -137,7 +137,7 @@ void Analyse::backward_analyse (Audio_Event &audio_event,
     analyse_frame(seek, noise, signal, background_noise);
     seek -= step;
     kalman.impl(bin_centroid);
-    kalman.data.push_back(kalman._X);
+    kalman.data.push_back(kalman.p_state_prev);
 
     double AD = ang_diff(kalman.data);
     double amp_diff = to_dB(audio_event.amp_peak) - to_dB(energy);
@@ -181,7 +181,7 @@ void Analyse::forward_analyse (Audio_Event &audio_event,
     analyse_frame(seek, noise, signal, background_noise);
     seek += step;
     kalman.impl(bin_centroid);
-    kalman.data.push_back(kalman._X);
+    kalman.data.push_back(kalman.p_state_prev);
     double AD = ang_diff(kalman.data);
     double amp_diff = to_dB(audio_event.amp_peak) - to_dB(energy);
     double SNR = to_dB(signal / no_zero(noise));
