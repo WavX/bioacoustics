@@ -15,7 +15,7 @@ threshold_detection(wave, threshold = 14, channel = "left", time_exp = 1,
 \arguments{
 \item{wave}{either a path to a file, or a \link[tuneR]{Wave} object.
 
-read_audios will be automatically decoded internally using the function \link{read_audio}.}
+Audio files will be automatically decoded internally using the function \link{read_audio}.}
 
 \item{threshold}{integer. Sensitivity of the audio event detection function (peak-picking algorithm) in dB.
 A threshold value of 14 dB above SNR is recommended. Higher values increase the risk of leaving audio events undetected (false negative).
@@ -29,14 +29,14 @@ yet supported. Default setting is 'left'.}
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}
 
-\item{min_dur}{numeric. Minimum duration threshold in milliseconds (msec).
-Extracted audio events shorter than this threshold are ignored. Default setting is 1.5 msec.}
+\item{min_dur}{numeric. Minimum duration threshold in milliseconds (ms).
+Extracted audio events shorter than this threshold are ignored. Default setting is 1.5 ms.}
 
-\item{max_dur}{numeric. Maximum duration threshold in milliseconds (msec).
-Extracted audio events longer than this threshold are ignored. The default setting is 80 msec.}
+\item{max_dur}{numeric. Maximum duration threshold in milliseconds (ms).
+Extracted audio events longer than this threshold are ignored. The default setting is 80 ms.}
 
-\item{TBE}{numeric. Minimum time window between two audio events in milliseconds (msec). If the time interval between two
-successive audio events is shorter than this window, they are ignored. The default setting is 20 msec.}
+\item{TBE}{numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
+successive audio events is shorter than this window, they are ignored. The default setting is 20 ms.}
 
 \item{EDG}{numeric. Exponential Decay Gain from 0 to 1. Sets the degree of temporal masking at the end of each audio event.
 This filter avoids extracting noise or echoes at the end of the audio event. The default setting is 0.996.}
@@ -63,13 +63,13 @@ Default setting is 20 dB. 30 dB is recommended for extracting bird vocalizations
 Default setting is 10 dB. 8 dB is recommended for bird vocalizations.}
 
 \item{angle_thr}{integer. Angle threshold (°) at which the audio event extraction stops.
-Default setting is 40°. 125° of angle is recommended for extracting bird vocalizations.}
+Default setting is 40°. 125° is recommended for extracting bird vocalizations.}
 
-\item{duration_thr}{integer. Maximum duration threshold in milliseconds (msec) after which the background noise estimation is resumed.
-Default setting is 80 msec for bat echolocation calls. A higher threshold value is recommended for extracting bird vocalizations.}
+\item{duration_thr}{integer. Maximum duration threshold in milliseconds (ms) after which the monitoring of the background noise is resumed.
+Default setting is 80 ms for bat echolocation calls. A higher threshold value is recommended for extracting bird vocalizations.}
 
 \item{NWS}{integer. Length of the time window used for background noise estimation in the recording (ms).
-A longer window size increases the accuracy of the background noise estimation, but reduces the speed of the analysis.
+A longer window size is less sensitive to local variations in the background noise.
 Default setting is 100 ms.}
 
 \item{KPE}{numeric. Set the Process Error parameter of the Kalman filter.
@@ -82,7 +82,7 @@ Default setting is 1e-05.}
 Default setting is \code{FALSE}.}
 
 \item{acoustic_feat}{logical. \code{TRUE} or \code{FALSE}. Extracts the acoustic and signal quality parameters from each audio event in a data frame.
-The sequences of smoothed amplitude (dB) and frequency (Hz) bins of each audio event, temporal values (in msec)
+The sequences of smoothed amplitude (dB) and frequency (Hz) bins of each audio event, temporal values (in ms)
  of the beginning and the end of each audio event are also extracted in separate lists. Default setting is \code{TRUE}.}
 
 \item{metadata}{logical. \code{TRUE} or \code{FALSE}. Extracts on a list the metadata embedded with the Wave file
@@ -93,8 +93,8 @@ of detection in the recording. Spectrograms are generated as individual .PNG fil
 'spectro_dir/spectrograms' subdirectory. The R working directory is used if \code{spectro_dir} is \code{NULL}.
 \code{spectro_dir} is set to \code{NULL} by default.}
 
-\item{time_scale}{numeric. Time resolution of the spectrogram in milliseconds (msec) per pixel (px). Default setting is 0.1 for bat echolocation calls.
-A default of 2 msec/px is recommended for most bird vocalizations.}
+\item{time_scale}{numeric. Time resolution of the spectrogram in milliseconds (ms) per pixel (px). Default setting is 0.1 ms for bat echolocation calls.
+A default of 2 ms/px is recommended for most bird vocalizations.}
 
 \item{ticks}{either logical or numeric. If \code{TRUE} tickmarks are drawn on the (frequency)
 y-axis and their positions are computed automatically. If numeric, sets the

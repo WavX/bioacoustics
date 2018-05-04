@@ -1,7 +1,7 @@
 #' Blob detection of a region of interest into a spectrographic representation of the recording
 #'
 #' This function is a modified version of the Bat classify software developed by Christopher Scott (2014).
-#' It combines several detection, filtering and audio feature extraction processes.
+#' It combines several algorithms for detection, filtering and audio feature extraction.
 #'
 #' @inheritParams threshold_detection
 #'
@@ -12,7 +12,7 @@
 #' @param blur integer. Gaussian smoothing function for blurring the spectrogram of the audio event to reduce image noise.
 #' Default setting is 2.
 #'
-#' @param contrast_boost integer.Edge contrast enhancement filter of the spectrogram of the audio event to improve its apparent sharpness.
+#' @param contrast_boost integer. Edge contrast enhancement filter of the spectrogram of the audio event to improve its apparent sharpness.
 #' Default setting is 20.
 #'
 #' @param bg_substract integer. Foreground extraction with a mean filter applied on the spectrogram of the audio even for image denoising.

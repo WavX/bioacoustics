@@ -13,7 +13,7 @@ blob_detection(wave, channel = "left", time_exp = 1, min_dur = 1.5,
 \arguments{
 \item{wave}{either a path to a file, or a \link[tuneR]{Wave} object.
 
-read_audios will be automatically decoded internally using the function \link{read_audio}.}
+Audio files will be automatically decoded internally using the function \link{read_audio}.}
 
 \item{channel}{character. Channel to keep for analysis in a stereo recording: 'left' or 'right'.
 Do not need to be specified for mono recordings, recordings with more than two channels are not
@@ -22,18 +22,18 @@ yet supported. Default setting is 'left'.}
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}
 
-\item{min_dur}{numeric. Minimum duration threshold in milliseconds (msec).
-Extracted audio events shorter than this threshold are ignored. Default setting is 1.5 msec.}
+\item{min_dur}{numeric. Minimum duration threshold in milliseconds (ms).
+Extracted audio events shorter than this threshold are ignored. Default setting is 1.5 ms.}
 
-\item{max_dur}{numeric. Maximum duration threshold in milliseconds (msec).
-Extracted audio events longer than this threshold are ignored. The default setting is 80 msec.}
+\item{max_dur}{numeric. Maximum duration threshold in milliseconds (ms).
+Extracted audio events longer than this threshold are ignored. The default setting is 80 ms.}
 
 \item{min_area}{integer. Minimum area threshold in number of pixels.
 Extracted segments with an area shorter than this threshold are discarded.
 Default setting is 40 pixels.}
 
-\item{TBE}{numeric. Minimum time window between two audio events in milliseconds (msec). If the time interval between two
-successive audio events is shorter than this window, they are ignored. The default setting is 20 msec.}
+\item{TBE}{numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
+successive audio events is shorter than this window, they are ignored. The default setting is 20 ms.}
 
 \item{EDG}{numeric. Exponential Decay Gain from 0 to 1. Sets the degree of temporal masking at the end of each audio event.
 This filter avoids extracting noise or echoes at the end of the audio event. The default setting is 0.996.}
@@ -54,14 +54,14 @@ Default setting is 2.}
 \item{bg_substract}{integer. Foreground extraction with a mean filter applied on the spectrogram of the audio even for image denoising.
 Default setting is 20.}
 
-\item{contrast_boost}{integer.Edge contrast enhancement filter of the spectrogram of the audio event to improve its apparent sharpness.
+\item{contrast_boost}{integer. Edge contrast enhancement filter of the spectrogram of the audio event to improve its apparent sharpness.
 Default setting is 20.}
 
 \item{settings}{logical. \code{TRUE} or \code{FALSE}. Save on a list the parameters set with the threshold_detection function.
 Default setting is \code{FALSE}.}
 
 \item{acoustic_feat}{logical. \code{TRUE} or \code{FALSE}. Extracts the acoustic and signal quality parameters from each audio event in a data frame.
-The sequences of smoothed amplitude (dB) and frequency (Hz) bins of each audio event, temporal values (in msec)
+The sequences of smoothed amplitude (dB) and frequency (Hz) bins of each audio event, temporal values (in ms)
  of the beginning and the end of each audio event are also extracted in separate lists. Default setting is \code{TRUE}.}
 
 \item{metadata}{logical. \code{TRUE} or \code{FALSE}. Extracts on a list the metadata embedded with the Wave file
@@ -72,8 +72,8 @@ of detection in the recording. Spectrograms are generated as individual .PNG fil
 'spectro_dir/spectrograms' subdirectory. The R working directory is used if \code{spectro_dir} is \code{NULL}.
 \code{spectro_dir} is set to \code{NULL} by default.}
 
-\item{time_scale}{numeric. Time resolution of the spectrogram in milliseconds (msec) per pixel (px). Default setting is 0.1 for bat echolocation calls.
-A default of 2 msec/px is recommended for most bird vocalizations.}
+\item{time_scale}{numeric. Time resolution of the spectrogram in milliseconds (ms) per pixel (px). Default setting is 0.1 ms for bat echolocation calls.
+A default of 2 ms/px is recommended for most bird vocalizations.}
 
 \item{ticks}{either logical or numeric. If \code{TRUE} tickmarks are drawn on the (frequency)
 y-axis and their positions are computed automatically. If numeric, sets the
@@ -81,7 +81,7 @@ lower and upper limits of the tickmarks and their interval (in Hz). Default sett
 }
 \description{
 This function is a modified version of the Bat classify software developed by Christopher Scott (2014).
-It combines several detection, filtering and audio feature extraction processes.
+It combines several algorithms for detection, filtering and audio feature extraction.
 }
 \examples{
 data(myotis)

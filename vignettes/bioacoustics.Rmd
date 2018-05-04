@@ -188,7 +188,7 @@ knitr::kable(as.data.frame(cbind(
 'bin_max_energy','pc_freq_max_amp','pc_freq_min','pc_fmax','pc_knee','temp_bw_knee_fc','slope',
 'kalman_slope','curve_pos_start','curve_pos_end','curve_neg','mid_offset','snr',
 'harmonic_distortion','smoothness'),
-c('sec','msec','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','%','%','%','%','ms','Hz / ms','Hz / ms','Hz / ms','Hz / ms','dB','dB','dB',''),
+c('sec','ms','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','%','%','%','%','ms','Hz / ms','Hz / ms','Hz / ms','Hz / ms','dB','dB','dB',''),
 c('Location of the audio event in the recording',
   'Duration of the audio event',
   'Frequency of the maximum energy of the audio event',
@@ -257,7 +257,7 @@ The spectral and temporal moments are extracted from the audio event contour poi
 knitr::kable(as.data.frame(cbind(
   c('starting_time', 'duration','area','freq_centroid','freq_bandwith','freq_skew','freq_kurtosis','q','freq_gini_impurity','quant_2.5','quant_25','quant_50','quant_75','quant_97.5','freq_bw_95_ci','freq_bw_75_ci','temp_centroid','temp_bandwith','temp_skew','temp_kurtosis','temp_gini_impurity','grad_centroid',
 'grad_bandwith','grad_skew','grad_kurtosis','grad_gini_impurity'),
-c('sec','msec','pixels','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','msec','msec','msec','msec','msec','','','','',''),
+c('sec','ms','pixels','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','Hz','ms','ms','ms','ms','ms','','','','',''),
 c('Location of the audio event in the recording',
   'Duration of the audio event',
   'Estimated area of the audio event (in pixels)',
