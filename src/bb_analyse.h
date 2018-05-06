@@ -53,8 +53,7 @@ private:
   const double &start_t, &end_t, &angl_t, &snr_t;
 
   size_t bin_fundamental, bin_harmonic;
-  double energy = 0, freq_res, min_SNR, smoothing_gain = 0.25;
-  double signal = 0, noise = 0;
+  double energy = 0, freq_res, smoothing_gain = 0.25;
   double bin_centroid;
   std::vector<double> power_spectrum, mask;
 

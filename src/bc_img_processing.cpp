@@ -31,7 +31,7 @@ void background_subtract(Rcpp::NumericMatrix& pixels, const double& C)
     for (int y = 0; y < height; y++)
     {
       double z = pixels(y, x) - C * mean[y];
-      pixels(y, x) = (z + abs(z)) * 0.5;
+      pixels(y, x) = (z + std::abs(z)) * 0.5;
       mean[y] = mean[y] + (z - mean[y]) / size;
     }
   }
