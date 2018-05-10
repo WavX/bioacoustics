@@ -1,5 +1,5 @@
-[![CRAN](https://www.r-pkg.org/badges/version/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
+[![CRAN](http://www.r-pkg.org/badges/version/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
 
 # bioacoustics: detect and extract automatically acoustic features in audio recordings
 
