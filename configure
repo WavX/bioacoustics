@@ -649,7 +649,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -724,7 +723,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -977,15 +975,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1123,7 +1112,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1276,7 +1265,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -3498,29 +3486,25 @@ $as_echo "$as_me: Need to download and build libsoxr" >&6;}
    LIBS="${LSR_LIBS} ${LIBS}"
 
    ## Necessary Include dirs
-   LSR_INCL="-I\"$(pwd)/soxr-${LSR_VERSION}/include\""
+   LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
 
-   ## Download NLopt source code
-   ## curl -O https://github.com/WavX/soxr/archive/${LSR_TGZ}
+   ## Download libsoxr source code
    $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
 
    ## Extract libsoxr source code and remove .tar.gz
-   ## tar -xzvf soxr-${LSR_VERSION}.tar.gz
-   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}')")
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}', exdir='$(pwd)')")
    $(rm -rf ${LSR_TGZ})
 
    ## Compile libsoxr source code and clean up
-   { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install soxr-lsr library" >&5
-$as_echo "$as_me: Starting to install soxr-lsr library" >&6;}
-   cd soxr-${LSR_VERSION};
-   cmake . -Wno-dev -DCMAKE_BUILD_TYPE=Release \
-                    -DCMAKE_INSTALL_PREFIX=. \
-                    -DBUILD_SHARED_LIBS=OFF \
-                    -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null 2>&1;
-   make > /dev/null 2>&1;
-   make install > /dev/null 2>&1;
-   ls | grep -v "^include$" | grep -v "^lib$" | xargs rm -rf;
-   cd ..;
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}" >&5
+$as_echo "$as_me: Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}" >&6;}
+   $(cd soxr-${LSR_VERSION}; \
+     cmake $(pwd) -Wno-dev -DCMAKE_BUILD_TYPE=Release \
+                  -DCMAKE_INSTALL_PREFIX=$(pwd) \
+                  -DBUILD_SHARED_LIBS=OFF \
+                  -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null; \
+     make > /dev/null; \
+     make install > /dev/null; )
 
    { $as_echo "$as_me:${as_lineno-$LINENO}: Done installing soxr-lsr library" >&5
 $as_echo "$as_me: Done installing soxr-lsr library" >&6;}
@@ -3532,7 +3516,7 @@ $as_echo "$as_me: Suitable libsoxr-lsr library found." >&6;}
 fi
 
 LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
-CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -s -march=native -mtune=native"
+CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 
 

@@ -135,28 +135,24 @@ if test x"${lsr_ok}" = x"no"; then
    LIBS="${LSR_LIBS} ${LIBS}"
 
    ## Necessary Include dirs
-   LSR_INCL="-I\"$(pwd)/soxr-${LSR_VERSION}/include\""
+   LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
 
-   ## Download NLopt source code
-   ## curl -O https://github.com/WavX/soxr/archive/${LSR_TGZ}
+   ## Download libsoxr source code
    $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
 
    ## Extract libsoxr source code and remove .tar.gz
-   ## tar -xzvf soxr-${LSR_VERSION}.tar.gz
-   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}')")
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}', exdir='$(pwd)')")
    $(rm -rf ${LSR_TGZ})
 
    ## Compile libsoxr source code and clean up
-   AC_MSG_NOTICE([Starting to install soxr-lsr library])
-   cd soxr-${LSR_VERSION};
-   cmake . -Wno-dev -DCMAKE_BUILD_TYPE=Release \
-                    -DCMAKE_INSTALL_PREFIX=. \
-                    -DBUILD_SHARED_LIBS=OFF \
-                    -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null 2>&1;
-   make > /dev/null 2>&1;
-   make install > /dev/null 2>&1;
-   ls | grep -v "^include$" | grep -v "^lib$" | xargs rm -rf;
-   cd ..;
+   AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
+   $(cd soxr-${LSR_VERSION}; \
+     cmake $(pwd) -Wno-dev -DCMAKE_BUILD_TYPE=Release \
+                  -DCMAKE_INSTALL_PREFIX=$(pwd) \
+                  -DBUILD_SHARED_LIBS=OFF \
+                  -DCMAKE_POSITION_INDEPENDENT_CODE=ON > /dev/null; \
+     make > /dev/null; \
+     make install > /dev/null; )
 
    AC_MSG_NOTICE([Done installing soxr-lsr library])
 
@@ -166,7 +162,7 @@ else
 fi
 
 LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
-CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -s -march=native -mtune=native"
+CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
