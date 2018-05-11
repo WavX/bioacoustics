@@ -39,7 +39,7 @@ void calc_features(Rcpp::List& event_data, Rcpp::NumericMatrix& segment, const s
 
     for (int y = 0; y < height; y++)
     {
-      spectrum[y] = segment(height - y,x);
+      spectrum[y] = segment(height - y-1,x);
       sum += spectrum[y];
     }
 
