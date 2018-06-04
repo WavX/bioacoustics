@@ -3358,7 +3358,7 @@ $as_echo "$as_me: Need to download and build fftw3" >&6;}
    FFTW_VERSION=3.3.8
 
    ## define FFTW file and download URL
-   FFTW_TGZ="${FFTW_VERSION}.tar.gz"
+   FFTW_TGZ="fftw-${FFTW_VERSION}.tar.gz"
    FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
 
    ## C Compiler options
