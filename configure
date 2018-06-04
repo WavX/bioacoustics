@@ -3385,7 +3385,7 @@ $as_echo "$as_me: Need to download and build fftw3" >&6;}
    { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&5
 $as_echo "$as_me: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&6;}
    $(cd fftw-${FFTW_VERSION}; \
-     ./configure > /dev/null; \
+     ./configure --prefix=$(pwd) > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
 
