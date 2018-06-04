@@ -87,7 +87,7 @@ if test x"${fftw_ok}" = x"no"; then
    FFTW_CLINKFLAGS=
 
    ## Libraries necessary to link with the package
-   FFTW_LIBS="-L\"$(pwd)/fftw-${fftw_VERSION}/lib\" -lfftw"
+   FFTW_LIBS="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\" -lfftw"
    LIBS="${FFTW_LIBS} ${LIBS}"
 
    ## Necessary Include dirs
