@@ -3,3 +3,4 @@
 ^windows
 ^config.log
 ^cran-comments\.md$
+^\.travis\.yml$
