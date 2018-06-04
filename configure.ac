@@ -46,8 +46,7 @@ else
   fi
 fi
 
-AC_CHECK_HEADERS(fftw3.h,,
-    AC_MSG_ERROR([fftw3.h not found in standard or given locations]))
+AC_CHECK_HEADERS(fftw3.h, [fftw_ok="yes"], [fftw_ok="no"])
 
 
 # dnl ditto for a library path
@@ -68,8 +67,52 @@ else
   fi
 fi
 
-AC_SEARCH_LIBS(fftw_plan_r2r_1d, fftw3, ,
-    AC_MSG_ERROR("Library fftw3 not found in standard or given locations"))
+AC_SEARCH_LIBS(fftw_plan_r2r_1d, fftw3, [fftw_ok="yes"], [fftw_ok="no"])
+
+## If fftw3 is not found, download fftw3 and build it locally
+if test x"${fftw_ok}" = x"no"; then
+   AC_MSG_NOTICE([Need to download and build fftw3])
+
+   ## define FFTW version
+   FFTW_VERSION=3.3.8
+
+   ## define FFTW file and download URL
+   FFTW_TGZ="${FFTW_VERSION}.tar.gz"
+   FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
+
+   ## C Compiler options
+   FFTW_CFLAGS=
+
+   ## additional C Compiler options for linking
+   FFTW_CLINKFLAGS=
+
+   ## Libraries necessary to link with the package
+   FFTW_LIBS="-L\"$(pwd)/fftw-${fftw_VERSION}/lib\" -lfftw"
+   LIBS="${FFTW_LIBS} ${LIBS}"
+
+   ## Necessary Include dirs
+   FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
+
+   ## Download fftw3 source code
+   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')")
+
+   ## Extract fftw3 source code and remove .tar.gz
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${FFTW_TGZ}', exdir='$(pwd)')")
+   $(rm -rf ${FFTW_TGZ})
+
+   ## Compile fftw3 source code and clean up
+   AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
+   $(cd fftw-${FFTW_VERSION}; \
+     ./configure > /dev/null; \
+     make > /dev/null; \
+     make install > /dev/null; )
+
+   AC_MSG_NOTICE([Done installing fftw3 library])
+
+   FFTW_CPPFLAGS="${FFTW_INCL}"
+else
+   AC_MSG_NOTICE([Suitable fftw3 library found.])
+fi
 
 
 #

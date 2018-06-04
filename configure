@@ -3261,9 +3261,9 @@ if test "x$ac_cv_header_fftw3_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_FFTW3_H 1
 _ACEOF
-
+ fftw_ok="yes"
 else
-  as_fn_error $? "fftw3.h not found in standard or given locations" "$LINENO" 5
+  fftw_ok="no"
 fi
 
 done
@@ -3343,11 +3343,60 @@ $as_echo "$ac_cv_search_fftw_plan_r2r_1d" >&6; }
 ac_res=$ac_cv_search_fftw_plan_r2r_1d
 if test "$ac_res" != no; then :
   test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
+  fftw_ok="yes"
 else
-  as_fn_error $? "\"Library fftw3 not found in standard or given locations\"" "$LINENO" 5
+  fftw_ok="no"
 fi
 
+
+## If fftw3 is not found, download fftw3 and build it locally
+if test x"${fftw_ok}" = x"no"; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Need to download and build fftw3" >&5
+$as_echo "$as_me: Need to download and build fftw3" >&6;}
+
+   ## define FFTW version
+   FFTW_VERSION=3.3.8
+
+   ## define FFTW file and download URL
+   FFTW_TGZ="${FFTW_VERSION}.tar.gz"
+   FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
+
+   ## C Compiler options
+   FFTW_CFLAGS=
+
+   ## additional C Compiler options for linking
+   FFTW_CLINKFLAGS=
+
+   ## Libraries necessary to link with the package
+   FFTW_LIBS="-L\"$(pwd)/fftw-${fftw_VERSION}/lib\" -lfftw"
+   LIBS="${FFTW_LIBS} ${LIBS}"
+
+   ## Necessary Include dirs
+   FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
+
+   ## Download fftw3 source code
+   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')")
+
+   ## Extract fftw3 source code and remove .tar.gz
+   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${FFTW_TGZ}', exdir='$(pwd)')")
+   $(rm -rf ${FFTW_TGZ})
+
+   ## Compile fftw3 source code and clean up
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&5
+$as_echo "$as_me: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&6;}
+   $(cd fftw-${FFTW_VERSION}; \
+     ./configure > /dev/null; \
+     make > /dev/null; \
+     make install > /dev/null; )
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Done installing fftw3 library" >&5
+$as_echo "$as_me: Done installing fftw3 library" >&6;}
+
+   FFTW_CPPFLAGS="${FFTW_INCL}"
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: Suitable fftw3 library found." >&5
+$as_echo "$as_me: Suitable fftw3 library found." >&6;}
+fi
 
 
 #
