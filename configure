@@ -674,7 +674,7 @@ enable_option_checking
 with_fftw_include
 with_fftw_lib
 with_libsoxr_lsr_include
-with_libsoxr_lsr_lib
+with_lsr_lib
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1293,13 +1293,13 @@ if test -n "$ac_init_help"; then
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-fftw-include=INCLUDE_PATH
+  --with-fftw-include=FFTW_INCLUDE_PATH
                           the location of fftw3 header file
-  --with-fftw-lib=LIB_PATH
-                          the location of fftw library
+  --with-fftw-lib=FFTW_LIB_PATH
+                          the location of fftw3 library
   --with-libsoxr-lsr-include=INCLUDE_PATH
                           the location of libsoxr-lsr header file
-  --with-libsoxr-lsr-lib=LIB_PATH
+  --with-lsr-lib=LSR_LIB_PATH
                           the location of libsoxr-lsr library
 
 Some influential environment variables:
@@ -3278,14 +3278,14 @@ if test "${with_fftw_lib+set}" = set; then :
 fi
 
 if test  -n "$fftw_lib_path"  ; then
-   FFTW_LIBS="-L$fftw_lib_path"
+   FFTW_LIB_PATH="-L$fftw_lib_path"
 else
-  if test  -n "${FFTW_LIBS}"  ; then
-     FFTW_LIBS="-L${FFTW_LIBS}"
+  if test  -n "${FFTW_LIB_PATH}"  ; then
+     FFTW_LIB_PATH="-L${FFTW_LIB_PATH}"
   else
     if test -n "${FFTW_CONFIG}"; then
-      fftw_lib_path=`fftw_config --libs | sed s/-lfftw//`
-      FFTW_LIBS="${fftw_lib_path}"
+      fftw_lib_path=`fftw_config --libs`
+      FFTW_LIB_PATH="${fftw_lib_path}"
     fi
   fi
 fi
@@ -3368,8 +3368,7 @@ $as_echo "$as_me: Need to download and build fftw3" >&6;}
    FFTW_CLINKFLAGS=
 
    ## Libraries necessary to link with the package
-   FFTW_LIBS="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\" -lfftw"
-   LIBS="${FFTW_LIBS} ${LIBS}"
+   FFTW_LIB_PATH="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\""
 
    ## Necessary Include dirs
    FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
@@ -3385,7 +3384,7 @@ $as_echo "$as_me: Need to download and build fftw3" >&6;}
    { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&5
 $as_echo "$as_me: Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}" >&6;}
    $(cd fftw-${FFTW_VERSION}; \
-     ./configure --prefix=$(pwd) > /dev/null; \
+     ./configure --prefix=$(pwd) --enable-static --disable-shared > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
 
@@ -3435,20 +3434,20 @@ done
 
 # dnl ditto for a library path
 
-# Check whether --with-libsoxr-lsr-lib was given.
-if test "${with_libsoxr_lsr_lib+set}" = set; then :
-  withval=$with_libsoxr_lsr_lib; lsr_lib_path=$withval
+# Check whether --with-lsr-lib was given.
+if test "${with_lsr_lib+set}" = set; then :
+  withval=$with_lsr_lib; lsr_lib_path=$withval
 fi
 
 if test  -n "$lsr_lib_path"  ; then
-   LSR_LIBS="-L$lsr_lib_path"
+   LSR_LIB_PATH="-L$lsr_lib_path"
 else
-  if test  -n "${LSR_LIBS}"  ; then
-     LSR_LIBS="-L${LSR_LIBS}"
+  if test  -n "${LSR_LIB_PATH}"  ; then
+     LSR_LIB_PATH="-L${LSR_LIB_PATH}"
   else
     if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
-      LSR_LIBS="${lsr_lib_path}"
+      lsr_lib_path=`lsr_config --libs`
+      LSR_LIB_PATH="${lsr_lib_path}"
     fi
   fi
 fi
@@ -3531,8 +3530,7 @@ $as_echo "$as_me: Need to download and build libsoxr" >&6;}
    LSR_CLINKFLAGS=
 
    ## Libraries necessary to link with the package
-   LSR_LIBS="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\" -lsoxr -lsoxr-lsr"
-   LIBS="${LSR_LIBS} ${LIBS}"
+   LSR_LIB_PATH="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\""
 
    ## Necessary Include dirs
    LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
@@ -3564,7 +3562,7 @@ else
 $as_echo "$as_me: Suitable libsoxr-lsr library found." >&6;}
 fi
 
-LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
+LIBS="${FFTW_LIB_PATH} ${LSR_LIB_PATH} -lsoxr-lsr -lsoxr -lfftw3 ${LIBS}"
 CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 

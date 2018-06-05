@@ -34,7 +34,7 @@ AC_MSG_NOTICE([CXX: ${CXX}])
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
 AC_ARG_WITH([fftw-include],
-            AC_HELP_STRING([--with-fftw-include=INCLUDE_PATH],
+            AC_HELP_STRING([--with-fftw-include=FFTW_INCLUDE_PATH],
                            [the location of fftw3 header file]),
             [fftw_include_path=$withval])
 FFTW_CPPFLAGS="-I."
@@ -51,18 +51,18 @@ AC_CHECK_HEADERS(fftw3.h, [fftw_ok="yes"], [fftw_ok="no"])
 
 # dnl ditto for a library path
 AC_ARG_WITH([fftw-lib],
-            AC_HELP_STRING([--with-fftw-lib=LIB_PATH],
-                           [the location of fftw library]),
+            AC_HELP_STRING([--with-fftw-lib=FFTW_LIB_PATH],
+                           [the location of fftw3 library]),
             [fftw_lib_path=$withval])
 if test [ -n "$fftw_lib_path" ] ; then
-   FFTW_LIBS="-L$fftw_lib_path"
+   FFTW_LIB_PATH="-L$fftw_lib_path"
 else
-  if test [ -n "${FFTW_LIBS}" ] ; then
-     FFTW_LIBS="-L${FFTW_LIBS}"
+  if test [ -n "${FFTW_LIB_PATH}" ] ; then
+     FFTW_LIB_PATH="-L${FFTW_LIB_PATH}"
   else
     if test -n "${FFTW_CONFIG}"; then
-      fftw_lib_path=`fftw_config --libs | sed s/-lfftw//`
-      FFTW_LIBS="${fftw_lib_path}"
+      fftw_lib_path=`fftw_config --libs`
+      FFTW_LIB_PATH="${fftw_lib_path}"
     fi
   fi
 fi
@@ -87,8 +87,7 @@ if test x"${fftw_ok}" = x"no"; then
    FFTW_CLINKFLAGS=
 
    ## Libraries necessary to link with the package
-   FFTW_LIBS="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\" -lfftw"
-   LIBS="${FFTW_LIBS} ${LIBS}"
+   FFTW_LIB_PATH="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\""
 
    ## Necessary Include dirs
    FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
@@ -103,7 +102,7 @@ if test x"${fftw_ok}" = x"no"; then
    ## Compile fftw3 source code and clean up
    AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
    $(cd fftw-${FFTW_VERSION}; \
-     ./configure --prefix=$(pwd) > /dev/null; \
+     ./configure --prefix=$(pwd) --enable-static --disable-shared > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
 
@@ -137,19 +136,19 @@ fi
 AC_CHECK_HEADERS(soxr-lsr.h, [lsr_ok="yes"], [lsr_ok="no"])
 
 # dnl ditto for a library path
-AC_ARG_WITH([libsoxr-lsr-lib],
-            AC_HELP_STRING([--with-libsoxr-lsr-lib=LIB_PATH],
+AC_ARG_WITH([lsr-lib],
+            AC_HELP_STRING([--with-lsr-lib=LSR_LIB_PATH],
                            [the location of libsoxr-lsr library]),
             [lsr_lib_path=$withval])
 if test [ -n "$lsr_lib_path" ] ; then
-   LSR_LIBS="-L$lsr_lib_path"
+   LSR_LIB_PATH="-L$lsr_lib_path"
 else
-  if test [ -n "${LSR_LIBS}" ] ; then
-     LSR_LIBS="-L${LSR_LIBS}"
+  if test [ -n "${LSR_LIB_PATH}" ] ; then
+     LSR_LIB_PATH="-L${LSR_LIB_PATH}"
   else
     if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=`lsr_config --libs | sed s/-lsoxr-lsr//`
-      LSR_LIBS="${lsr_lib_path}"
+      lsr_lib_path=`lsr_config --libs`
+      LSR_LIB_PATH="${lsr_lib_path}"
     fi
   fi
 fi
@@ -174,8 +173,7 @@ if test x"${lsr_ok}" = x"no"; then
    LSR_CLINKFLAGS=
 
    ## Libraries necessary to link with the package
-   LSR_LIBS="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\" -lsoxr -lsoxr-lsr"
-   LIBS="${LSR_LIBS} ${LIBS}"
+   LSR_LIB_PATH="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\""
 
    ## Necessary Include dirs
    LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
@@ -204,7 +202,7 @@ else
    AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
 fi
 
-LIBS="${LIBS} ${FFTW_LIBS} ${LSR_LIBS}"
+LIBS="${FFTW_LIB_PATH} ${LSR_LIB_PATH} -lsoxr-lsr -lsoxr -lfftw3 ${LIBS}"
 CPPFLAGS="${CPPFLAGS} ${FFTW_CPPFLAGS} ${LSR_CPPFLAGS} -O3 -march=native -mtune=native"
 
 dnl substitute CPPFLAGS and LIBS
