@@ -1,4 +1,4 @@
 #!/bin/sh
-rm -rf src/Makevars config.log config.status autom4te.cache src/*.o src/*.so soxr-?.?.?/
+rm -rf src/Makevars config.log config.status autom4te.cache src/*.o src/*.so fftw-?.?.?/ soxr-?.?.?/
 
 exit 0
