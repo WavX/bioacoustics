@@ -102,7 +102,7 @@ if test x"${fftw_ok}" = x"no"; then
    ## Compile fftw3 source code and clean up
    AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
    $(cd fftw-${FFTW_VERSION}; \
-     ./configure --prefix=$(pwd) --enable-static --disable-shared > /dev/null; \
+     ./configure --prefix=$(pwd) --enable-static --disable-shared CFLAGS=-fPIC > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
 
