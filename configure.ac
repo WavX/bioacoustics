@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.1.0) dnl package name, version
+AC_INIT([bioacoustics], 0.1.2) dnl package name, version
 
 # require at least autoconf 2.61
 AC_PREREQ(2.61)
