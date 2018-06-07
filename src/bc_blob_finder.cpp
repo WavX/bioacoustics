@@ -20,7 +20,7 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with This program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with This program. If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 #include <unordered_map>
@@ -91,9 +91,6 @@ std::unordered_map<int, Rcpp::List> blob_extract(Rcpp::NumericMatrix& mat, Rcpp:
         if (offset > Rcpp::as<int>(blob_map[n]["max_offset"]))
         {
           blob_map[n]["max_offset"] = offset;
-          // if (n == 4777) {
-          //   Rprintf("step3 %d\n", offset);
-          // }
         }
       }
     } while (++x < width);
@@ -101,7 +98,6 @@ std::unordered_map<int, Rcpp::List> blob_extract(Rcpp::NumericMatrix& mat, Rcpp:
   return blob_map;
 }
 
-// std::unordered_map<int, Blob> blob_finder(Rcpp::NumericMatrix& mat)
 std::unordered_map<int, Rcpp::List> blob_finder(Rcpp::NumericMatrix& mat, Rcpp::NumericMatrix& label)
 {
   int height = mat.nrow();
@@ -123,38 +119,6 @@ std::unordered_map<int, Rcpp::List> blob_finder(Rcpp::NumericMatrix& mat, Rcpp::
   }
 
   std::unordered_map<int, Rcpp::List> blob_map = blob_extract(mat, label);
-
-  // for (auto blob : blob_map) if (Rcpp::as<int>(blob.second["blob_id"]) == 4777){ Rprintf("end blob_finder\n");      Rprintf("min = %d\n", Rcpp::as<int>(blob.second["min_offset"]));
-  // Rprintf("max = %d\n", Rcpp::as<int>(blob.second["max_offset"])); }
-
-  // pos_.resize(8);
-  // pos_[0] = 1;
-  // pos_[1] = w_+1;
-  // pos_[2] = w_;
-  // pos_[3] = w_-1;
-  // pos_[4] = -1;
-  // pos_[5] = -w_-1;
-  // pos_[6] = -w_;
-  // pos_[7] = -w_+1;
-
-  // label_.clear();
-  // label_.resize(max_, 0);
-  // c_ = 1;// blob index
-  // blobmap.clear();
-
-  // We change the border to be white. We could add a pixel around
-  // but we are lazy and want to do this in place.
-  // Set the outer rows/cols to background
-  // for (int j = 0; j < width; ++j) {
-  //   data.setPixel(j, 0.0);
-  //   data.setPixel((h_-1) * w_ + j, 0.0);
-  // }
-  // for (int i = 0; i < height; ++i) {
-  //   data.setPixel(i * w_, 0.0);
-  //   data.setPixel(i * w_ + (w_-1), 0.0);
-  // }
-  //
-  // Extract(data);
   return blob_map;
 }
 
@@ -170,12 +134,6 @@ void contour_tracing(Rcpp::NumericMatrix& mat,
 
   int height = mat.nrow();
   int offset = offset_x * height + offset_y;
-
-  // Rprintf("p = %d\n", p);
-  // Rprintf("offset = %d\n", offset);
-  // Rprintf("x = %d\n", offset_x);
-  // Rprintf("y = %d\n", offset_y);
-  // throw 20;
 
   // Find out our default next pos (from offset)
   std::vector<int> traced = tracer(mat, label, offset, p);
@@ -205,13 +163,6 @@ void contour_tracing(Rcpp::NumericMatrix& mat,
   }
   if (offset > Rcpp::as<int>(blob_map[blob_id]["max_offset"]))
   {
-    // if (blob_id == 4777 && p == 7) {
-    //   Rprintf("step1 %d\n", offset);
-    // }
-    // if (blob_id == 4777 && p == 3) {
-    //   Rprintf("step2 %d\n", offset);
-    // }
-
     blob_map[blob_id]["max_offset"] = offset;
   }
 
@@ -237,14 +188,6 @@ void contour_tracing(Rcpp::NumericMatrix& mat,
     }
     if (stored_offset > Rcpp::as<int>(blob_map[blob_id]["max_offset"]))
     {
-      // if (blob_id == 4777 && p == 7) {
-      //   Rprintf("step1 y=%d", stored_offset_y);
-      //   Rprintf("x=%d\n", stored_offset_x);
-      // }
-      // if (blob_id == 4777 && p == 3) {
-      //   Rprintf("step2 y=%d", stored_offset_y);
-      //   Rprintf("x=%d\n", stored_offset_x);
-      // }
       blob_map[blob_id]["max_offset"] = stored_offset;
     }
 
@@ -254,8 +197,6 @@ void contour_tracing(Rcpp::NumericMatrix& mat,
     stored_offset = traced[0];
     q             = traced[1];
   }
-  // Rprintf("blob_id = %d\n", blob_id);
-  // Rprintf("%d\n", Rcpp::as<int>(blob_map[blob_id]["max_offset"]));
 }
 
 Rcpp::NumericMatrix mask(const Rcpp::NumericMatrix& mat, const Rcpp::NumericMatrix& label, std::pair<int, Rcpp::List> blob)
@@ -263,10 +204,6 @@ Rcpp::NumericMatrix mask(const Rcpp::NumericMatrix& mat, const Rcpp::NumericMatr
   int height = mat.nrow();
   int min = Rcpp::as<int>(blob.second["min_offset"]) / height;
   int max = Rcpp::as<int>(blob.second["max_offset"]) / height;
-
-  // int index = height * floor(Rcpp::as<int>(blob.second["min_offset"]) / (double)height);
-  // int frames = 1 + ceil((Rcpp::as<int>(blob.second["max_offset"]) - Rcpp::as<int>(blob.second["min_offset"])) / (double)height);
-  // int counter = 0;
 
   int n_col = max - min + 1;
 
@@ -276,41 +213,13 @@ Rcpp::NumericMatrix mask(const Rcpp::NumericMatrix& mat, const Rcpp::NumericMatr
   {
     for (int y = 0; y < height; y++)
     {
-          // int xl = (counter + index) / (double)height;
-          // int yl = (counter + index) % height;
-          // Rprintf("xl = %d\n", xl);
-          // Rprintf("x = %d\n", x);
-          // Rprintf("yl = %d\n", yl);
-          // Rprintf("y = %d\n", y);
       if (label(y,x) == blob.first)
       {
-        // int xs = counter / height;
-        // int ys = counter % height;
-        // Rprintf("xs2 = %d\n", xs2);
-        // Rprintf("xs = %d\n", xs);
-        // Rprintf("y = %d\n", y);
-        // Rprintf("ys = %d\n", ys);
         segment(y, xs) = mat(y, x);
       }
     }
   }
 
-  // for (int x = 0; x < frames; x++)
-  // {
-  //   for (int y = 0; y < height; y++, counter++)
-  //   {
-  //     int xl = (counter + index) / height;
-  //     int yl = (counter + index) % height;
-  //
-  //     if (label(yl,xl) == blob.first)
-  //     {
-  //       int xs = counter / height;
-  //       int ys = counter % height;
-  //
-  //       segment(ys, xs) = mat(yl, xl);
-  //     }
-  //   }
-  // }
   return segment;
 }
 
