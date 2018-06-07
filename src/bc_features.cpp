@@ -16,6 +16,7 @@
 //  along with This program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+#include <cmath>
 #include <vector>
 #include <Rcpp.h>
 #include "bc_tools.h"
@@ -61,7 +62,7 @@ void calc_features(Rcpp::List& event_data, Rcpp::NumericMatrix& segment, const s
       }
 
       centroid /= sum;
-      cur_peak = round(centroid);
+      cur_peak = std::round(centroid);
     }
 
     if (cur_peak > 0 && prev_peak > 0)

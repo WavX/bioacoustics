@@ -16,6 +16,7 @@
 //  along with This program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+#include <cmath>
 #include <Rcpp.h>
 #include "bb_extract.h"
 #include "bb_kalman.h"

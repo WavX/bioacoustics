@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------
 
 #include <algorithm>
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <vector>
 #include "fft.h"
@@ -42,7 +42,7 @@ void FFT::set_plan(const size_t &size)
 void FFT::set_window(const WIN_TYPE& win_type)
 {
   window.resize(size, 0);
-  z = 8.0 * atan(1.0) / (size-1);
+  z = 8.0 * std::atan(1.0) / (size-1);
 
   switch(win_type)
   {
@@ -88,9 +88,9 @@ void FFT::blackman_harris_4 (size_t size)
 {
   for (size_t i = 0; i < size; i++)
   {
-    window[i] = 0.35875 - 0.48829 * cos(z*i) + \
-      0.14128 * cos(2*z*i) -                   \
-      0.01168 * cos(3*z*i);
+    window[i] = 0.35875 - 0.48829 * std::cos(z*i) + \
+      0.14128 * std::cos(2*z*i) -                   \
+      0.01168 * std::cos(3*z*i);
   }
 }
 
@@ -99,10 +99,10 @@ void FFT::blackman_harris_7 (size_t size)
 {
   for (size_t i = 0; i < size; i++)
   {
-    window[i] = 0.2712203606 - 0.4334446123 * cos(z*i) +      \
-      0.21800412 * cos(2*z*i) - 0.0657853433 * cos(3*z*i) +   \
-      0.0107618673 * cos(4*z*i) - 0.0007700127 * cos(5*z*i) + \
-      0.00001368088 * cos(6*z*i);
+    window[i] = 0.2712203606 - 0.4334446123 * std::cos(z*i) +      \
+      0.21800412 * std::cos(2*z*i) - 0.0657853433 * std::cos(3*z*i) +   \
+      0.0107618673 * std::cos(4*z*i) - 0.0007700127 * std::cos(5*z*i) + \
+      0.00001368088 * std::cos(6*z*i);
   }
 }
 
@@ -110,7 +110,7 @@ void FFT::hann (size_t size)
 {
   for (size_t i = 0; i < size; i++)
   {
-    window[i] = 0.5 * (1 - cos(2*z*i));
+    window[i] = 0.5 * (1 - std::cos(2*z*i));
   }
 }
 

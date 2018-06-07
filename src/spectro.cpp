@@ -15,7 +15,7 @@
 //  along with This program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <vector>
 #include <Rcpp.h>
@@ -38,7 +38,7 @@ Rcpp::NumericMatrix fspec_impl(const std::vector<int>& audio_samples,
 
   int n_rows = FUL_bin - FLL_bin + 1;
   int k = FLL_bin - 1;
-  int n_cols = ceil((double)audio_samples.size() / (double)seek_step);
+  int n_cols = std::ceil((double)audio_samples.size() / (double)seek_step);
 
   if (rotate)
   {

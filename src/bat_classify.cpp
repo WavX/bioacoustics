@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------
 
 #include <algorithm>
-#include <math.h>
+#include <cmath>
 #include <queue>
 #include <vector>
 #include <Rcpp.h>
@@ -47,7 +47,7 @@ Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples,
                                double boost)
 {
   size_t HPF_bin = (double)HPF * (double)FFT_size / (double)sample_rate;
-  size_t LPF_bin = ceil((double)LPF * (double)FFT_size / (double)sample_rate) - 1;
+  size_t LPF_bin = std::ceil((double)LPF * (double)FFT_size / (double)sample_rate) - 1;
 
   Rcpp::NumericMatrix spectro = \
     fspec_impl(audio_samples, FFT_size, FFT_overlap, "blackman4", HPF_bin, LPF_bin, HPF_bin, LPF_bin, false);

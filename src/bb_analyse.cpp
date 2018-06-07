@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------
 
 #include <algorithm>
+#include <cmath>
 #include <deque>
 #include <vector>
 #include "fft.h"
@@ -110,7 +111,7 @@ void Analyse::analyse_frame (const int &seek,
   bin_centroid = centroid(mask);
 
   // Harmonic octave above tracked
-  bin_harmonic = round(2 * bin_centroid);
+  bin_harmonic = std::round(2 * bin_centroid);
 }
 
 

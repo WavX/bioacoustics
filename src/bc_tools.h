@@ -19,6 +19,7 @@
 #ifndef BC_TOOLS_H
 #define BC_TOOLS_H
 
+#include <cmath>
 #include <Rcpp.h>
 
 template <class InputIterator>
@@ -110,8 +111,8 @@ inline
     }
 
     bandwidth = std::sqrt(bandwidth);
-    skew = (bandwidth > epsilon) ? (skew / pow(bandwidth, 3.0)) : 0.0;
-    kurtosis = (bandwidth > epsilon) ? (kurtosis / pow(bandwidth, 4.0)) : 3.0;
+    skew = (bandwidth > epsilon) ? (skew / std::pow(bandwidth, 3.0)) : 0.0;
+    kurtosis = (bandwidth > epsilon) ? (kurtosis / std::pow(bandwidth, 4.0)) : 3.0;
     kurtosis -= 3.0;
 
     Rcpp::as<Rcpp::NumericVector>(event_data[which + "_centroid"])[index] = centroid * bin2freq;

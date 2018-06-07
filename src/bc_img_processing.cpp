@@ -16,6 +16,7 @@
 //  along with This program.  If not, see <https://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+#include <cmath>
 #include <vector>
 #include "bc_img_processing.h"
 

@@ -20,6 +20,7 @@
 #define BB_TOOLS_H
 
 #include <algorithm>
+#include <cmath>
 #include <vector>
 
 const int ZEROLOG = -120;
@@ -89,8 +90,8 @@ inline
 inline
   double cubic_interp (const std::vector<double> &x, const size_t i, const double &f)
   {
-    return pow(f, 3) * (- x[i - 1] - 3 * x[i + 1] + x[i + 2] + 3 * x[i]) / 6 + \
-      pow(f, 2) * ((x[i - 1] + x[i + 1]) / 2 - x[i]) +                         \
+    return std::pow(f, 3) * (- x[i - 1] - 3 * x[i + 1] + x[i + 2] + 3 * x[i]) / 6 + \
+      std::pow(f, 2) * ((x[i - 1] + x[i + 1]) / 2 - x[i]) +                         \
       f * (x[i + 1] + (-2 * x[i - 1] - (x[i + 2] + 3 * x[i])) / 6) + x[i];
   }
 
