@@ -6,3 +6,11 @@ cache: packages
 
 before_install:
   - chmod +x configure
+
+r:
+  - release
+  - devel
+
+os:
+  - linux
+  - osx
