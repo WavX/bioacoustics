@@ -5,6 +5,7 @@ sudo: false
 cache: packages
 
 before_install:
+  - chmod +x cleanup
   - chmod +x configure
 
 matrix:
