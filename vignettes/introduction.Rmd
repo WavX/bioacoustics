@@ -311,6 +311,12 @@ The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24
 > Skowronski, M. D., & Fenton, M. B (2009). Detecting bat calls: An analysis of automated methods. Acta Chiropterologica, 11(1), 191-203.
 
 
+## See also
+```{r see_also, eval=FALSE}
+# Package tutorial
+browseVignettes("tutorial", package = "bioacoustics")
+```
+
 Table 1. Example of detection, filtering and extraction settings with the `threshold_detection` function for eastern canadian bats and calls of Bicknell's Thrush (*Catharus bicknelii*).
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(as.data.frame(cbind(c('threshold','time_exp','min_dur','max_dur','TBE','EDG','LPF','HPF','FFT_size','FFT_overlap','start_thr','end_thr','SNR_thr','angle_thr','duration_thr', 'NWS', 'KPE','KME'),
