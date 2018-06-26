@@ -1,5 +1,7 @@
 # version 0.1.2.9000
 
+* Add a tutorial (vignette)
+
 # version 0.1.2
 
 * Automate fftw installation if a suitable version was not found
