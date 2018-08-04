@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.1.2) dnl package name, version
+AC_INIT([bioacoustics], 0.1.3) dnl package name, version
 
 # require at least autoconf 2.61
 AC_PREREQ(2.61)
@@ -22,6 +22,11 @@ RBIN="${R_HOME}/bin/R"
 : ${LDFLAGS=`"${RBIN}" CMD config LDFLAGS`}
 AC_PROG_CC
 AC_PROG_CPP
+
+#
+# Check if compiler supports C++11 features
+#
+AX_CXX_COMPILE_STDCXX_11()
 
 AC_MSG_NOTICE([CC: ${CC}])
 AC_MSG_NOTICE([CXX: ${CXX}])
@@ -203,7 +208,7 @@ if test x"${lsr_ok}" = x"no"; then
                   -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
                   -${LSR_OPENMP} > /dev/null; \
      make > /dev/null; \
-     make install > /dev/null; );
+     make install > /dev/null; )
    AC_MSG_NOTICE([Done installing soxr-lsr library])
 
    LSR_CPPFLAGS="${LSR_INCL}"
