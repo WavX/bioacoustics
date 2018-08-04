@@ -4,9 +4,9 @@
 \alias{plot_zc}
 \title{Generate spectrogram for Zero-Crossing files}
 \usage{
-plot_zc(x, LPF = 125000, HPF = 16000, tlim = c(0, Inf), flim = c(HPF,
-  LPF), ybar = TRUE, ybar.lty = 2, ybar.col = "gray", dot.size = 0.3,
-  dot.col = "red", ...)
+plot_zc(x, LPF = 125000, HPF = 16000, tlim = c(0, Inf),
+  flim = c(HPF, LPF), ybar = TRUE, ybar.lty = 2, ybar.col = "gray",
+  dot.size = 0.3, dot.col = "red", ...)
 }
 \arguments{
 \item{x}{an object of class 'zc'.}

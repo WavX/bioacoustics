@@ -3,7 +3,6 @@
 \docType{data}
 \name{myotis}
 \alias{myotis}
-\alias{myotis}
 \alias{zc}
 \title{Audio recording of myotis species from United-Kingdom}
 \format{\link[tuneR]{Wave} object}
