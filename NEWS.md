@@ -1,6 +1,8 @@
-# version 0.1.2.9000
+# version 0.1.3
 
 * Add a tutorial (vignette)
+* Make the use of OpenMP conditional
+* Fix for Solaris
 
 # version 0.1.2
 
