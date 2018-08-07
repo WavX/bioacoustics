@@ -119,6 +119,7 @@ if test x"${fftw_ok}" = x"no"; then
                  --enable-static \
                  --disable-shared \
                  ${FFTW_OPENMP} \
+                 CC = ${CC} \
                  CFLAGS=-fPIC > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
@@ -206,6 +207,7 @@ if test x"${lsr_ok}" = x"no"; then
                   -DCMAKE_INSTALL_PREFIX=$(pwd) \
                   -DBUILD_SHARED_LIBS=OFF \
                   -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+                  -DCMAKE_C_COMPILER=${CC} \
                   -${LSR_OPENMP} > /dev/null; \
      make > /dev/null; \
      make install > /dev/null; )
