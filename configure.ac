@@ -244,7 +244,15 @@ else
    AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
 fi
 
-LIBS="${FFTW_LIB} ${LSR_LIB} -lsoxr-lsr -lsoxr -lfftw3 ${LIBS}"
+if [[ "$LIBS" != *"lfftw3"* ]]; then
+    LIBS="$LIBS -lfftw3"
+fi
+
+if [[ "$LIBS" != *"lsoxr-lsr"* ]]; then
+    LIBS="$LIBS -lsoxr-lsr -lsoxr"
+fi
+
+LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
 CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
 
 dnl substitute CPPFLAGS and LIBS
