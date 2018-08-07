@@ -32,6 +32,15 @@ AC_MSG_NOTICE([CC: ${CC}])
 AC_MSG_NOTICE([CXX: ${CXX}])
 
 #
+# Check for cmake
+#
+AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake])
+
+if test x"${CMAKE_FOUND}" != x"cmake" ; then
+  AC_MSG_ERROR(Could not find cmake)
+fi
+
+#
 # Check for OpenMP
 #
 AC_OPENMP
@@ -84,50 +93,58 @@ AC_SEARCH_LIBS(fftw_plan_r2r_1d, fftw3, [fftw_ok="yes"], [fftw_ok="no"])
 
 ## If fftw3 is not found, download fftw3 and build it locally
 if test x"${fftw_ok}" = x"no"; then
-   AC_MSG_NOTICE([Need to download and build fftw3])
+  AC_MSG_NOTICE([Need to download and build fftw3])
 
-   ## define FFTW version
-   FFTW_VERSION=3.3.8
+  ## define FFTW version
+  FFTW_VERSION=3.3.8
 
-   ## define FFTW file and download URL
-   FFTW_TGZ="fftw-${FFTW_VERSION}.tar.gz"
-   FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
+  ## define FFTW file and download URL
+  FFTW_TGZ="fftw-${FFTW_VERSION}.tar.gz"
+  FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
 
-   ## C Compiler options
-   FFTW_CFLAGS=
+  ## C Compiler options
+  FFTW_CFLAGS=
 
-   ## additional C Compiler options for linking
-   FFTW_CLINKFLAGS=
+  ## additional C Compiler options for linking
+  FFTW_CLINKFLAGS=
 
-   ## Libraries necessary to link with the package
-   FFTW_LIB="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\""
+  ## Libraries necessary to link with the package
+  FFTW_LIB="-L\"$(pwd)/fftw-${FFTW_VERSION}/lib\""
 
-   ## Necessary Include dirs
-   FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
+  ## Necessary Include dirs
+  FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
 
-   ## Download fftw3 source code
-   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')")
+  ## Download fftw3 source code
+  $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')")
 
-   ## Extract fftw3 source code and remove .tar.gz
-   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${FFTW_TGZ}', exdir='$(pwd)')")
-   $(rm -rf ${FFTW_TGZ})
+  ## Extract fftw3 source code and remove .tar.gz
+  $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${FFTW_TGZ}', exdir='$(pwd)')")
+  $(rm -rf ${FFTW_TGZ})
 
-   ## Compile fftw3 source code and clean up
-   AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
-   $(cd fftw-${FFTW_VERSION}; \
-     ./configure --prefix=$(pwd) \
-                 --enable-static \
-                 --disable-shared \
-                 ${FFTW_OPENMP} \
-                 CC = ${CC} \
-                 CFLAGS=-fPIC > /dev/null; \
-     make > /dev/null; \
-     make install > /dev/null; )
+  ## Compile fftw3 source code and clean up
+  AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
 
-   AC_MSG_NOTICE([Done installing fftw3 library])
+  $(set -e; \
+    cd fftw-${FFTW_VERSION}; \
+    ./configure --prefix=$(pwd) \
+                --enable-static \
+                --disable-shared \
+                ${FFTW_OPENMP} \
+                CFLAGS=-fPIC > /dev/null; \
+    make > /dev/null; \
+    make install > /dev/null;
+  )
+
+  FFTW3_INSTALL=$?
+
+  if test x"${FFTW3_INSTALL}" != x"0" ; then
+    AC_MSG_ERROR([Could not install fftw3 library, try to install it manually?])
+  fi
+
+  AC_MSG_NOTICE([Done installing fftw3 library])
 
 else
-   AC_MSG_NOTICE([Suitable fftw3 library found.])
+  AC_MSG_NOTICE([Suitable fftw3 library found.])
 fi
 
 
@@ -172,48 +189,57 @@ AC_SEARCH_LIBS(src_simple, soxr-lsr, [lsr_ok="yes"], [lsr_ok="no"])
 
 ## If libsoxr-lsr is not found, download libsoxr and build it locally
 if test x"${lsr_ok}" = x"no"; then
-   AC_MSG_NOTICE([Need to download and build libsoxr])
+  AC_MSG_NOTICE([Need to download and build libsoxr])
 
-   ## define LSR version
-   LSR_VERSION=0.1.3
+  ## define LSR version
+  LSR_VERSION=0.1.3.9000
 
-   ## define LSR file and download URL
-   LSR_TGZ="${LSR_VERSION}.tar.gz"
-   LSR_URL="https://github.com/WavX/soxr/archive/${LSR_TGZ}"
+  ## define LSR file and download URL
+  LSR_TGZ="${LSR_VERSION}.tar.gz"
+  LSR_URL="https://github.com/WavX/soxr/archive/${LSR_TGZ}"
 
-   ## C Compiler options
-   LSR_CFLAGS=
+  ## C Compiler options
+  LSR_CFLAGS=
 
-   ## additional C Compiler options for linking
-   LSR_CLINKFLAGS=
+  ## additional C Compiler options for linking
+  LSR_CLINKFLAGS=
 
-   ## Libraries necessary to link with the package
-   LSR_LIB="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\""
+  ## Libraries necessary to link with the package
+  LSR_LIB="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\""
 
-   ## Necessary Include dirs
-   LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
+  ## Necessary Include dirs
+  LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
 
-   ## Download libsoxr source code
-   $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
+  ## Download libsoxr source code
+  $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
 
-   ## Extract libsoxr source code and remove .tar.gz
-   $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}', exdir='$(pwd)')")
-   $(rm -rf ${LSR_TGZ})
+  ## Extract libsoxr source code and remove .tar.gz
+  $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}', exdir='$(pwd)')")
+  $(rm -rf ${LSR_TGZ})
 
-   ## Compile libsoxr source code and clean up
-   AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
-   $(cd soxr-${LSR_VERSION}; \
-     cmake $(pwd) -Wno-dev -DCMAKE_BUILD_TYPE=Release \
-                  -DCMAKE_INSTALL_PREFIX=$(pwd) \
-                  -DBUILD_SHARED_LIBS=OFF \
-                  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-                  -DCMAKE_C_COMPILER=${CC} \
-                  -${LSR_OPENMP} > /dev/null; \
-     make > /dev/null; \
-     make install > /dev/null; )
-   AC_MSG_NOTICE([Done installing soxr-lsr library])
+  ## Compile libsoxr source code and clean up
+  AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
+  $(set -e; \
+    cd soxr-${LSR_VERSION}; \
+    cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=$(pwd) \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+            -Wno-dev \
+            -${LSR_OPENMP} > /dev/null;
+    make > /dev/null; \
+    make install > /dev/null;
+  )
 
-   LSR_CPPFLAGS="${LSR_INCL}"
+  LSR_INSTALL=$?
+
+  if test x"${LSR_INSTALL}" != x"0" ; then
+    AC_MSG_ERROR([Could not install soxr-lsr, try to install it manually?])
+  fi
+
+  AC_MSG_NOTICE([Done installing soxr-lsr library])
+
+  LSR_CPPFLAGS="${LSR_INCL}"
 else
    AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
 fi
