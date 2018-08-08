@@ -7,4 +7,4 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a minor fix release to make the use of OpenMP conditional and fix compilation errors on Solaris.
+* This is a minor fix release to fix compilation errors on Solaris and improve error messages in the configure script.
