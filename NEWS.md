@@ -1,3 +1,9 @@
+# version 0.1.4
+
+* Link explicitly librt on Solaris
+* Improve configure script with better error messages
+* Upgrade libsoxr-lsr to 0.1.3.9000
+
 # version 0.1.3
 
 * Add a tutorial (vignette)
