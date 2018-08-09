@@ -2,8 +2,8 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT([bioacoustics], 0.1.4) dnl package name, version
 
-# require at least autoconf 2.61
-AC_PREREQ(2.61)
+# require at least autoconf 2.62
+AC_PREREQ(2.62)
 
 dnl Now find the compiler and compiler flags to use
 : ${R_HOME=`R RHOME`}
@@ -29,7 +29,7 @@ AC_PROG_CPP
 AX_CXX_COMPILE_STDCXX_11()
 
 AC_MSG_NOTICE([CC: ${CC}])
-AC_MSG_NOTICE([CXX: ${CXX11}])
+AC_MSG_NOTICE([CXX: ${CXX}])
 
 #
 # Check for cmake
@@ -43,16 +43,20 @@ fi
 #
 # Check for OpenMP
 #
-AC_OPENMP()
+AC_OPENMP
 LSR_OPENMP="DWITH_OPENMP=OFF"
 
-if test "x$ac_cv_prog_c_openmp" != "xunsupported" \
-   && test "x$ac_cv_prog_c_openmp" != "x" \
-   && test "x$ac_cv_prog_c_openmp" != "none needed"
-then
+if test x"${OPENMP_CFLAGS}" != "x" || x"${OPENMP_CXXFLAGS}" != "x"; then
+    if test x"${OPENMP_CFLAGS}" = "x"; then
+        OPENMP_CFLAGS=${OPENMP_CXXFLAGS}
+    fi
+    
+    if test x"${OPENMP_CXXFLAGS}" = "x"; then
+        OPENMP_CXXFLAGS=${OPENMP_CFLAGS}
+    fi
+
 	FFTW_OPENMP="--enable-openmp"
 	LSR_OPENMP="DWITH_OPENMP=ON"
-	SHLIB_OPENMP_CXXFLAGS=-fopenmp
 fi
 
 #
@@ -262,7 +266,7 @@ CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
-AC_SUBST(SHLIB_OPENMP_CXXFLAGS)
+AC_SUBST(OPENMP_CXXFLAGS)
 dnl and do substitution in the src/Makevars.in
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
