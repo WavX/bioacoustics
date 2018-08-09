@@ -7,4 +7,4 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a minor fix release to fix compilation errors on Solaris and improve error messages in the configure script.
+* This is a minor fix release to fix an OpenMP failure with clang observed on CRAN's machine and properly link the OpenMP library.
