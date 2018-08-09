@@ -15,7 +15,7 @@ fi
 RBIN="${R_HOME}/bin/R"
 
 : ${CC=`"${RBIN}" CMD config CC`}
-: ${CXX=`"${RBIN}" CMD config CXX`}
+: ${CXX=`"${RBIN}" CMD config CXX11`}
 : ${CPP=`"${RBIN}" CMD config CPP`}
 : ${CFLAGS=`"${RBIN}" CMD config CFLAGS`}
 : ${CPPFLAGS=`"${RBIN}" CMD config CPPFLAGS`}
@@ -29,7 +29,7 @@ AC_PROG_CPP
 AX_CXX_COMPILE_STDCXX_11()
 
 AC_MSG_NOTICE([CC: ${CC}])
-AC_MSG_NOTICE([CXX: ${CXX}])
+AC_MSG_NOTICE([CXX: ${CXX11}])
 
 #
 # Check for cmake
@@ -43,12 +43,16 @@ fi
 #
 # Check for OpenMP
 #
-AC_OPENMP
+AC_OPENMP()
 LSR_OPENMP="DWITH_OPENMP=OFF"
 
-if test "x$ac_cv_prog_c_openmp" != "xunsupported"; then
+if test "x$ac_cv_prog_c_openmp" != "xunsupported" \
+   && test "x$ac_cv_prog_c_openmp" != "x" \
+   && test "x$ac_cv_prog_c_openmp" != "none needed"
+then
 	FFTW_OPENMP="--enable-openmp"
 	LSR_OPENMP="DWITH_OPENMP=ON"
+	SHLIB_OPENMP_CXXFLAGS=-fopenmp
 fi
 
 #
@@ -139,6 +143,10 @@ if test x"${fftw_ok}" = x"no"; then
 
   if test x"${FFTW3_INSTALL}" != x"0" ; then
     AC_MSG_ERROR([Could not install fftw3 library, try to install it manually?])
+  fi
+
+  if [[ "$LIBS" != *"lfftw3"* ]]; then
+      LIBS="$LIBS -lfftw3"
   fi
 
   AC_MSG_NOTICE([Done installing fftw3 library])
@@ -237,19 +245,15 @@ if test x"${lsr_ok}" = x"no"; then
     AC_MSG_ERROR([Could not install soxr-lsr, try to install it manually?])
   fi
 
+  if [[ "$LIBS" != *"lsoxr-lsr"* ]]; then
+      LIBS="$LIBS -lsoxr-lsr -lsoxr"
+  fi
+
   AC_MSG_NOTICE([Done installing soxr-lsr library])
 
   LSR_CPPFLAGS="${LSR_INCL}"
 else
    AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
-fi
-
-if [[ "$LIBS" != *"lfftw3"* ]]; then
-    LIBS="$LIBS -lfftw3"
-fi
-
-if [[ "$LIBS" != *"lsoxr-lsr"* ]]; then
-    LIBS="$LIBS -lsoxr-lsr -lsoxr"
 fi
 
 LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
@@ -258,6 +262,7 @@ CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
+AC_SUBST(SHLIB_OPENMP_CXXFLAGS)
 dnl and do substitution in the src/Makevars.in
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
