@@ -46,7 +46,7 @@ fi
 AC_OPENMP
 LSR_OPENMP="DWITH_OPENMP=OFF"
 
-if test x"${OPENMP_CFLAGS}" != "x" || x"${OPENMP_CXXFLAGS}" != "x"; then
+if test x"${OPENMP_CFLAGS}" != "x" || test x"${OPENMP_CXXFLAGS}" != "x"; then
     if test x"${OPENMP_CFLAGS}" = "x"; then
         OPENMP_CFLAGS=${OPENMP_CXXFLAGS}
     fi
