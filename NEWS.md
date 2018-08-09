@@ -1,3 +1,7 @@
+# version 0.1.5
+
+* Link OpenMP library properly
+
 # version 0.1.4
 
 * Link explicitly librt on Solaris
