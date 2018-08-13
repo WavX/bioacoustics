@@ -34,7 +34,7 @@ AC_MSG_NOTICE([CXX: ${CXX}])
 #
 # Check for cmake
 #
-AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake])
+AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found])
 
 if test x"${CMAKE_FOUND}" != x"cmake" ; then
   AC_MSG_ERROR(Could not find cmake)
@@ -43,18 +43,13 @@ fi
 #
 # Check for OpenMP
 #
+AC_LANG([C++])
+AC_OPENMP
+AC_LANG([C])
 AC_OPENMP
 LSR_OPENMP="DWITH_OPENMP=OFF"
 
-if test x"${OPENMP_CFLAGS}" != "x" || test x"${OPENMP_CXXFLAGS}" != "x"; then
-    if test x"${OPENMP_CFLAGS}" = "x"; then
-        OPENMP_CFLAGS=${OPENMP_CXXFLAGS}
-    fi
-    
-    if test x"${OPENMP_CXXFLAGS}" = "x"; then
-        OPENMP_CXXFLAGS=${OPENMP_CFLAGS}
-    fi
-
+if test x"${OPENMP_CFLAGS}" != "x"; then
 	FFTW_OPENMP="--enable-openmp"
 	LSR_OPENMP="DWITH_OPENMP=ON"
 fi
@@ -235,11 +230,11 @@ if test x"${lsr_ok}" = x"no"; then
     cd soxr-${LSR_VERSION}; \
     CC="${CC}" \
     cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=$(pwd) \
-            -DBUILD_SHARED_LIBS=OFF \
-            -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-            -Wno-dev \
-            -${LSR_OPENMP} > /dev/null;
+                 -DCMAKE_INSTALL_PREFIX=$(pwd) \
+                 -DBUILD_SHARED_LIBS=OFF \
+                 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+                 -Wno-dev \
+                 -${LSR_OPENMP} > /dev/null;
     make > /dev/null; \
     make install > /dev/null;
   )
