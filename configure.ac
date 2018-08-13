@@ -233,6 +233,7 @@ if test x"${lsr_ok}" = x"no"; then
   AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
   $(set -e; \
     cd soxr-${LSR_VERSION}; \
+    CC="${CC}" \
     cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=$(pwd) \
             -DBUILD_SHARED_LIBS=OFF \
