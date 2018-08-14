@@ -6,22 +6,42 @@ AC_INIT([bioacoustics], 0.1.5) dnl package name, version
 AC_PREREQ(2.62)
 
 dnl Now find the compiler and compiler flags to use
-: ${R_HOME=`R RHOME`}
+: ${R_HOME=$(R RHOME)}
 if test -z "${R_HOME}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
 
 RBIN="${R_HOME}/bin/R"
+RVER=$("${R_HOME}/bin/Rscript" -e 'cat((R.version)$major, (R.version)$minor, sep=".")')
 
-: ${CC=`"${RBIN}" CMD config CC`}
-: ${CXX=`"${RBIN}" CMD config CXX11`}
-: ${CPP=`"${RBIN}" CMD config CPP`}
-: ${CFLAGS=`"${RBIN}" CMD config CFLAGS`}
-: ${CPPFLAGS=`"${RBIN}" CMD config CPPFLAGS`}
-: ${LDFLAGS=`"${RBIN}" CMD config LDFLAGS`}
+: ${CC=$("${RBIN}" CMD config CC)}
+: ${CPP=$("${RBIN}" CMD config CPP)}
+: ${CFLAGS=$("${RBIN}" CMD config CFLAGS)}
+: ${CPPFLAGS=$("${RBIN}" CMD config CPPFLAGS)}
+: ${LDFLAGS=$("${RBIN}" CMD config LDFLAGS)}
+
+if test [ -z "$CXX" ] ; then
+	CXX11=CXX11
+	AS_VERSION_COMPARE([${RVER}], [3.4.0], [CXX11=CXX1X], [], [])
+	CXX11=$("${RBIN}" CMD config "${CXX11}")
+fi
+
+if test [ -z "$CXX11STD" ] ; then
+	if test [ -z "$CXX1XSTD"]
+	then
+		CXX11STD=CXX11STD
+		AS_VERSION_COMPARE([${RVER}], [3.4.0], [CXX11STD=CXX1XSTD], [], [])
+		CXX11STD=$("${RBIN}" CMD config "${CXX11STD}")
+	else
+		CXX11STD=CXX1XSTD
+	fi
+fi
+
+: ${CXX="${CXX11} ${CXX11STD}"}
+
 AC_PROG_CC
-AC_PROG_CPP
+AC_PROG_CXX
 
 #
 # Check if compiler supports C++11 features
@@ -86,7 +106,7 @@ else
      FFTW_LIB="-L${LIB_FFTW}/lib"
   else
     if test -n "${FFTW_CONFIG}"; then
-      fftw_lib_path=`fftw_config --libs`
+      fftw_lib_path=$(fftw_config --libs)
       FFTW_LIB="${fftw_lib_path}"
     fi
   fi
@@ -186,7 +206,7 @@ else
      LSR_LIB="-L${LIB_LSR}/lib"
   else
     if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=`lsr_config --libs`
+      lsr_lib_path=$(lsr_config --libs)
       LSR_LIB="${lsr_lib_path}"
     fi
   fi
@@ -258,10 +278,12 @@ fi
 
 LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
 CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
+CXXFLAGS="${CXXFLAGS} ${CXX11STD}"
 
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
+AC_SUBST(CXXFLAGS)
 AC_SUBST(OPENMP_CXXFLAGS)
 dnl and do substitution in the src/Makevars.in
 AC_CONFIG_FILES([src/Makevars])
