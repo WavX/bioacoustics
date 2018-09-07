@@ -314,7 +314,7 @@ The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24
 ## See also
 ```{r see_also, eval=FALSE}
 # Package tutorial
-browseVignettes("tutorial", package = "bioacoustics")
+vignette("tutorial", package = "bioacoustics")
 ```
 
 Table 1. Example of detection, filtering and extraction settings with the `threshold_detection` function for eastern canadian bats and calls of Bicknell's Thrush (*Catharus bicknelii*).
