@@ -14,7 +14,7 @@ output:
     toc: yes
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{bioacoustics} 
+  %\VignetteIndexEntry{Introduction to bioacoustics} 
   %\VignetteEngine{knitr::knitr} 
   %\VignetteEncoding{UTF-8}
 ---
