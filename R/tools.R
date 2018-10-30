@@ -16,9 +16,14 @@
 
 mp3_to_wav <- function(file, output_dir = dirname(file), delete = FALSE)
 {
+  mp3 <- tuneR::readMP3(file)
+
+  extensible <- if (slot(mp3, "samp.rate") > 44100) TRUE else FALSE
+
   tuneR::writeWave(
-    object = tuneR::readMP3(file),
-    filename = file.path(output_dir, basename(paste0(tools::file_path_sans_ext(file), ".wav")))
+    object = mp3,
+    file = file.path(output_dir, basename(paste0(tools::file_path_sans_ext(file), ".wav"))),
+    extensible = extensible
   )
 
   if (delete)
