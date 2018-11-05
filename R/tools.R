@@ -56,4 +56,4 @@ rotate90 <- function(m) t(m)[,NROW(m):1]
 #' @rdname to_dB
 #'
 
-to_dB <- function(x, ref) pmax(20 * log10(x / ref), -120)
+to_dB <- function(x, ref = 1) 20 * log10(x / ref)
