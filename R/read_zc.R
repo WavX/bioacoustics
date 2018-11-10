@@ -118,13 +118,20 @@ read_zc <- function(filename)
           if (grepl(x, pattern = "[:]"))
           {
             tmp2 <- strsplit(x, "[\n]")[[1]]
-            tmp2 <- tmp2[tmp2 != "Anabat"]
+            tmp2 <- tmp2[!tmp2 %in% c("Anabat", "WA")]
 
             tmp3 <- lapply(tmp2, function(x) strsplit(x, "[:]")[[1]])
             setNames(unlist(lapply(tmp3, "[[", 2)), unlist(lapply(tmp3, "[[", 1)))
           }
+          else if (x == "Kaleidoscope")
+          {
+            NULL
+          }
           else
-            setNames(list(NULL), x))
+          {
+            setNames(list(NULL), x)
+          }
+        )
       }
 
       names(tmp)[1] <- paste0(splitted[1L], "|", names(tmp)[1L])
