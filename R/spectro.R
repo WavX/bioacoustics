@@ -101,12 +101,14 @@ fspec <- function(wave,
     }
   }
 
+  bit_depth <- slot(wave, "bit")
+
   to_dB(
     .fspec_impl(
       audio_samples, FFT_size, FFT_overlap, FFT_win,
       HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate = rotate
     ),
-    ref = 2 ^ (slot(wave, "bit") - 1)
+    ref = 2^(bit_depth - 1) # dBFS scale
   )
 }
 

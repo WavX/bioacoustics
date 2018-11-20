@@ -80,6 +80,7 @@ inline
     for (size_t i = 1; i < size / 2; i++)
     {
       magnitude[i] = std::abs(std::complex<double>(transformed[i], transformed[--seek])) * normalise;
+      magnitude[i] *= 2; // We are using half of the spectrum so we need to multiply by 2
     }
   }
 

@@ -42,7 +42,7 @@ void FFT::set_plan(const size_t &size)
 void FFT::set_window(const WIN_TYPE& win_type)
 {
   window.resize(size, 0);
-  z = 8.0 * std::atan(1.0) / (size-1);
+  z = 4.0 * std::atan(1.0) / (size-1);
 
   switch(win_type)
   {
