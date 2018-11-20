@@ -51,7 +51,7 @@ Rcpp::NumericMatrix fspec_impl(const std::vector<int>& audio_samples,
       for (size_t i = LPF_bin + 1; i-- > HPF_bin;)
       {
         double x = fft.magnitude[i];
-        mat(j, i - HPF_bin) = x < 1e-16 ? 1e-16 : x;
+        mat(j, i - HPF_bin) = x;
       }
     }
 
@@ -68,7 +68,7 @@ Rcpp::NumericMatrix fspec_impl(const std::vector<int>& audio_samples,
       for (size_t i = LPF_bin + 1; i-- > HPF_bin;)
       {
         double x = fft.magnitude[i];
-        mat(n_rows - i + k, j) = x < 1e-16 ? 1e-16 : x;
+        mat(n_rows - i + k, j) = x;
       }
     }
 
