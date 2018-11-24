@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.1.5) dnl package name, version
+AC_INIT([bioacoustics], 0.1.6) dnl package name, version
 
 # require at least autoconf 2.62
 AC_PREREQ(2.62)
@@ -277,11 +277,13 @@ else
 fi
 
 LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
-CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
+CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL}"
+CFLAGS="${CFLAGS} -O3 -march=native -mtune=native"
 CXXFLAGS="${CXXFLAGS} ${CXX11STD}"
 
 dnl substitute CPPFLAGS and LIBS
 AC_SUBST(CPPFLAGS)
+AC_SUBST(CFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(CXXFLAGS)
 AC_SUBST(OPENMP_CXXFLAGS)
