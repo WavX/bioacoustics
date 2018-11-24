@@ -142,10 +142,7 @@ blob_detection <- function(wave,
                 png(file.path(spectro_dir, png_file), width = (((1 - FFT_overlap) * FFT_size) / sample_rate * 1000) * ncol(blobs[[2]][[i]]) / time_scale)
                 par(mar = rep_len(0L,4L), oma = c(.1,.1,.1,.1))
 
-                db <- to_dB(rotate90(blobs[[2]][[i]]))
-                db <- pmax(db, max(db) - 90) # Use a 90 dB dynamic range
-
-                .spectro(data = db, colors = gray.colors(25, 1, 0))
+                .spectro(data = to_dB(rotate90(blobs[[2]][[i]])), colors = gray.colors(25, 1, 0))
                 lgd <- legend('topright', legend = NA, inset = 0, box.col = NA)
                 text(x = lgd$rect$left + min(lgd$rect$w, 1) / 2L, y = lgd$text$y, labels = i, adj = .5)
                 if (ticks)
