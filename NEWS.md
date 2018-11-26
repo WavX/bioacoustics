@@ -1,8 +1,9 @@
 # version 0.1.6
 
 * Internal fixes
-  * Fix magnitude calculation
   * Fix compiler flags
+  * Fix magnitude calculation
+  * Fix tutorial vignette
   * Update ZC metadata reader for ZC generated with new version of Kaleidoscope
 
 # version 0.1.5
