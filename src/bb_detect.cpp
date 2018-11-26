@@ -174,4 +174,4 @@ void detect_impl (const std::vector<int> &audio_samples,
     }
     background_noise_filtered_prev = background_noise_filtered_new;
   }
-};
+}

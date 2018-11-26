@@ -44,7 +44,7 @@ Analyse::Analyse(const std::vector<int> &audio_samples,
   end_t(end_t),
   angl_t(angl_t),
   snr_t(snr_t)
-  {};
+  {}
 
 Audio_Event Analyse::impl(const size_t &fft_size,
                           const int &peak_location,
