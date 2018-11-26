@@ -14,7 +14,7 @@ output:
     toc: yes
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{Tutorial} 
+  %\VignetteIndexEntry{Tutorial: Detection, Extraction and Classification of Bird and Bat Vocalizations in R} 
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::knitr} 
 ---
