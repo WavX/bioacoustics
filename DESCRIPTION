@@ -6,6 +6,7 @@ Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c(
              person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
              person("Christopher", "Scott", role = "aut"),
              person("Chris", "Corben", role = c("ctb", "cph"), email = "chris@hoarybat.com", comment = "Read ZC files, original C code"),
+             person("David", "Riggs", role = c("ctb", "cph"), email = "driggs@myotisoft.com", comment = "Read GUANO metadata, original R code"),
              person("Peter", "Wilson", role = c("ctb", "cph"), email = "peter@peterwilson.id.au", comment = "Read ZC files, original R code"),
              person(family = "Wildlife Acoustics, Inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
              person(family = "WavX Inc.", role = "cph"))
