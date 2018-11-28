@@ -107,36 +107,76 @@ read_zc <- function(filename)
     {
       # Parse GUANO data
       raw <- rawToChar(as.raw(zc$raw_data[(0x150+1):(p - 1)]))
-      splitted <- strsplit(raw, "[|]")[[1]]
+      split <- strsplit(raw, "[|]")[[1]]
 
-      tmp <- list()
-
-      for (x in splitted[-1])
+      try_coerce_to_numeric <- function(x)
       {
-        tmp <- c(
-          tmp,
+        suppressWarnings(y <- as.numeric(x))
+        ifelse(is.na(y) | grepl("[.]0$", x), x, y)
+      }
+
+      format_val <- function(val_split)
+      {
+        clean <- gsub("[\"]|[[]|[{]|[}]|[]]", "", val_split)
+
+        is_uneven <- as.logical(1:length(clean) %% 2)
+
+        setNames(
+          lapply(clean[!is_uneven], try_coerce_to_numeric),
+          clean[is_uneven]
+        )
+      }
+
+      tmp <- lapply(
+        split[split != "Kaleidoscope"][-1],
+        function(x)
+        {
           if (grepl(x, pattern = "[:]"))
           {
-            tmp2 <- strsplit(x, "[\n]")[[1]]
-            tmp2 <- tmp2[!tmp2 %in% c("Anabat", "WA")]
+            tmp2 <- strsplit(x, "[\n]")[[1L]]
+            tmp2 <- tmp2[!tmp2 %in% c("Anabat", "SB", "WA")]
 
-            tmp3 <- lapply(tmp2, function(x) strsplit(x, "[:]")[[1]])
-            setNames(unlist(lapply(tmp3, "[[", 2)), unlist(lapply(tmp3, "[[", 1)))
-          }
-          else if (x == "Kaleidoscope")
-          {
-            NULL
+            tmp3 <- lapply(
+              tmp2,
+              function(x)
+              {
+                split <- strsplit(x, "[:]")[[1L]]
+
+                if (length(split) > 2L)
+                {
+                  if (grepl("^[[][{]", val <- paste(split[-1], collapse = ":")))
+                  {
+                    val_split <- strsplit(val, "[:]|[,]")[[1L]]
+                    val <- format_val(val_split)
+                  }
+                  else if (grepl("^[{]", val))
+                  {
+                    val_split <- strsplit(val, '(\\[[^)]*\\](*SKIP)(*F)|\\,)|\\:', perl = TRUE)[[1L]]
+                    val <- format_val(val_split)
+                  }
+
+                  return( setNames(list(val), split[1L]) )
+                }
+                else
+                {
+                  return( setNames(list(try_coerce_to_numeric(split[2L])), split[1L]) )
+                }
+              }
+            )
+
+            unlist(tmp3, recursive = FALSE)
           }
           else
           {
             setNames(list(NULL), x)
           }
-        )
-      }
+        }
+      )
 
-      names(tmp)[1] <- paste0(splitted[1L], "|", names(tmp)[1L])
+      tmp <- unlist(tmp, recursive = FALSE)
+      names(tmp)[1L] <- paste0(split[1L], "|", names(tmp)[1L])
 
-      zc$metadata$GUANO <- as.list(tmp)
+      zc$metadata$GUANO <- tmp
     }
 
     # Read data from file types 130, 131 & 132
