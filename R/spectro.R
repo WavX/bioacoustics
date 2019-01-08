@@ -103,12 +103,16 @@ fspec <- function(wave,
 
   bit_depth <- slot(wave, "bit")
 
-  to_dB(
+  mag_db <- to_dB(
     .fspec_impl(
       audio_samples, FFT_size, FFT_overlap, FFT_win,
       HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate = rotate
-    ),
-    ref = 2^(bit_depth - 1) # dBFS scale
+    )
+  )
+
+  pmax(
+    mag_db - max(mag_db), # Normalise to 0 dB
+    -120                  # Clip to [0, -120] dB
   )
 }
 
