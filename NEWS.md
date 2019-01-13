@@ -1,3 +1,8 @@
+# version 0.1.7
+
+* Update
+  * fspec gains one argument: to_dB
+
 # version 0.1.6
 
 * Internal fixes

@@ -1,6 +1,6 @@
 #' Generate spectrograms
 #'
-#' This function returns the spectrographic representation of a time wave in decibels (dB) using the Fast Fourier transform (FFT).
+#' This function returns the spectrographic representation of a time wave in the absolute scale or in decibels (dB) using the Fast Fourier transform (FFT).
 #'
 #' @param wave a \link[tuneR]{Wave} object.
 #'
@@ -25,10 +25,12 @@
 #' @param flim numeric. Specify the frequency limits on the Y-axis in Hz. Default
 #' setting is \code{NULL}, i.e. frequency limits are equal to \code{c(0, LPF)}.
 #'
+#' @param to_dB logical. Convert magnitude values to decibels (dB)? Default is \code{TRUE}.
+#'
 #' @param rotate logical. Should the matrix be rotated 90° counter clockwise ?
 #' Default setting is \code{FALSE}.
 #'
-#' @return A matrix of decibel (dB) values in the time / frequency domain.
+#' @return A matrix of amplitude or decibel (dB) values in the time / frequency domain.
 #'
 #' @examples
 #' data(myotis)
@@ -47,7 +49,8 @@ fspec <- function(wave,
                   HPF = 0,
                   tlim = NULL,
                   flim = NULL,
-                  rotate = FALSE)
+                  rotate = FALSE,
+                  to_dB = TRUE)
 {
   sample_rate <- slot(wave, "samp.rate")
   audio_samples <- slot(wave, channel)
@@ -86,34 +89,32 @@ fspec <- function(wave,
       warning("'flim[2]' was above the Nyquist, reset to the Nyquist")
     }
 
-    FLL_bin = max(floor(flim[1L] * FFT_size / sample_rate), 0);
+    FLL_bin = max(floor(flim[1L] * FFT_size / sample_rate), 0)
 
     if (flim[1L] > HPF)
     {
-      HPF_bin = FLL_bin;
+      HPF_bin = FLL_bin
     }
 
-    FUL_bin = min(ceiling(flim[2L] * FFT_size / sample_rate), FFT_size / 2 - 1);
+    FUL_bin = min(ceiling(flim[2L] * FFT_size / sample_rate), FFT_size / 2 - 1)
 
     if (flim[2L] < LPF)
     {
-      LPF_bin = FUL_bin;
+      LPF_bin = FUL_bin
     }
   }
 
   bit_depth <- slot(wave, "bit")
 
-  mag_db <- to_dB(
-    .fspec_impl(
-      audio_samples, FFT_size, FFT_overlap, FFT_win,
-      HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate = rotate
-    )
+  mag <- .fspec_impl(
+    audio_samples, FFT_size, FFT_overlap, FFT_win,
+    HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate = rotate
   )
 
-  pmax(
-    mag_db - max(mag_db), # Normalise to 0 dB
-    -120                  # Clip to [0, -120] dB
-  )
+  if (to_dB)
+    mag <- to_dB(mag)
+
+  mag
 }
 
 #' @importFrom graphics image plot
@@ -180,6 +181,11 @@ spectro <- function(wave,
                 tlim = tlim,
                 flim = flim,
                 rotate = TRUE)
+
+  spec <- pmax(
+    spec - max(spec), # Normalise to 0 dB
+    -120              # Clip to [0, -120] dB
+  )
 
   .spectro(spec, col)
 
