@@ -18,7 +18,7 @@ Description: Contains all the necessary tools to process audio recordings of
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-SystemRequirements: C++11, cmake
+SystemRequirements: C++11, cmake, GNU make
 Depends: R (>= 3.3.0)
 LinkingTo: Rcpp
 Imports: 
