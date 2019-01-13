@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.1.6) dnl package name, version
+AC_INIT([bioacoustics], 0.1.7) dnl package name, version
 
 # require at least autoconf 2.62
 AC_PREREQ(2.62)
@@ -73,6 +73,14 @@ if test x"${OPENMP_CFLAGS}" != "x"; then
 	FFTW_OPENMP="--enable-openmp"
 	LSR_OPENMP="DWITH_OPENMP=ON"
 fi
+
+#
+# Check if MAKE is set, if not set to make
+#
+if test -z "${MAKE}"; then
+  MAKE = make
+fi
+
 
 #
 # fftw
@@ -154,8 +162,8 @@ if test x"${fftw_ok}" = x"no"; then
                 --disable-shared \
                 ${FFTW_OPENMP} \
                 CFLAGS=-fPIC > /dev/null; \
-    make > /dev/null; \
-    make install > /dev/null;
+    ${MAKE} > /dev/null; \
+    ${MAKE} install > /dev/null;
   )
 
   FFTW3_INSTALL=$?
@@ -255,8 +263,8 @@ if test x"${lsr_ok}" = x"no"; then
                  -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
                  -Wno-dev \
                  -${LSR_OPENMP} > /dev/null;
-    make > /dev/null; \
-    make install > /dev/null;
+    ${MAKE} > /dev/null; \
+    ${MAKE} install > /dev/null;
   )
 
   LSR_INSTALL=$?

@@ -6,7 +6,7 @@
 \usage{
 fspec(wave, channel = "left", FFT_size = 256, FFT_overlap = 0.875,
   FFT_win = "hann", LPF, HPF = 0, tlim = NULL, flim = NULL,
-  rotate = FALSE)
+  rotate = FALSE, to_dB = TRUE)
 }
 \arguments{
 \item{wave}{a \link[tuneR]{Wave} object.}
@@ -34,12 +34,14 @@ setting is \code{NULL}, i.e. frequency limits are equal to \code{c(0, LPF)}.}
 
 \item{rotate}{logical. Should the matrix be rotated 90° counter clockwise ?
 Default setting is \code{FALSE}.}
+
+\item{to_dB}{logical. Convert magnitude values to decibels? Default is \code{TRUE}.}
 }
 \value{
-A matrix of decibel (dB) values in the time / frequency domain.
+A matrix of amplitude or decibel (dB) values in the time / frequency domain.
 }
 \description{
-This function returns the spectrographic representation of a time wave in decibels (dB) using the Fast Fourier transform (FFT).
+This function returns the spectrographic representation of a time wave in the absolute scale or in decibels (dB) using the Fast Fourier transform (FFT).
 }
 \examples{
 data(myotis)
