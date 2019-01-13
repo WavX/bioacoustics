@@ -3,6 +3,9 @@
 * Update
   * fspec gains one argument: to_dB
 
+* Internal fixes
+  * Make sure we use GNU make
+
 # version 0.1.6
 
 * Internal fixes
