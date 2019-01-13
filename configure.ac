@@ -131,7 +131,7 @@ if test x"${fftw_ok}" = x"no"; then
 
   ## define FFTW file and download URL
   FFTW_TGZ="fftw-${FFTW_VERSION}.tar.gz"
-  FFTW_URL="ftp://ftp.fftw.org/pub/fftw/${FFTW_TGZ}"
+  FFTW_URL="http://fftw.org/${FFTW_TGZ}"
 
   ## C Compiler options
   FFTW_CFLAGS=
