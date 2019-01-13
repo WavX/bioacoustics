@@ -4,7 +4,7 @@
 \alias{to_dB}
 \title{Convert to dB}
 \usage{
-to_dB(x, ref)
+to_dB(x, ref = 1)
 }
 \arguments{
 \item{x}{numeric. Vector of amplitude values (V1).}

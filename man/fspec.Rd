@@ -35,7 +35,7 @@ setting is \code{NULL}, i.e. frequency limits are equal to \code{c(0, LPF)}.}
 \item{rotate}{logical. Should the matrix be rotated 90° counter clockwise ?
 Default setting is \code{FALSE}.}
 
-\item{to_dB}{logical. Convert magnitude values to decibels? Default is \code{TRUE}.}
+\item{to_dB}{logical. Convert magnitude values to decibels (dB)? Default is \code{TRUE}.}
 }
 \value{
 A matrix of amplitude or decibel (dB) values in the time / frequency domain.
