@@ -1,6 +1,5 @@
 ## Release summary
-* Fix compiler flags
-* Internal fixes for the package
+* Fix the use of GNU make
 
 ## Test environments
 * OS X install (on travis-ci), R release
