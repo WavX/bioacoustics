@@ -227,7 +227,7 @@ if test x"${lsr_ok}" = x"no"; then
   AC_MSG_NOTICE([Need to download and build libsoxr])
 
   ## define LSR version
-  LSR_VERSION=0.1.3.9001
+  LSR_VERSION=0.1.3.9002
 
   ## define LSR file and download URL
   LSR_TGZ="${LSR_VERSION}.tar.gz"
