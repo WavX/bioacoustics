@@ -1,5 +1,38 @@
 #' Internal function
 #'
+#' Parse ISO 8601 subset timestamps
+#'
+#' @param str a string
+#'
+#' @keywords internal
+#'
+.parse.timestamp <- function(str)
+{
+  if (is.na(str) || is.null(str) || str == "")
+  {
+    return(NA)
+  }
+  else if (endsWith(str, "Z"))
+  {
+    # UTC
+    return(strptime(str, "%Y-%m-%dT%H:%M:%S", tz = "UTC"))
+  }
+  else if (length(gregexpr(":", str)[[1]]) == 3) {
+    # UTC offset
+    len <- nchar(str)
+    str <- paste(substr(str, 1, len-3), substr(str, len-1, len), sep = "")
+    return(strptime(str, "%Y-%m-%dT%H:%M:%S%z"))
+  }
+  else
+  {
+    # local
+    return(strptime(str, "%Y-%m-%dT%H:%M:%S"))
+  }
+}
+
+
+#' Internal function
+#'
 #' Performs various check on files
 #'
 #' @param file path to a file
