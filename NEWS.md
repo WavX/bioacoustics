@@ -1,9 +1,14 @@
 # version 0.1.7.9000
+
 * Update
   * threshold_detection gains one argument: max_TBE
   * threshold_detection TBE becomes min_TBE
   * blob_detection gains one argument: max_TBE
   * blob_detection TBE becomes min_TBE
+  
+* New features
+  * Add a metadata function
+  * Extraction of GUANO metadata is now implemented
 
 # version 0.1.7
 
