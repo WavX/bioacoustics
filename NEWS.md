@@ -2,6 +2,8 @@
 * Update
   * threshold_detection gains one argument: max_TBE
   * threshold_detection TBE becomes min_TBE
+  * blob_detection gains one argument: max_TBE
+  * blob_detection TBE becomes min_TBE
 
 # version 0.1.7
 
