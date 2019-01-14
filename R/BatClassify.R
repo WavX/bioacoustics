@@ -40,7 +40,8 @@ blob_detection <- function(wave,
                            min_dur = 1.5,
                            max_dur = 80,
                            min_area = 40,
-                           TBE = 20,
+                           min_TBE = 20,
+                           max_TBE = 1000,
                            EDG = .9,
                            LPF,
                            HPF = 16000,
@@ -72,20 +73,23 @@ blob_detection <- function(wave,
   else
     LPF <- min(LPF, sample_rate / 2)
 
-  blobs <- blob_detection_impl(audio_samples = slot(wave, channel <- ifelse(slot(wave, 'stereo'), channel, 'left')),
-                               sample_rate = sample_rate,
-                               LPF = LPF,
-                               HPF = HPF,
-                               TBE = TBE,
-                               EDG = EDG,
-                               FFT_size = FFT_size,
-                               FFT_overlap = FFT_overlap,
-                               min_d = min_dur,
-                               max_d = max_dur,
-                               area = min_area,
-                               blur_f = blur,
-                               bg_substract = bg_substract,
-                               boost = contrast_boost)
+  blobs <- blob_detection_impl(
+    audio_samples = slot(wave, channel <- ifelse(slot(wave, 'stereo'), channel, 'left')),
+    sample_rate = sample_rate,
+    LPF = LPF,
+    HPF = HPF,
+    min_TBE = min_TBE,
+    max_TBE = max_TBE,
+    EDG = EDG,
+    FFT_size = FFT_size,
+    FFT_overlap = FFT_overlap,
+    min_d = min_dur,
+    max_d = max_dur,
+    area = min_area,
+    blur_f = blur,
+    bg_substract = bg_substract,
+    boost = contrast_boost
+  )
 
   if (length(blobs) == 0)
   {
@@ -179,12 +183,13 @@ blob_detection <- function(wave,
         min_area = min_area,
         LPF = LPF,
         HPF = HPF,
+        min_TBE = min_TBE,
+        max_TBE = max_TBE,
         EDG = EDG,
         FFT_size = FFT_size,
         FFT_overlap = FFT_overlap,
         blur = blur,
         bg_substract = bg_substract,
-        EDG = EDG,
         contrast_boost = contrast_boost,
         stringsAsFactors = FALSE
       )
