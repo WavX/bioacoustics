@@ -1,3 +1,53 @@
+#' Internal function
+#'
+#' Performs various check on files
+#'
+#' @param file path to a file
+#'
+#' @keywords internal
+#'
+file_checks <- function(file)
+{
+  if(!is.character(file))
+    stop("'file' must be of type character.")
+
+  if(length(file) != 1)
+    stop("Please specify exactly one file.")
+
+  if(!file.exists(file))
+    stop("File '", file, "' does not exist.")
+
+  if(file.access(file, 4))
+    stop("No read permission for file ", file)
+}
+
+#' Internal function
+#'
+#' Determine the file extension
+#'
+#' @param file path to a file
+#'
+#' @keywords internal
+#'
+file_type_guess <- function(file)
+{
+  file_checks(file)
+  ext <- tools::file_ext(file)
+
+  if(grepl(ext, pattern = "zc$|[0-9]{2}#$", ignore.case = TRUE))
+  {
+    return("zc")
+  }
+  else if (grepl(ext, pattern = "wav", ignore.case = TRUE))
+  {
+    return("wav")
+  }
+  else
+  {
+    stop("File type Could not be guessed.")
+  }
+}
+
 #' Convert MP3 to WAV
 #'
 #' Convert an MP3 file to a Wave file
@@ -16,6 +66,8 @@
 
 mp3_to_wav <- function(file, output_dir = dirname(file), delete = FALSE)
 {
+  file_checks(file)
+
   mp3 <- tuneR::readMP3(file)
 
   extensible <- if (slot(mp3, "samp.rate") > 44100) TRUE else FALSE
