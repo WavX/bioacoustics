@@ -29,7 +29,7 @@
 #' @examples
 #' data(myotis)
 #' Output <- blob_detection(myotis, time_exp = 10, contrast_boost = 30, bg_substract = 30)
-#' Output$event_data
+#' Output$data
 #'
 #' @rdname blob_detection
 #'
@@ -69,7 +69,7 @@ blob_detection <- function(wave,
   )
 
   sample_rate <- slot(wave, 'samp.rate') * time_exp
-  n_bits <- slot(wave, 'bit')
+  bit_depth <- slot(wave, 'bit')
 
   if(missing(LPF))
     LPF <- sample_rate / 2
@@ -106,11 +106,6 @@ blob_detection <- function(wave,
   }
   else
   {
-    audio_events <- list( event_data = blobs[[1L]] )
-
-    if (!acoustic_feat)
-      audio_events$event_data <- audio_events$event_data[, c('starting_time', 'duration')]
-
     if ( !is.null(spectro_dir) )
     {
       if ( !dir.exists(file.path(spectro_dir, 'spectrograms')) )
@@ -172,17 +167,42 @@ blob_detection <- function(wave,
       utils::browseURL(file.path(spectro_dir, html_file)) # Open html page on favorite browser
     }
 
+    if (!acoustic_feat)
+      blobs[[1L]] <- blobs[[1L]][, c('starting_time', 'duration')]
+
+    # Add info about filename if available
+    blobs[[1L]] <- cbind(
+      data.frame(
+        filename = basename(filename),
+        stringsAsFactors = FALSE
+      ),
+      blobs[[1L]]
+    )
+
+    output <- list( data = blobs[[1L]] )
+
     if (metadata)
     {
-      audio_events$metadata <- list(
-        sample_rate = sample_rate,
-        n_bits = n_bits
-      )
+      if (!is.null(attr(wave, "metadata")))
+      {
+        output$metadata <- metadata(wave)
+      }
+      else
+      {
+        if (!is.null(filepath))
+        {
+          output$metadata$file$sample_rate <- sample_rate
+          output$metadata$file$bit_depth <- bit_depth
+
+          if (length(guano_md <- guano_md(filepath)) > 0)
+            output$metadata$guano <- guano_md
+        }
+      }
     }
 
     if (settings)
     {
-      audio_events$settings$blob_detection <- data.frame(
+      output$metadata$settings_blob_detection <- list(
         channel = channel,
         min_dur = min_dur,
         max_dur = max_dur,
@@ -201,12 +221,8 @@ blob_detection <- function(wave,
       )
     }
 
-    # Add info about filename if x is a file path
-    if (!is.null(filename))
-      audio_events$event_data <- cbind(data.frame(filename = filename), audio_events$event_data)
+    class(output) <- "blob_detection"
 
-    class(audio_events) <- c(class(audio_events), "blob_detection")
-
-    return(audio_events)
+    return(output)
   }
 }
