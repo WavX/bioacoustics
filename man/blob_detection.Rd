@@ -5,10 +5,11 @@
 \title{Blob detection of a region of interest into a spectrographic representation of the recording}
 \usage{
 blob_detection(wave, channel = "left", time_exp = 1, min_dur = 1.5,
-  max_dur = 80, min_area = 40, TBE = 20, EDG = 0.9, LPF, HPF = 16000,
-  FFT_size = 256, FFT_overlap = 0.875, blur = 2, bg_substract = 20,
-  contrast_boost = 20, settings = FALSE, acoustic_feat = TRUE,
-  metadata = FALSE, spectro_dir = NULL, time_scale = 0.1, ticks = TRUE)
+  max_dur = 80, min_area = 40, min_TBE = 20, max_TBE = 1000,
+  EDG = 0.9, LPF, HPF = 16000, FFT_size = 256, FFT_overlap = 0.875,
+  blur = 2, bg_substract = 20, contrast_boost = 20,
+  settings = FALSE, acoustic_feat = TRUE, metadata = FALSE,
+  spectro_dir = NULL, time_scale = 0.1, ticks = TRUE)
 }
 \arguments{
 \item{wave}{either a path to a file, or a \link[tuneR]{Wave} object.
@@ -32,8 +33,11 @@ Extracted audio events longer than this threshold are ignored. The default setti
 Extracted segments with an area shorter than this threshold are discarded.
 Default setting is 40 pixels.}
 
-\item{TBE}{numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
+\item{min_TBE}{numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
 successive audio events is shorter than this window, they are ignored. The default setting is 20 ms.}
+
+\item{max_TBE}{numeric. Maximum time window between two audio events in milliseconds (ms). If the time interval between two
+successive audio events is longer than this window, they are ignored. The default setting is 1000 ms.}
 
 \item{EDG}{numeric. Exponential Decay Gain from 0 to 1. Sets the degree of temporal masking at the end of each audio event.
 This filter avoids extracting noise or echoes at the end of the audio event. The default setting is 0.996.}
@@ -86,6 +90,6 @@ It combines several algorithms for detection, filtering and audio feature extrac
 \examples{
 data(myotis)
 Output <- blob_detection(myotis, time_exp = 10, contrast_boost = 30, bg_substract = 30)
-Output$event_data
+Output$data
 
 }

@@ -4,10 +4,10 @@
 \alias{read_mp3}
 \title{Read MP3 files}
 \usage{
-read_mp3(filename, time_exp = 1, ...)
+read_mp3(file, time_exp = 1, ...)
 }
 \arguments{
-\item{filename}{a MP3 file.}
+\item{file}{a MP3 file.}
 
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}

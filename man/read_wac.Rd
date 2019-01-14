@@ -4,10 +4,10 @@
 \alias{read_wac}
 \title{Read WAC files from Wildlife Acoustics recorders}
 \usage{
-read_wac(filename, time_exp = 1, write_wav = NULL, ...)
+read_wac(file, time_exp = 1, write_wav = NULL, ...)
 }
 \arguments{
-\item{filename}{a WAC file.}
+\item{file}{a WAC file.}
 
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}

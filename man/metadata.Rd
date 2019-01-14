@@ -2,19 +2,32 @@
 % Please edit documentation in R/metadata.R
 \name{metadata}
 \alias{metadata}
-\alias{metadata.threshold_detection}
+\alias{metadata.character}
 \alias{metadata.blob_detection}
+\alias{metadata.threshold_detection}
+\alias{metadata.zc}
 \title{Extract metadata}
 \usage{
-metadata(x)
+metadata(x, ...)
 
-\method{metadata}{threshold_detection}(x)
+\method{metadata}{character}(x, file_type = c(file_type_guess(x), "wav",
+  "zc"), ...)
 
-\method{metadata}{blob_detection}(x)
+\method{metadata}{blob_detection}(x, ...)
+
+\method{metadata}{threshold_detection}(x, ...)
+
+\method{metadata}{zc}(x, ...)
 }
 \arguments{
 \item{x}{an object for which metadata will be extracted}
+
+\item{...}{further arguments passed to or from other methods.}
+
+\item{file_type}{type of file to read metadata from}
 }
 \description{
 Extract metadata
+
+Extract metadata from Zero-Crossing files
 }

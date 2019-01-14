@@ -4,10 +4,10 @@
 \alias{read_wav}
 \title{Read WAV files}
 \usage{
-read_wav(filename, time_exp = 1, from = NULL, to = NULL)
+read_wav(file, time_exp = 1, from = NULL, to = NULL)
 }
 \arguments{
-\item{filename}{a WAV file.}
+\item{file}{a WAV file.}
 
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}

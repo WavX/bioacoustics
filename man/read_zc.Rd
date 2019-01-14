@@ -4,10 +4,10 @@
 \alias{read_zc}
 \title{Read Zero-Crossing files}
 \usage{
-read_zc(filename)
+read_zc(file)
 }
 \arguments{
-\item{filename}{a Zero-Crossing file.}
+\item{file}{a Zero-Crossing file.}
 }
 \value{
 an object of class 'zc'.
@@ -17,7 +17,7 @@ Read Zero-Crossing files (.zc, .#) from various bat recorders
 }
 \examples{
 \dontrun{
-zc <- read_zc("filename")
+zc <- read_zc("file")
 }
 
 }
