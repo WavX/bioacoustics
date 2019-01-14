@@ -3,7 +3,7 @@
 #' Read audio files into a \link{Wave} object. WAV, WAC and MP3 files are
 #' currently supported.
 #'
-#' @param filename a \link{Wave}, WAC or MP3 recording containing animal vocalizations.
+#' @param file a \link{Wave}, WAC or MP3 recording containing animal vocalizations.
 #'
 #' @param time_exp integer. Time expansion factor of the recording.
 #' Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.
@@ -28,9 +28,9 @@
 #'
 #' @rdname read_audio
 
-read_audio <- function(filename, time_exp = 1, from = NULL, to = NULL)
+read_audio <- function(file, time_exp = 1, from = NULL, to = NULL)
 {
-  file_format <- tolower(tools::file_ext(filename))
+  file_format <- tolower(tools::file_ext(file))
 
   switch (file_format,
           wav = read_wav,
@@ -42,14 +42,14 @@ read_audio <- function(filename, time_exp = 1, from = NULL, to = NULL)
   if (!is.null(from) && !is.null(to) && from > to)
     stop("'from' > 'to'")
 
-  read_fun(filename = filename, time_exp = time_exp, from = from, to = to)
+  read_fun(file = file, time_exp = time_exp, from = from, to = to)
 }
 
 #' Read MP3 files
 #'
 #' A thin wrapped around \link[tuneR]{readMP3} from the package tuneR.
 #'
-#' @param filename a MP3 file.
+#' @param file a MP3 file.
 #'
 #' @inheritParams read_audio
 #'
@@ -69,11 +69,13 @@ read_audio <- function(filename, time_exp = 1, from = NULL, to = NULL)
 #'
 #' @rdname read_mp3
 
-read_mp3 <- function(filename, time_exp = 1, ...)
+read_mp3 <- function(file, time_exp = 1, ...)
 {
-  w <- tuneR::readMP3(filename = filename)
+  file_checks(file)
+
+  w <- tuneR::readMP3(filename = file)
   slot(w, "samp.rate") <- slot(w, "samp.rate") * time_exp
-  attr(w, "filename") <- basename(filename)
+  attr(w, "file") <- basename(file)
 
   return(w)
 }
@@ -82,7 +84,7 @@ read_mp3 <- function(filename, time_exp = 1, ...)
 #'
 #' Convert a Wildlife Acoustics' proprietary compressed WAC file into a \link[tuneR]{Wave} object
 #'
-#' @param filename a WAC file.
+#' @param file a WAC file.
 #'
 #' @inheritParams read_audio
 #'
@@ -104,12 +106,14 @@ read_mp3 <- function(filename, time_exp = 1, ...)
 #'
 #' @rdname read_wac
 
-read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
+read_wac <- function(file, time_exp = 1, write_wav = NULL, ...)
 {
-  basenm <- basename(filename)
+  file_checks(file)
+
+  basenm <- basename(file)
 
   w <- read_wac_impl(
-    normalizePath(filename, winslash = "/", mustWork = TRUE),
+    normalizePath(file, winslash = "/", mustWork = TRUE),
     basenm
   )
 
@@ -124,7 +128,7 @@ read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
   )
 
   if (is.na(date_time))
-    stop("Could not extract date/time info from filename: '", filename, "'")
+    stop("Could not extract date/time info from filename: '", file, "'")
 
   if (length(w$trigger) > 0)
   {
@@ -221,7 +225,7 @@ read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
 #'
 #' A thin wrapped around \link[tuneR]{readWave} from the package tuneR.
 #'
-#' @param filename a WAV file.
+#' @param file a WAV file.
 #'
 #' @inheritParams read_audio
 #'
@@ -239,16 +243,30 @@ read_wac <- function(filename, time_exp = 1, write_wav = NULL, ...)
 #'
 #' @rdname read_wav
 
-read_wav <- function(filename, time_exp = 1, from = NULL, to = NULL)
+read_wav <- function(file, time_exp = 1, from = NULL, to = NULL)
 {
+  file_checks(file)
+
   tuneR::readWave(
-    filename = filename,
+    filename = file,
     from = ifelse(is.null(from), 0, from * time_exp),
     to = ifelse(is.null(to), Inf, to * time_exp),
     units = "seconds"
   ) -> w
   slot(w, "samp.rate") <- slot(w, "samp.rate") * time_exp
-  attr(w, "filename") <- basename(filename)
+  attr(w, "filepath") <- normalizePath(file)
+
+  md <- list(
+    file = list(
+      sample_rate = slot(w, 'samp.rate'),
+      bit_depth = slot(w, 'bit')
+    )
+  )
+
+  if (length(guano_md <- guano_md(file)) > 0)
+    md$guano <- guano_md
+
+  attr(w, "metadata") <- md
 
   return(w)
 }
