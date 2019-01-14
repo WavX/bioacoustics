@@ -11,13 +11,13 @@
 #' bioacoustics is subdivided into three main components:
 #'
 #' \itemize{
-#' \item Read, extract data (not yet implemented), display, and write Zero-Crossing files.
-#' \item Stand-alone tools to display, convert or resample MP3, WAV, and WAC files.
-#' \item Read MP3, WAV or WAC files, filter, and extract automatically acoustic features.
+#' \item Read, write and manipulate acoustic recordings.
+#' \item Display what's inside acoustic recordings, whether to plot or just extract metadata.
+#' \item Analyse audio recordings in batch in search of specific vocalizations and extract acoustic features.
 #' }
 #'
-#' To learn more about bioacoustics, start with the vignette:
-#' `browseVignettes(package = "bioacoustics")`
+#' To learn more about bioacoustics, start with the introduction vignette:
+#' `vignette("introduction", package = "bioacoustics")`
 #'
 #' @useDynLib bioacoustics, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
