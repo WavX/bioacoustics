@@ -27,27 +27,29 @@
 #include "bb_extract.h"
 
 // [[Rcpp::export]]
-Rcpp::List threshold_detection_impl(const std::vector<int>& audio_samples,
-                              size_t sample_rate,
-                              size_t threshold,
-                              double min_d,
-                              double max_d,
-                              double TBE,
-                              double EDG,
-                              size_t LPF,
-                              size_t HPF,
-                              double dur_t,
-                              double snr_t,
-                              double angl_t,
-                              size_t FFT_size,
-                              double FFT_overlap,
-                              double start_t,
-                              double end_t,
-                              const size_t NWS,
-                              double KPE,
-                              double KME)
+Rcpp::List threshold_detection_impl(
+    const std::vector<int>& audio_samples,
+    size_t sample_rate,
+    size_t threshold,
+    double min_d,
+    double max_d,
+    double min_TBE,
+    double max_TBE,
+    double EDG,
+    size_t LPF,
+    size_t HPF,
+    double dur_t,
+    double snr_t,
+    double angl_t,
+    size_t FFT_size,
+    double FFT_overlap,
+    double start_t,
+    double end_t,
+    const size_t NWS,
+    double KPE,
+    double KME
+)
 {
-
   std::deque<int> peak_locations;
   std::deque< std::vector<double> > background_noises;
 
@@ -106,7 +108,10 @@ Rcpp::List threshold_detection_impl(const std::vector<int>& audio_samples,
   {
     for (size_t i = 1; i < n_events; i++)
     {
-      if (((audio_events[i].start - audio_events[i - 1].end) / (double)sample_rate * 1000) < TBE)
+      if (
+          ((audio_events[i].start - audio_events[i - 1].end) / (double)sample_rate * 1000) < min_TBE ||
+          ((audio_events[i].start - audio_events[i - 1].end) / (double)sample_rate * 1000) > max_TBE
+         )
       {
         del[i - 1] = true;
         del[i] = true;

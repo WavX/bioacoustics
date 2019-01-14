@@ -24,8 +24,11 @@
 #' @param max_dur numeric. Maximum duration threshold in milliseconds (ms).
 #' Extracted audio events longer than this threshold are ignored. The default setting is 80 ms.
 #'
-#' @param TBE numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
+#' @param min_TBE numeric. Minimum time window between two audio events in milliseconds (ms). If the time interval between two
 #' successive audio events is shorter than this window, they are ignored. The default setting is 20 ms.
+#'
+#' @param max_TBE numeric. Maximum time window between two audio events in milliseconds (ms). If the time interval between two
+#' successive audio events is longer than this window, they are ignored. The default setting is 1000 ms.
 #'
 #' @param EDG numeric. Exponential Decay Gain from 0 to 1. Sets the degree of temporal masking at the end of each audio event.
 #' This filter avoids extracting noise or echoes at the end of the audio event. The default setting is 0.996.
@@ -101,7 +104,7 @@
 #' @examples
 #' data(myotis)
 #' Output <- threshold_detection(myotis, time_exp = 10, HPF = 16000, LPF = 200000)
-#' Output$event_data
+#' Output$data
 #'
 #' @rdname threshold_detection
 #'
@@ -112,7 +115,8 @@ threshold_detection <- function(wave,
                                 time_exp = 1,
                                 min_dur = 1.5,
                                 max_dur = 80,
-                                TBE = 20,
+                                min_TBE = 20,
+                                max_TBE = 1000,
                                 EDG = 0.996,
                                 LPF,
                                 HPF = 16000,
@@ -147,25 +151,28 @@ threshold_detection <- function(wave,
   else
     LPF <- min(LPF, sample_rate / 2)
 
-  audio_events <- threshold_detection_impl(audio_samples = slot(wave, channel <- ifelse(slot(wave, 'stereo'), channel, 'left')),
-                                           sample_rate = sample_rate,
-                                           threshold = threshold,
-                                           min_d = min_dur,
-                                           max_d = max_dur,
-                                           TBE = TBE,
-                                           EDG = EDG,
-                                           LPF = LPF,
-                                           HPF = HPF,
-                                           FFT_size = FFT_size,
-                                           FFT_overlap = FFT_overlap,
-                                           dur_t = duration_thr,
-                                           snr_t = SNR_thr,
-                                           angl_t = angle_thr,
-                                           start_t = start_thr,
-                                           end_t = end_thr,
-                                           NWS = NWS,
-                                           KPE = KPE,
-                                           KME = KME)
+  event_list <- threshold_detection_impl(
+    audio_samples = slot(wave, channel <- ifelse(slot(wave, 'stereo'), channel, 'left')),
+    sample_rate = sample_rate,
+    threshold = threshold,
+    min_d = min_dur,
+    max_d = max_dur,
+    min_TBE = min_TBE,
+    max_TBE = max_TBE,
+    EDG = EDG,
+    LPF = LPF,
+    HPF = HPF,
+    FFT_size = FFT_size,
+    FFT_overlap = FFT_overlap,
+    dur_t = duration_thr,
+    snr_t = SNR_thr,
+    angl_t = angle_thr,
+    start_t = start_thr,
+    end_t = end_thr,
+    NWS = NWS,
+    KPE = KPE,
+    KME = KME
+  )
 
   if (length(audio_events) == 0)
   {
@@ -269,7 +276,8 @@ threshold_detection <- function(wave,
         channel = channel,
         min_dur = min_dur,
         max_dur = max_dur,
-        TBE = TBE,
+        min_TBE = min_TBE,
+        max_TBE = max_TBE,
         EDG = EDG,
         LPF = LPF,
         HPF = HPF,

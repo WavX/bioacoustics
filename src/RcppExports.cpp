@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // threshold_detection_impl
-Rcpp::List threshold_detection_impl(const std::vector<int>& audio_samples, size_t sample_rate, size_t threshold, double min_d, double max_d, double TBE, double EDG, size_t LPF, size_t HPF, double dur_t, double snr_t, double angl_t, size_t FFT_size, double FFT_overlap, double start_t, double end_t, const size_t NWS, double KPE, double KME);
-RcppExport SEXP _bioacoustics_threshold_detection_impl(SEXP audio_samplesSEXP, SEXP sample_rateSEXP, SEXP thresholdSEXP, SEXP min_dSEXP, SEXP max_dSEXP, SEXP TBESEXP, SEXP EDGSEXP, SEXP LPFSEXP, SEXP HPFSEXP, SEXP dur_tSEXP, SEXP snr_tSEXP, SEXP angl_tSEXP, SEXP FFT_sizeSEXP, SEXP FFT_overlapSEXP, SEXP start_tSEXP, SEXP end_tSEXP, SEXP NWSSEXP, SEXP KPESEXP, SEXP KMESEXP) {
+Rcpp::List threshold_detection_impl(const std::vector<int>& audio_samples, size_t sample_rate, size_t threshold, double min_d, double max_d, double min_TBE, double max_TBE, double EDG, size_t LPF, size_t HPF, double dur_t, double snr_t, double angl_t, size_t FFT_size, double FFT_overlap, double start_t, double end_t, const size_t NWS, double KPE, double KME);
+RcppExport SEXP _bioacoustics_threshold_detection_impl(SEXP audio_samplesSEXP, SEXP sample_rateSEXP, SEXP thresholdSEXP, SEXP min_dSEXP, SEXP max_dSEXP, SEXP min_TBESEXP, SEXP max_TBESEXP, SEXP EDGSEXP, SEXP LPFSEXP, SEXP HPFSEXP, SEXP dur_tSEXP, SEXP snr_tSEXP, SEXP angl_tSEXP, SEXP FFT_sizeSEXP, SEXP FFT_overlapSEXP, SEXP start_tSEXP, SEXP end_tSEXP, SEXP NWSSEXP, SEXP KPESEXP, SEXP KMESEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -16,7 +16,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< size_t >::type threshold(thresholdSEXP);
     Rcpp::traits::input_parameter< double >::type min_d(min_dSEXP);
     Rcpp::traits::input_parameter< double >::type max_d(max_dSEXP);
-    Rcpp::traits::input_parameter< double >::type TBE(TBESEXP);
+    Rcpp::traits::input_parameter< double >::type min_TBE(min_TBESEXP);
+    Rcpp::traits::input_parameter< double >::type max_TBE(max_TBESEXP);
     Rcpp::traits::input_parameter< double >::type EDG(EDGSEXP);
     Rcpp::traits::input_parameter< size_t >::type LPF(LPFSEXP);
     Rcpp::traits::input_parameter< size_t >::type HPF(HPFSEXP);
@@ -30,13 +31,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const size_t >::type NWS(NWSSEXP);
     Rcpp::traits::input_parameter< double >::type KPE(KPESEXP);
     Rcpp::traits::input_parameter< double >::type KME(KMESEXP);
-    rcpp_result_gen = Rcpp::wrap(threshold_detection_impl(audio_samples, sample_rate, threshold, min_d, max_d, TBE, EDG, LPF, HPF, dur_t, snr_t, angl_t, FFT_size, FFT_overlap, start_t, end_t, NWS, KPE, KME));
+    rcpp_result_gen = Rcpp::wrap(threshold_detection_impl(audio_samples, sample_rate, threshold, min_d, max_d, min_TBE, max_TBE, EDG, LPF, HPF, dur_t, snr_t, angl_t, FFT_size, FFT_overlap, start_t, end_t, NWS, KPE, KME));
     return rcpp_result_gen;
 END_RCPP
 }
 // blob_detection_impl
-Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples, size_t sample_rate, size_t FFT_size, double FFT_overlap, double TBE, size_t HPF, size_t LPF, double min_d, double max_d, size_t area, double blur_f, double bg_substract, double EDG, double boost);
-RcppExport SEXP _bioacoustics_blob_detection_impl(SEXP audio_samplesSEXP, SEXP sample_rateSEXP, SEXP FFT_sizeSEXP, SEXP FFT_overlapSEXP, SEXP TBESEXP, SEXP HPFSEXP, SEXP LPFSEXP, SEXP min_dSEXP, SEXP max_dSEXP, SEXP areaSEXP, SEXP blur_fSEXP, SEXP bg_substractSEXP, SEXP EDGSEXP, SEXP boostSEXP) {
+Rcpp::List blob_detection_impl(const std::vector<int>& audio_samples, size_t sample_rate, size_t FFT_size, double FFT_overlap, double min_TBE, double max_TBE, size_t HPF, size_t LPF, double min_d, double max_d, size_t area, double blur_f, double bg_substract, double EDG, double boost);
+RcppExport SEXP _bioacoustics_blob_detection_impl(SEXP audio_samplesSEXP, SEXP sample_rateSEXP, SEXP FFT_sizeSEXP, SEXP FFT_overlapSEXP, SEXP min_TBESEXP, SEXP max_TBESEXP, SEXP HPFSEXP, SEXP LPFSEXP, SEXP min_dSEXP, SEXP max_dSEXP, SEXP areaSEXP, SEXP blur_fSEXP, SEXP bg_substractSEXP, SEXP EDGSEXP, SEXP boostSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,7 +45,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< size_t >::type sample_rate(sample_rateSEXP);
     Rcpp::traits::input_parameter< size_t >::type FFT_size(FFT_sizeSEXP);
     Rcpp::traits::input_parameter< double >::type FFT_overlap(FFT_overlapSEXP);
-    Rcpp::traits::input_parameter< double >::type TBE(TBESEXP);
+    Rcpp::traits::input_parameter< double >::type min_TBE(min_TBESEXP);
+    Rcpp::traits::input_parameter< double >::type max_TBE(max_TBESEXP);
     Rcpp::traits::input_parameter< size_t >::type HPF(HPFSEXP);
     Rcpp::traits::input_parameter< size_t >::type LPF(LPFSEXP);
     Rcpp::traits::input_parameter< double >::type min_d(min_dSEXP);
@@ -54,7 +56,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type bg_substract(bg_substractSEXP);
     Rcpp::traits::input_parameter< double >::type EDG(EDGSEXP);
     Rcpp::traits::input_parameter< double >::type boost(boostSEXP);
-    rcpp_result_gen = Rcpp::wrap(blob_detection_impl(audio_samples, sample_rate, FFT_size, FFT_overlap, TBE, HPF, LPF, min_d, max_d, area, blur_f, bg_substract, EDG, boost));
+    rcpp_result_gen = Rcpp::wrap(blob_detection_impl(audio_samples, sample_rate, FFT_size, FFT_overlap, min_TBE, max_TBE, HPF, LPF, min_d, max_d, area, blur_f, bg_substract, EDG, boost));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -103,8 +105,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_bioacoustics_threshold_detection_impl", (DL_FUNC) &_bioacoustics_threshold_detection_impl, 19},
-    {"_bioacoustics_blob_detection_impl", (DL_FUNC) &_bioacoustics_blob_detection_impl, 14},
+    {"_bioacoustics_threshold_detection_impl", (DL_FUNC) &_bioacoustics_threshold_detection_impl, 20},
+    {"_bioacoustics_blob_detection_impl", (DL_FUNC) &_bioacoustics_blob_detection_impl, 15},
     {"_bioacoustics_read_wac_impl", (DL_FUNC) &_bioacoustics_read_wac_impl, 2},
     {"_bioacoustics_resample_impl", (DL_FUNC) &_bioacoustics_resample_impl, 2},
     {"_bioacoustics_fspec_impl", (DL_FUNC) &_bioacoustics_fspec_impl, 9},

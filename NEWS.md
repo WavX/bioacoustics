@@ -1,3 +1,8 @@
+# version 0.1.7.9000
+* Update
+  * threshold_detection gains one argument: max_TBE
+  * threshold_detection TBE becomes min_TBE
+
 # version 0.1.7
 
 * Update
