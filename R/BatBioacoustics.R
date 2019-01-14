@@ -138,10 +138,16 @@ threshold_detection <- function(wave,
                                 ticks = TRUE)
 
 {
-  if (!is(wave, 'Wave'))
+  if (is.character(wave))
     wave <- read_audio(wave)
 
-  filename <- attr(wave, 'filename')
+  filepath <- attr(wave, 'filepath')
+
+  filename <- ifelse(
+    is.null(filepath),
+    NA_character_,
+    basename(filepath)
+  )
 
   sample_rate <- slot(wave, 'samp.rate') * time_exp
   n_bits <- slot(wave, 'bit')
@@ -178,7 +184,7 @@ threshold_detection <- function(wave,
   {
     message(
       "No audio events found",
-      if (!is.null(filename)) paste0(" for file '", basename(filename), "'")
+      if (!is.na(filename)) paste0(" for file '", basename(filename), "'")
     )
   }
   else
@@ -203,7 +209,7 @@ threshold_detection <- function(wave,
         ticks <- TRUE
       }
 
-      bare_name <- if (!is.null(filename)) tools::file_path_sans_ext(filename)
+      bare_name <- if (!is.na(filename)) tools::file_path_sans_ext(filename)
       html_file <- paste0('spectrograms--', bare_name, format(Sys.time(), '--%y%m%d--%H%M%S'), '.html')
 
       tags <- htmltools::tags
