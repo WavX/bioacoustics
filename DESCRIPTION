@@ -1,15 +1,15 @@
 Package: bioacoustics
 Type: Package
 Title: Analyse Audio Recordings and Automatically Extract Animal Vocalizations
-Version: 0.1.7.9000
+Version: 0.2.0
 Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c("aut","cre")),
              person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
              person("Christopher", "Scott", role = "aut"),
              person("Chris", "Corben", role = c("ctb", "cph"), email = "chris@hoarybat.com", comment = "Read ZC files, original C code"),
              person("David", "Riggs", role = c("ctb", "cph"), email = "driggs@myotisoft.com", comment = "Read GUANO metadata, original R code"),
              person("Peter", "Wilson", role = c("ctb", "cph"), email = "peter@peterwilson.id.au", comment = "Read ZC files, original R code"),
-             person(family = "Wildlife Acoustics, Inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
-             person(family = "WavX Inc.", role = "cph"))
+             person(family = "Wildlife Acoustics, inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
+             person(family = "WavX, inc.", role = "cph"))
 Maintainer: Jean Marchal <jean.marchal@wavx.ca>
 Description: Contains all the necessary tools to process audio recordings of
              various formats (e.g., WAV, WAC, MP3, ZC), filter noisy files, 
