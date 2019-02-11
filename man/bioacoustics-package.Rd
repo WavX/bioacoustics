@@ -44,8 +44,8 @@ Other contributors:
   \item Chris Corben \email{chris@hoarybat.com} (Read ZC files, original C code) [contributor, copyright holder]
   \item David Riggs \email{driggs@myotisoft.com} (Read GUANO metadata, original R code) [contributor, copyright holder]
   \item Peter Wilson \email{peter@peterwilson.id.au} (Read ZC files, original R code) [contributor, copyright holder]
-  \item  Wildlife Acoustics, Inc. (Read WAC files, original C code) [contributor, copyright holder]
-  \item  WavX Inc. [copyright holder]
+  \item  Wildlife Acoustics, inc. (Read WAC files, original C code) [contributor, copyright holder]
+  \item  WavX, inc. [copyright holder]
 }
 
 }

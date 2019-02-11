@@ -12,7 +12,7 @@ metadata <- function(x, ...)
   UseMethod("metadata", x)
 }
 
-#' @param file_type type of file to read metadata from
+#' @param file_type type of file to read metadata from. wav, zc, .# files are currently supported.
 #' @export
 #' @rdname metadata
 metadata.character <- function(x, file_type = c(file_type_guess(x), "wav", "zc"), ...)
@@ -30,7 +30,6 @@ metadata.character <- function(x, file_type = c(file_type_guess(x), "wav", "zc")
     stop("Not implemented")
   }
 }
-
 
 #' @export
 #' @rdname metadata
@@ -55,12 +54,17 @@ metadata.zc <- function(x, ...)
   return(x$metadata)
 }
 
-
+#' Extract metadata from a Wave object
+#'
+#' @export
+#' @rdname metadata
 metadata.Wave <- function(x, ...)
 {
   md <- attr(x, "metadata")
+  
+  if(is.null(md))
+    md <- list()
 
-  # sample_rate, bit_depth changed since loading the audio file?
   md$file$sample_rate <- slot(x, "samp.rate")
   md$file$bit_depth <- slot(x, "bit")
   md

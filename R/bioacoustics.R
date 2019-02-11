@@ -1,12 +1,12 @@
 #' bioacoustics: detect and extract automatically acoustic features in Zero-Crossing files and audio recordings
 #'
-#'@description
+#' @description
 #'
 #' bioacoustics contains all the necessary functions to read Zero-Crossing files and audio recordings of various formats,
 #' filter noisy files, display audio signals, detect and extract automatically acoustic features
 #' for further analysis such as species identification based on classification of animal vocalizations.
 #'
-#'@details
+#' @details
 #'
 #' bioacoustics is subdivided into three main components:
 #'

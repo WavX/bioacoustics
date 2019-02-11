@@ -6,6 +6,7 @@
 \alias{metadata.blob_detection}
 \alias{metadata.threshold_detection}
 \alias{metadata.zc}
+\alias{metadata.Wave}
 \title{Extract metadata}
 \usage{
 metadata(x, ...)
@@ -18,16 +19,20 @@ metadata(x, ...)
 \method{metadata}{threshold_detection}(x, ...)
 
 \method{metadata}{zc}(x, ...)
+
+\method{metadata}{Wave}(x, ...)
 }
 \arguments{
 \item{x}{an object for which metadata will be extracted}
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{file_type}{type of file to read metadata from}
+\item{file_type}{type of file to read metadata from. wav, zc, .# files are currently supported.}
 }
 \description{
 Extract metadata
 
 Extract metadata from Zero-Crossing files
+
+Extract metadata from a Wave object
 }
