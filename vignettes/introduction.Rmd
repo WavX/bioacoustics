@@ -60,7 +60,7 @@ The `read_audio` function loads into R mono and stereo audio recordings with MP3
 
 ## Metadata
 
-The `metadata` function automatically extracts metadata (if present) encapsulated in audio recordings that were previously loaded into R with the `read_audio` function. It can also extract metadata from objects generated with the `threshold_detection` or `blob_detection` functions. Also extract the [GUANO](https://guano-md.org/) metadata. [GUANO](https://guano-md.org/) stands for the "Grand Unified Acoustic Notation Ontology for Bats" and means to be a universal, extensible, open metadata format for bat (and non-bat) acoustic recordings. The R code necessary to extract GUANO metadata was originally provided by David Riggs under the MIT licence and is available [here](https://github.com/riggsd/guano-r).
+The `metadata` function automatically extracts metadata (if present) embedded in audio recordings that were previously loaded into R with the `read_audio` function. It can also extract metadata from objects generated with the `threshold_detection` or `blob_detection` functions. The `metadata` function also extract [GUANO](https://guano-md.org/) metadata. [GUANO](https://guano-md.org/) stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (and non-bat) acoustic recordings. The R code necessary to extract GUANO metadata was originally provided by David Riggs under the MIT licence and is available [here](https://github.com/riggsd/guano-r).
 
 ## Display
 
@@ -305,7 +305,7 @@ The `plot_zc` function can be used to plot the content of a Zero-Crossing file p
 The myotis dataset is a WAV file of 10 seconds, 16 bits, mono, with an original sampling rate at 500 kHz (time expanded by 10). It contains 11 echolocation calls of bats from the *Myotis* genus. The recording was made in United-Kingdom with a D500X bat detector from Pettersson Elektronik AB.
 
 ## zc
-The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (*Lasiurus cinereus*). This ZC recording was made in Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.
+The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (*Lasiurus cinereus*). This ZC recording was made in the Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.
 
 # References
 

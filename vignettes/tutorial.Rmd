@@ -102,8 +102,21 @@ We can see that the MP3 file has been converted into a Wave object with 7551360 
 
 Remember that you just have to divide the number of samples by the sampling rate to retrieve the duration (s) of an audio file.
 
-We will use the Fast Fourrier Transform (FFT) to compute a frequency-time representation of the recording called spectrogram. A spectrogram being the representation of the spectrum of frequencies in a recording as they vary through time. This representation is used to detect animal vocalizations and extract acoustic features useful for classification, with the purpose of animal identification.
+___________________
 
+# Extract GUANO metadata
+
+[GUANO](https://guano-md.org/) stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (ultrasonic) and non-bat (audible, infrasonic) acoustic recordings [more here](https://github.com/riggsd/guano-r). GUANO format is now embeded directly in the WAV files generated from most Pettersson, Wildlife Acoustics, Titley Scientific acoustic recorders. It is possible to extract the metadata and GUANO embedded in the WAV file by using the `metadata()` function.
+
+```{r metadata,eval=FALSE}
+
+metadata(CATBIC)
+
+```
+<br>
+
+
+Now that we have explored a WAV file, we will use the Fast Fourrier Transform (FFT) to compute a frequency-time representation of the recording, called a spectrogram. A spectrogram being the representation of the spectrum of frequencies in a recording as they vary through time. This representation, although not optimal, is still commonly used to detect animal vocalizations and extract acoustic features useful for classification with the purpose of animal identification.
 ___________________
 
 # Plot audio files
