@@ -75,7 +75,7 @@ read_mp3 <- function(file, time_exp = 1, ...)
 
   w <- tuneR::readMP3(filename = file)
   slot(w, "samp.rate") <- slot(w, "samp.rate") * time_exp
-  attr(w, "file") <- basename(file)
+  attr(w, "filename") <- basename(file)
 
   return(w)
 }
