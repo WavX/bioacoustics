@@ -103,6 +103,8 @@ blob_detection <- function(wave,
       "No audio events found",
       if (!is.na(filename)) paste0(" for file '", basename(filename), "'")
     )
+
+    output <- list(data = NULL)
   }
   else
   {
@@ -180,49 +182,49 @@ blob_detection <- function(wave,
     )
 
     output <- list( data = blobs[[1L]] )
-
-    if (metadata)
-    {
-      if (!is.null(attr(wave, "metadata")))
-      {
-        output$metadata <- metadata(wave)
-      }
-      else
-      {
-        if (!is.null(filepath))
-        {
-          output$metadata$file$sample_rate <- sample_rate
-          output$metadata$file$bit_depth <- bit_depth
-
-          if (length(guano_md <- guano_md(filepath)) > 0)
-            output$metadata$guano <- guano_md
-        }
-      }
-    }
-
-    if (settings)
-    {
-      output$metadata$settings_blob_detection <- list(
-        channel = channel,
-        min_dur = min_dur,
-        max_dur = max_dur,
-        min_area = min_area,
-        LPF = LPF,
-        HPF = HPF,
-        min_TBE = min_TBE,
-        max_TBE = max_TBE,
-        EDG = EDG,
-        FFT_size = FFT_size,
-        FFT_overlap = FFT_overlap,
-        blur = blur,
-        bg_substract = bg_substract,
-        contrast_boost = contrast_boost,
-        stringsAsFactors = FALSE
-      )
-    }
-
-    class(output) <- "blob_detection"
-
-    return(output)
   }
+
+  if (metadata)
+  {
+    if (!is.null(attr(wave, "metadata")))
+    {
+      output$metadata <- metadata(wave)
+    }
+    else
+    {
+      if (!is.null(filepath))
+      {
+        output$metadata$file$sample_rate <- sample_rate
+        output$metadata$file$bit_depth <- bit_depth
+
+        if (length(guano_md <- guano_md(filepath)) > 0)
+          output$metadata$guano <- guano_md
+      }
+    }
+  }
+
+  if (settings)
+  {
+    output$metadata$settings_blob_detection <- list(
+      channel = channel,
+      min_dur = min_dur,
+      max_dur = max_dur,
+      min_area = min_area,
+      LPF = LPF,
+      HPF = HPF,
+      min_TBE = min_TBE,
+      max_TBE = max_TBE,
+      EDG = EDG,
+      FFT_size = FFT_size,
+      FFT_overlap = FFT_overlap,
+      blur = blur,
+      bg_substract = bg_substract,
+      contrast_boost = contrast_boost,
+      stringsAsFactors = FALSE
+    )
+  }
+
+  class(output) <- "blob_detection"
+
+  return(output)
 }
