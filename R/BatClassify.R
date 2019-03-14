@@ -62,11 +62,13 @@ blob_detection <- function(wave,
 
   filepath <- attr(wave, 'filepath')
 
-  filename <- ifelse(
-    is.null(filepath),
-    NA_character_,
+  filename <-
+    if (!is.null(attr(wave, 'filename')))
+      attr(wave, 'filename')
+  else if (!is.null(filepath))
     basename(filepath)
-  )
+  else
+    NA_character_
 
   sample_rate <- slot(wave, 'samp.rate') * time_exp
   bit_depth <- slot(wave, 'bit')
