@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 // Copyright (C) 2014-2017 Wildlife Acoustics, inc.
-// Copyright (C) 2017-2018 WavX, inc. (www.wavx.ca)
+// Further modified at WavX, inc. (www.wavx.ca) since 2017
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -257,7 +257,7 @@ int ReadBits(wac_s *w, int bits)
     // If starting a new 16-bit word, read the next 16 bits
     if (w->filebit_index == 0)
     {
-      fread(&w->bitbuffer, 2, 1, w->fp);
+      std::size_t result = fread(&w->bitbuffer, 2, 1, w->fp);
       w->filebit_index = 16;
     }
 
