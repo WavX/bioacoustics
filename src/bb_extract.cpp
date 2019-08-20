@@ -68,7 +68,7 @@ void extract_impl (Audio_Event &audio_event,
 
   double bin2freq = (double)sample_rate / (double)(fft_size);
 
-  std::transform(freq_track.data.begin(), freq_track.data.end(), freq_track.data.begin(), std::bind1st(std::multiplies<double>(), bin2freq));
+  std::transform(freq_track.data.begin(), freq_track.data.end(), freq_track.data.begin(), std::bind(std::multiplies<double>(), bin2freq, std::placeholders::_1));
   Rcpp::as<Rcpp::List>(out["freq_track"])[index] = freq_track.data;
   Rcpp::as<Rcpp::List>(out["amp_track"])[index] = amp_track.data;
   Rcpp::as<Rcpp::StringVector>(Rcpp::as<Rcpp::List>(out["event_data"])["starting_time"])[index] = s2dhmsms((double)audio_event.start / sample_rate);

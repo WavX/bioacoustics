@@ -102,7 +102,7 @@ inline
     std::vector<double> result (x.size(), 0);
     std::vector<double> kernel = {1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1};
     const double c = 4096;
-    std::transform(kernel.begin(), kernel.end(), kernel.begin(), std::bind2nd(std::divides<double>(), c));
+      std::transform(kernel.begin(), kernel.end(), kernel.begin(), std::bind(std::divides<double>(), std::placeholders::_1, c));
     int i = peak - kernel.size() / 2;
     for (size_t j = 0; j < kernel.size(); j++) {
       i++;
