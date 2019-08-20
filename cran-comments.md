@@ -1,9 +1,9 @@
 ## Release summary
-* This is an enhancement release. We are adding new functions and arguments. For more info see the NEWS.md file.
+* This is a minor fix release to fix clang warnings on Fedora devel.
 
 ## Test environments
 * OS X install (on travis-ci), R release
-* ubuntu 14.04 (on travis-ci), R devel and release
+* ubuntu 16.04 (on travis-ci), R devel and release
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -14,4 +14,4 @@
 * checking for GNU extensions in Makefiles ... NOTE
 
 ## Reverse dependencies
-We checked against 1 reverse dependencies by running R CMD check twice, once with the CRAN version installed, and once with this version installed. We did not see any new problems.
+There were no reverse dependencies to check.

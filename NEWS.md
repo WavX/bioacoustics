@@ -1,3 +1,9 @@
+# version 0.2.1
+
+* Internal fixes
+  * Fix clang warnings
+  * Fix gcc warnings
+
 # version 0.2.0
 
 * Update
