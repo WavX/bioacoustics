@@ -27,7 +27,7 @@ metadata(x, ...)
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{file_type}{type of file to read metadata from. wav, zc, .# files are currently supported.}
+\item{file_type}{type of file to read metadata from. Wav and Zero-Crossing files are currently supported.}
 }
 \description{
 Extract metadata
