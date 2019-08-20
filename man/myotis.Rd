@@ -19,9 +19,9 @@ The recording was made in United-Kingdom with a D500X bat detector from Petterss
 The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24 echolocation calls of a hoary bat (Lasiurus cinereus).
 This ZC recording was made in Gatineau Park, Quebec, eastern Canada, during the summer 2017 with a Walkabout bat detector from Titley Scientific.
 }
-\keyword{bat,}
-\keyword{calls}
-\keyword{echolocation}
-\keyword{hoary}
-\keyword{myotis,}
-\keyword{zero-crossing,}
+\concept{bat}
+\concept{echolocation calls}
+\concept{hoary bat}
+\concept{myotis}
+\concept{zero-crossing}
+\keyword{datasets}

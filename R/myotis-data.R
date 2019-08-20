@@ -9,5 +9,7 @@
 #' @aliases myotis
 #' @usage myotis
 #' @format \link[tuneR]{Wave} object
-#' @keywords myotis, bat, echolocation calls
+#' @concept myotis
+#' @concept bat
+#' @concept echolocation calls
 "myotis"

@@ -8,5 +8,7 @@
 #' @aliases zc
 #' @usage zc
 #' @format Zero-Crossing object
-#' @keywords zero-crossing, hoary bat, echolocation calls
+#' @concept zero-crossing
+#' @concept hoary bat
+#' @concept echolocation calls
 "zc"
