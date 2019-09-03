@@ -2210,7 +2210,6 @@ RBIN="${R_HOME}/bin/R"
 RVER=$("${R_HOME}/bin/Rscript" -e 'cat((R.version)$major, (R.version)$minor, sep=".")')
 
 : ${CC=$("${RBIN}" CMD config CC)}
-: ${CPP=$("${RBIN}" CMD config CPP)}
 : ${CFLAGS=$("${RBIN}" CMD config CFLAGS)}
 : ${CPPFLAGS=$("${RBIN}" CMD config CPPFLAGS)}
 : ${LDFLAGS=$("${RBIN}" CMD config LDFLAGS)}
