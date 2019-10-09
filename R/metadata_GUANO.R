@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 # Copyright (C) 2017 David A. Riggs (driggs@myotisoft.com)
-# Copyright (C) 2018 WavX, inc. (www.wavx.ca)
+# Copyright (C) 2019 WavX, inc. (www.wavx.ca)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,7 +48,13 @@ guano_md <- function(file)
 
   read.subchunk <- function()
   {
-    id <- readChar(f, 4)
+    id <- tryCatch(
+      readChar(f, 4),
+      error = function(e)
+      {
+        return("")
+      }
+    )
 
     if (length(id) == 0 || id == "")
       return(NULL)
