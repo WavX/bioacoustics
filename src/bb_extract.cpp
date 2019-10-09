@@ -143,7 +143,7 @@ void extract_impl (Audio_Event &audio_event,
     {
       mean += freq_track_win[j];
     }
-    mean = mean / (double)freq_track_win_size;
+    mean /= (double)freq_track_win_size;
 
     // Fc
     if (i > (freq_track.data.size() * 0.6) && mean < slope)
