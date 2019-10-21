@@ -36,7 +36,7 @@ Installing bioacoustics from source works under windows when [Rtools](https://cr
 
 ### Linux
 
-For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1), [libsoxr-lsr](https://github.com/WavX/soxr) (>= 0.1.3.9002, forked from https://sourceforge.net/p/soxr/wiki/Home/) are required.
+For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1), [libsoxr-lsr](https://github.com/WavX/soxr) (>= 0.1.3.9003, forked from https://sourceforge.net/p/soxr/wiki/Home/) are required.
 
 ### Contributing
 
