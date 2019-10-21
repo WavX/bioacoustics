@@ -1,9 +1,9 @@
 ## Release summary
-* This is a minor fix release to fix clang warnings on Fedora devel.
+* This is a minor fix release to fix clang warnings on Fedora devel and revert a bad commit.
 
 ## Test environments
 * OS X install (on travis-ci), R release
-* ubuntu 16.04 (on travis-ci), R devel and release
+* Ubuntu 16.04.6 (on travis-ci), R devel and release
 * win-builder (devel and release)
 
 ## R CMD check results

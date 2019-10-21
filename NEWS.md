@@ -1,3 +1,9 @@
+# version 0.2.2
+
+* Internal fixes
+  * Fix clang warnings
+  * Revert fix magnitude calculation
+  
 # version 0.2.1
 
 * Internal fixes
