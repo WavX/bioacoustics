@@ -14,4 +14,4 @@
 * checking for GNU extensions in Makefiles ... NOTE
 
 ## Reverse dependencies
-There were no reverse dependencies to check.
+We checked against 1 reverse dependencies by running R CMD check twice, once with the CRAN version installed, and once with this version installed. We did not see any new problems.
