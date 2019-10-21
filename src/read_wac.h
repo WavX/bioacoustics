@@ -70,8 +70,8 @@ struct wac_s
 
 
 
-int ReadBits(wac_s *w, int _bits);
-unsigned short ReadWord(wac_s *w);
+int ReadBits(wac_s *w, int _bits, const std::string &filename);
+unsigned short ReadWord(wac_s *w, const std::string &filename);
 void FrameDecode(wac_s *w, const std::string &filename);
 
 Rcpp::List read_wac_impl (const std::string filepath, const std::string filename);

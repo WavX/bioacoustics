@@ -147,13 +147,13 @@ Rcpp::List read_wac_impl (const std::string filepath,
 
   if (ws.fp == NULL)
   {
-    throw std::range_error("Error reading " + filename);
+    Rcpp::Rcerr << "Error reading " << filename << "\n";
   }
 
   // Parse WAC header and validate supported formats
   if ((sz = std::fread(hdr, 1, 24, ws.fp)) != 24)
   {
-    throw std::range_error(filename + ": Unexpected eof");
+    Rcpp::Rcerr << filename << ": Unexpected eof \n";
   }
 
   // Verify "magic" header
@@ -163,14 +163,14 @@ Rcpp::List read_wac_impl (const std::string filepath,
       || hdr[3] != 'c'
   )
   {
-    throw std::range_error(filename + " is not a WAC file");
+    Rcpp::Rcerr << filename << " is not a WAC file \n";
   }
 
   // Check version
   ws.version = hdr[4];
   if (ws.version > 4)
   {
-    throw std::range_error(filename + " version (" + std::to_string(ws.version) + ") not supported");
+    Rcpp::Rcerr << filename << " version (" << std::to_string(ws.version) << ") not supported\n";
   }
 
   // Read channel count and frame size
@@ -181,14 +181,13 @@ Rcpp::List read_wac_impl (const std::string filepath,
   // 128 sample stereo) frames.
   if (ws.channelcount * ws.framesize != 256)
   {
-    throw std::range_error(filename + ": Unsupported block size (" +
-                           std::to_string(ws.channelcount * ws.framesize) + ")");
+    Rcpp::Rcerr << filename << ": Unsupported block size (" << std::to_string(ws.channelcount * ws.framesize) << ")\n";
   }
 
   // All Wildlife Acoustics WAC files have 1 or 2 channels
   if (ws.channelcount > 2)
   {
-    throw std::range_error(filename + ": Unsupported channel count (" + std::to_string(ws.channelcount) + ")");
+    Rcpp::Rcerr << filename << ": Unsupported channel count (" << std::to_string(ws.channelcount) << ")\n";
   }
 
   // Read flags
@@ -213,7 +212,7 @@ Rcpp::List read_wac_impl (const std::string filepath,
   b = (unsigned short*) std::malloc (sizeof(unsigned short)*2);
   if ((sz = std::fread(b, 2, 1, ws.fp)) != 1)
   {
-    throw std::range_error(filename + ": Unexpected eof");
+    Rcpp::Rcerr << filename << ": Unexpected eof\n";
   }
   *b *= 2;
   // Position the cursor at the first data block
@@ -247,9 +246,10 @@ Rcpp::List read_wac_impl (const std::string filepath,
 // We buffer 16-bits at a time in bitbuffer and keep track of the current
 // filebit_index number of bits remaining in the buffer.
 //
-int ReadBits(wac_s *w, int bits)
+int ReadBits(wac_s *w, int bits, const std::string &filename)
 {
   unsigned long x = 0;
+  std::size_t sz;
 
   // While we need bits...
   while (bits > 0)
@@ -257,7 +257,11 @@ int ReadBits(wac_s *w, int bits)
     // If starting a new 16-bit word, read the next 16 bits
     if (w->filebit_index == 0)
     {
-      std::size_t result = fread(&w->bitbuffer, 2, 1, w->fp);
+      if ((sz = fread(&w->bitbuffer, 2, 1, w->fp)) != 1)
+      {
+        Rcpp::Rcerr << filename << ": Unexpected eof\n";
+      }
+
       w->filebit_index = 16;
     }
 
@@ -288,10 +292,10 @@ int ReadBits(wac_s *w, int bits)
 //
 // Skip to 16-bit boundary and read and return the next 16 bits.
 //
-unsigned short ReadWord(wac_s *w)
+unsigned short ReadWord(wac_s *w, const std::string &filename)
 {
   w->filebit_index = 0;
-  return ReadBits(w, 16);
+  return ReadBits(w, 16, filename);
 }
 
 // FrameDecode
@@ -314,13 +318,13 @@ void FrameDecode(wac_s *w, const std::string &filename)
     // Verify that the block header is valid and as expected
     int block = w->frameindex / w->blocksize;
 
-    if (   ReadWord(w) != 0x8000
-        || ReadWord(w) != 0x0001
-        || ReadWord(w) != (block & 0xffff)
-        || ReadWord(w) != ((block >> 16) & 0xffff)
+    if (   ReadWord(w, filename) != 0x8000
+        || ReadWord(w, filename) != 0x0001
+        || ReadWord(w, filename) != (block & 0xffff)
+        || ReadWord(w, filename) != ((block >> 16) & 0xffff)
     )
     {
-      throw std::range_error(filename + ": Bad block header");
+      Rcpp::Rcerr << filename << ": Bad block header\n";
     }
 
     // If GPS data present and the block number is modulo the blocks per
@@ -356,7 +360,7 @@ void FrameDecode(wac_s *w, const std::string &filename)
   for (ch = 0; ch < w->channelcount; ch++)
   {
     lastsample[ch] = 0;
-    g[ch] = ReadBits(w,4);
+    g[ch] = ReadBits(w, 4, filename);
   }
 
   // Read samples for frame
@@ -429,12 +433,12 @@ void FrameDecode(wac_s *w, const std::string &filename)
       // ORIGINAL BEHAVIOUR ENDS //
 
       // Read the remainder code from the specified number of bits
-      code = ReadBits(w, g[ch]);
+      code = ReadBits(w, g[ch], filename);
 
       // Read the quotient represented by alternating 1/0 pattern
       // following the remainder code
       stopbit = (code & 1) ^ 1;
-      while (stopbit != ReadBits(w,1))
+      while (stopbit != ReadBits(w, 1, filename))
       {
         code += 1 << g[ch];
         stopbit ^= 1;
