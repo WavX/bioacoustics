@@ -1,5 +1,5 @@
 ## Release summary
-* This is a minor fix release to fix clang warnings on Fedora devel and revert a bad commit.
+* This is a minor fix release to fix gcc and clang warnings on Debian and Fedora, and revert a bad commit.
 
 ## Test environments
 * OS X install (on travis-ci), R release
