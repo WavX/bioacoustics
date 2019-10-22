@@ -1,4 +1,4 @@
-PKG_CPPFLAGS = -I$(LIB_FFTW)/include -I../windows/include/
+PKG_CXXFLAGS = -I$(LIB_FFTW)/include -I../windows/include/
 
 PKG_CXX_STD = CXX11
 

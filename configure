@@ -2211,7 +2211,6 @@ RVER=$("${R_HOME}/bin/Rscript" -e 'cat((R.version)$major, (R.version)$minor, sep
 
 : ${CC=$("${RBIN}" CMD config CC)}
 : ${CFLAGS=$("${RBIN}" CMD config CFLAGS)}
-: ${CPPFLAGS=$("${RBIN}" CMD config CPPFLAGS)}
 : ${LDFLAGS=$("${RBIN}" CMD config LDFLAGS)}
 
 if test  -z "$CXX"  ; then
@@ -4271,17 +4270,14 @@ $as_echo "$as_me: Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERS
   { $as_echo "$as_me:${as_lineno-$LINENO}: Done installing soxr-lsr library" >&5
 $as_echo "$as_me: Done installing soxr-lsr library" >&6;}
 
-  LSR_CPPFLAGS="${LSR_INCL}"
 else
    { $as_echo "$as_me:${as_lineno-$LINENO}: Suitable libsoxr-lsr library found." >&5
 $as_echo "$as_me: Suitable libsoxr-lsr library found." >&6;}
 fi
 
 LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
-CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL}"
-CFLAGS="${CFLAGS} -O3 -march=native -mtune=native"
-CXXFLAGS="${CXXFLAGS} ${CXX11STD}"
-
+CFLAGS="${CFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
+CXXFLAGS="${CXXFLAGS} ${LSR_INCL} ${CXX11STD}"
 
 
 

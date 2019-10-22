@@ -17,7 +17,6 @@ RVER=$("${R_HOME}/bin/Rscript" -e 'cat((R.version)$major, (R.version)$minor, sep
 
 : ${CC=$("${RBIN}" CMD config CC)}
 : ${CFLAGS=$("${RBIN}" CMD config CFLAGS)}
-: ${CPPFLAGS=$("${RBIN}" CMD config CPPFLAGS)}
 : ${LDFLAGS=$("${RBIN}" CMD config LDFLAGS)}
 
 if test [ -z "$CXX" ] ; then
@@ -278,18 +277,15 @@ if test x"${lsr_ok}" = x"no"; then
 
   AC_MSG_NOTICE([Done installing soxr-lsr library])
 
-  LSR_CPPFLAGS="${LSR_INCL}"
 else
    AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
 fi
 
 LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
-CPPFLAGS="${CPPFLAGS} ${FFTW_INCL} ${LSR_INCL}"
-CFLAGS="${CFLAGS} -O3 -march=native -mtune=native"
-CXXFLAGS="${CXXFLAGS} ${CXX11STD}"
+CFLAGS="${CFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
+CXXFLAGS="${CXXFLAGS} ${LSR_INCL} ${CXX11STD}"
 
-dnl substitute CPPFLAGS and LIBS
-AC_SUBST(CPPFLAGS)
+dnl substitute C/CXXFLAGS and LIBS
 AC_SUBST(CFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(CXXFLAGS)
