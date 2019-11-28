@@ -40,14 +40,14 @@ plot_zc <- function(x, LPF = 125000, HPF = 16000, tlim = c(0, Inf),
                     flim = c(HPF, LPF), ybar = TRUE, ybar.lty = 2,
                     ybar.col = "gray", dot.size = .3, dot.col = "red",  ...)
 {
-  zc$freq_data[zc$freq_data >= LPF] <- NA
-  zc$freq_data[zc$freq_data <= HPF] <- NA
+  x$data$freq_data[x$data$freq_data >= LPF] <- NA
+  x$data$freq_data[x$data$freq_data <= HPF] <- NA
 
-  tlim[2L] <- min(tlim[2L], max(zc$time_data) / 1e06)
+  tlim[2L] <- min(tlim[2L], max(x$data$time_data) / 1e06)
 
-  plot(x = zc$time_data / 1e06, y = zc$freq_data, xlim = tlim, ylim = flim,
+  plot(x = x$data$time_data / 1e06, y = x$data$freq_data, xlim = tlim, ylim = flim,
        xlab = "Time (Seconds)", ylab = "Frequency (Hz)",
-       main = zc$metadata$SPECIES, col = dot.col, cex = dot.size, pch = 16)
+       main = x$metadata$SPECIES, col = dot.col, cex = dot.size, pch = 16)
 
   if (ybar)
   {

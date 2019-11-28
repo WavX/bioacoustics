@@ -1,3 +1,8 @@
+# version 0.2.2.9000
+
+* Internal fixes
+  * Fix plot_zc
+
 # version 0.2.2
 
 * Internal fixes
