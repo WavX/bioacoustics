@@ -4,9 +4,19 @@
 \alias{fspec}
 \title{Generate spectrograms}
 \usage{
-fspec(wave, channel = "left", FFT_size = 256, FFT_overlap = 0.875,
-  FFT_win = "hann", LPF, HPF = 0, tlim = NULL, flim = NULL,
-  rotate = FALSE, to_dB = TRUE)
+fspec(
+  wave,
+  channel = "left",
+  FFT_size = 256,
+  FFT_overlap = 0.875,
+  FFT_win = "hann",
+  LPF,
+  HPF = 0,
+  tlim = NULL,
+  flim = NULL,
+  rotate = FALSE,
+  to_dB = TRUE
+)
 }
 \arguments{
 \item{wave}{a \link[tuneR]{Wave} object.}

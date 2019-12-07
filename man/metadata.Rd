@@ -11,8 +11,7 @@
 \usage{
 metadata(x, ...)
 
-\method{metadata}{character}(x, file_type = c(file_type_guess(x), "wav",
-  "zc"), ...)
+\method{metadata}{character}(x, file_type = c(file_type_guess(x), "wav", "zc"), ...)
 
 \method{metadata}{blob_detection}(x, ...)
 

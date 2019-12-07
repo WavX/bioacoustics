@@ -4,9 +4,19 @@
 \alias{spectro}
 \title{Plot a spectrogram}
 \usage{
-spectro(wave, channel = "left", FFT_size = 256, FFT_overlap = 0.875,
-  FFT_win = "hann", LPF, HPF = 0, tlim = NULL, flim = NULL,
-  ticks_y = NULL, col = gray.colors(25, 1, 0))
+spectro(
+  wave,
+  channel = "left",
+  FFT_size = 256,
+  FFT_overlap = 0.875,
+  FFT_win = "hann",
+  LPF,
+  HPF = 0,
+  tlim = NULL,
+  flim = NULL,
+  ticks_y = NULL,
+  col = gray.colors(25, 1, 0)
+)
 }
 \arguments{
 \item{wave}{a \link[tuneR]{Wave} object.}
