@@ -66,6 +66,9 @@ inline
   {
     size_t N = samples.size();
 
+    std::fill(original.begin(), original.end(), 0.0);
+    std::fill(transformed.begin(), transformed.end(), 0.0);
+
     for (size_t i = 0; i < fft_size; i++, seek++)
     {
       if (seek >= 0 && seek < N)
