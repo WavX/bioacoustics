@@ -77,7 +77,7 @@ inline
     fftw_execute(plan);
     size_t sk = fft_size;
 
-    for (size_t i = 1; i < size / 2; i++)
+    for (size_t i = 0; i < fft_size / 2; i++)
     {
       magnitude[i] = std::abs(std::complex<double>(transformed[i], transformed[--sk])) * normalise;
     }
