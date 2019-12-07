@@ -37,10 +37,10 @@ void detect_impl (const std::vector<int> &audio_samples,
                   const size_t &noise_estim_win_size)
 {
 
-  double freq_res = (double)sample_rate / fft.size;
+  double freq_res = (double)sample_rate / fft.fft_size;
   int n_samples = audio_samples.size();
-  size_t step_size = fft.size / 2;
-  size_t frames = 1 + (n_samples - fft.size) / step_size;
+  size_t step_size = fft.fft_size / 2;
+  size_t frames = 1 + (n_samples - fft.fft_size) / step_size;
   int seek = -step_size;
 
   double EXPT = -DBL_MAX;
@@ -48,7 +48,7 @@ void detect_impl (const std::vector<int> &audio_samples,
 
   while(sum_squares < 0.00001 && seek < n_samples)
   {
-    for (int j = 0; j < (int)fft.size; j++)
+    for (int j = 0; j < (int)fft.fft_size; j++)
     {
       if ((seek + j) >= 0 && (seek + j) < n_samples)
       {
@@ -66,7 +66,7 @@ void detect_impl (const std::vector<int> &audio_samples,
   std::vector<double> prev = power_spectrum, background_noise_filtered_prev = power_spectrum, background_noise_filtered_new = power_spectrum;
 
   size_t win_size = ((float)noise_estim_win_size * (float)sample_rate / 1000) / (float)step_size;
-  std::vector< std::vector<double> > bg_noiz_f_win (fft.size / 2, std::vector<double> (win_size));
+  std::vector< std::vector<double> > bg_noiz_f_win (fft.fft_size / 2, std::vector<double> (win_size));
 
   size_t bg_noiz_f_insert_at = 0, bg_noiz_f_win_size = 0;
 
@@ -81,7 +81,7 @@ void detect_impl (const std::vector<int> &audio_samples,
     if (seek > n_samples) continue;
 
     sum_squares = 0;
-    for (size_t j = 0; j < fft.size; j++)
+    for (size_t j = 0; j < fft.fft_size; j++)
     {
       if ((seek + (int)j) >= 0 && (seek + (int)j) < n_samples)
       {

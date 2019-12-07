@@ -54,10 +54,10 @@ Audio_Event Analyse::impl(const size_t &fft_size,
 {
   double noise = 0, signal = 0;
   int seek = peak_location;
-  fft.size = fft_size;
+  fft.fft_size = fft_size;
   fft.set_plan(fft_size);
   fft.set_window(FFT::WIN_TYPE::BLACKMAN_HARRIS_7);
-  freq_res = sample_rate / fft.size;
+  freq_res = sample_rate / fft.fft_size;
 
   smooth_spectrum(background_noise, smoothing_gain);
   analyse_frame(seek, noise, signal, background_noise);
@@ -65,7 +65,7 @@ Audio_Event Analyse::impl(const size_t &fft_size,
   kalman = Kalman(KPE, KME, bin_centroid);
 
   Audio_Event audio_event;
-  audio_event.power_spectrum.resize(fft.size / 2, 0);
+  audio_event.power_spectrum.resize(fft.fft_size / 2, 0);
   store_back(audio_event, noise, signal);
 
   forward_analyse(audio_event, seek, background_noise, noise, signal);
@@ -248,7 +248,7 @@ void Analyse::store_back (Audio_Event &audio_event,
   audio_event.amp_peak = std::max(audio_event.amp_peak, energy);
   audio_event.duration++;
   std::transform(mask.begin(), mask.end(), audio_event.power_spectrum.begin(), audio_event.power_spectrum.begin(), std::plus<double>());
-  audio_event.harmonic_amp_track.push_back(power_spectrum[std::min(bin_harmonic, fft.size/2 - 1)]);
+  audio_event.harmonic_amp_track.push_back(power_spectrum[std::min(bin_harmonic, fft.fft_size/2 - 1)]);
 }
 
 
@@ -263,7 +263,7 @@ void Analyse::store_front (Audio_Event &audio_event,
   audio_event.amp_peak = std::max(audio_event.amp_peak, energy);
   audio_event.duration++;
   std::transform(mask.begin(), mask.end(), audio_event.power_spectrum.begin(), audio_event.power_spectrum.begin(), std::plus<double>());
-  audio_event.harmonic_amp_track.push_front(power_spectrum[std::min(bin_harmonic, fft.size/2 - 1)]);
+  audio_event.harmonic_amp_track.push_front(power_spectrum[std::min(bin_harmonic, fft.fft_size/2 - 1)]);
 }
 
 

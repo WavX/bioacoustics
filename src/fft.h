@@ -39,34 +39,34 @@ public:
   };
 
   FFT();
-  FFT(size_t size, WIN_TYPE win_type);
+  FFT(size_t fft_sz, WIN_TYPE win_type);
   ~FFT();
 
   std::vector<double> magnitude, original, transformed;
 
-  inline void impl(int seek, const std::vector<int> &samples);
-  void set_plan(const size_t &size);
+  inline void impl(std::size_t seek, const std::vector<int> &samples);
+  void set_plan(const size_t &fft_sz);
   void set_window(const FFT::WIN_TYPE& win_type);
 
-  size_t size;
+  std::size_t fft_size;
 
 private:
   double normalise, z;
   std::vector<double> window;
   fftw_plan plan;
 
-  void blackman_harris_4 (const size_t size);
-  void blackman_harris_7 (const size_t size);
-  void hann (const size_t size);
+  void blackman_harris_4 (const size_t fft_sz);
+  void blackman_harris_7 (const size_t fft_sz);
+  void hann (const size_t fft_sz);
 };
 
 
 inline
-  void FFT::impl(int seek, const std::vector<int> &samples)
+  void FFT::impl(size_t seek, const std::vector<int> &samples)
   {
-    int N = samples.size();
+    size_t N = samples.size();
 
-    for (size_t i = 0; i < size; i++, seek++)
+    for (size_t i = 0; i < fft_size; i++, seek++)
     {
       if (seek >= 0 && seek < N)
       {
@@ -75,11 +75,11 @@ inline
     }
 
     fftw_execute(plan);
-    seek = size;
+    size_t sk = fft_size;
 
     for (size_t i = 1; i < size / 2; i++)
     {
-      magnitude[i] = std::abs(std::complex<double>(transformed[i], transformed[--seek])) * normalise;
+      magnitude[i] = std::abs(std::complex<double>(transformed[i], transformed[--sk])) * normalise;
     }
   }
 

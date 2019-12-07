@@ -23,20 +23,20 @@
 
 FFT::FFT() {}
 
-FFT::FFT(size_t size, FFT::WIN_TYPE win_type)
+FFT::FFT(size_t fft_sz, FFT::WIN_TYPE win_type)
 {
-  this->size = size;
+  this->fft_size = fft_sz;
 
   set_window(win_type);
-  set_plan(size);
+  set_plan(fft_sz);
 }
 
-void FFT::set_plan(const size_t &size)
+void FFT::set_plan(const size_t &fft_sz)
 {
-  original.resize(size, 0);
-  transformed.resize(size, 0);
-  magnitude.resize(size / 2, 0);
-  plan = fftw_plan_r2r_1d(size, &original[0], &transformed[0], FFTW_R2HC, FFTW_PATIENT);
+  original.resize(fft_sz, 0);
+  transformed.resize(fft_sz, 0);
+  magnitude.resize(fft_sz / 2, 0);
+  plan = fftw_plan_r2r_1d(fft_sz, &original[0], &transformed[0], FFTW_R2HC, FFTW_PATIENT);
 }
 
 void FFT::set_window(const WIN_TYPE& win_type)
@@ -47,18 +47,18 @@ void FFT::set_window(const WIN_TYPE& win_type)
   switch(win_type)
   {
   case WIN_TYPE::BLACKMAN_HARRIS_4 :
-    blackman_harris_4 (size);
+    blackman_harris_4 (fft_size);
     break;
   case WIN_TYPE::BLACKMAN_HARRIS_7 :
-    blackman_harris_7 (size);
+    blackman_harris_7 (fft_size);
     break;
   case WIN_TYPE::HANN :
-    hann (size);
+    hann (fft_size);
     break;
   }
 
   double sum { std::accumulate(window.begin(), window.end(), 0.0) };
-  normalise = 1 / sum;
+  normalise = 1. / sum;
 }
 
 // FFT windows
@@ -84,9 +84,9 @@ FFT::WIN_TYPE fft_win_str_to_enum(std::string s)
   return win_type;
 }
 
-void FFT::blackman_harris_4 (size_t size)
+void FFT::blackman_harris_4 (size_t fft_sz)
 {
-  for (size_t i = 0; i < size; i++)
+  for (size_t i = 0; i < fft_sz; i++)
   {
     window[i] = 0.35875 - 0.48829 * std::cos(z*i) + \
       0.14128 * std::cos(2*z*i) -                   \
@@ -95,9 +95,10 @@ void FFT::blackman_harris_4 (size_t size)
 }
 
 
-void FFT::blackman_harris_7 (size_t size)
+void FFT::blackman_harris_7 (size_t fft_sz)
 {
-  for (size_t i = 0; i < size; i++)
+  // doi:10.1109/icassp.2001.940309
+  for (size_t i = 0; i < fft_sz; i++)
   {
     window[i] = 0.2712203606 - 0.4334446123 * std::cos(z*i) +      \
       0.21800412 * std::cos(2*z*i) - 0.0657853433 * std::cos(3*z*i) +   \
@@ -106,9 +107,9 @@ void FFT::blackman_harris_7 (size_t size)
   }
 }
 
-void FFT::hann (size_t size)
+void FFT::hann (size_t fft_sz)
 {
-  for (size_t i = 0; i < size; i++)
+  for (size_t i = 0; i < fft_sz; i++)
   {
     window[i] = 0.5 * (1 - std::cos(2*z*i));
   }
