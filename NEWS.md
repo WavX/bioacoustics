@@ -2,6 +2,7 @@
 
 * Internal fixes
   * Fix plot_zc
+  * Fix calculation of Hann window
 
 # version 0.2.2
 
