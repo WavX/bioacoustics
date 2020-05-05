@@ -2254,7 +2254,9 @@ esac
 	fi
 fi
 
-: ${CXX="${CXX11} ${CXX11STD}"}
+: ${CXXPICFLAGS=$("${RBIN}" CMD config CXXPICFLAGS)}
+: ${CXX="${CXX11} ${CXX11STD} ${CXXPICFLAGS}"}
+
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'

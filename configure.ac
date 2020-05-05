@@ -36,7 +36,9 @@ if test [ -z "$CXX11STD" ] ; then
 	fi
 fi
 
-: ${CXX="${CXX11} ${CXX11STD}"}
+: ${CXXPICFLAGS=$("${RBIN}" CMD config CXXPICFLAGS)}
+: ${CXX="${CXX11} ${CXX11STD} ${CXXPICFLAGS}"}
+
 
 AC_PROG_CC
 AC_PROG_CXX
