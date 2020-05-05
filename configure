@@ -3318,6 +3318,10 @@ $as_echo "$as_me: CXX: ${CXX}" >&6;}
 #
 # Check for cmake
 #
+CMAKE_SEARCH_PATH="${PATH}:/Applications/CMake.app/Contents/bin"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: ${CMAKE_SEARCH_PATH}" >&5
+$as_echo "$as_me: ${CMAKE_SEARCH_PATH}" >&6;}
+
 # Extract the first word of "cmake", so it can be a program name with args.
 set dummy cmake; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -3329,7 +3333,7 @@ else
   ac_cv_prog_CMAKE_FOUND="$CMAKE_FOUND" # Let the user override the test.
 else
 as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
+for as_dir in ${CMAKE_SEARCH_PATH}
 do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.

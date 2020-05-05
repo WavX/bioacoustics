@@ -54,7 +54,8 @@ AC_MSG_NOTICE([CXX: ${CXX}])
 #
 # Check for cmake
 #
-AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found])
+CMAKE_SEARCH_PATH="${PATH}:/Applications/CMake.app/Contents/bin"
+AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found], ${CMAKE_SEARCH_PATH})
 
 if test x"${CMAKE_FOUND}" != x"cmake" ; then
   AC_MSG_ERROR(Could not find cmake)
