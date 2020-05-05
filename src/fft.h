@@ -71,7 +71,7 @@ inline
 
     for (size_t i = 0; i < fft_size; i++, seek++)
     {
-      if (seek >= 0 && seek < N)
+      if (seek < N)
       {
         original[i] = samples[seek] * window[i];
       }
