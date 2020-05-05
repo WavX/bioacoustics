@@ -1,7 +1,7 @@
 Package: bioacoustics
 Type: Package
 Title: Analyse Audio Recordings and Automatically Extract Animal Vocalizations
-Version: 0.2.2.9000
+Version: 0.2.3
 Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c("aut","cre")),
              person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
              person("Christopher", "Scott", role = "aut"),

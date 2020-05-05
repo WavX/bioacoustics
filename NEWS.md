@@ -1,8 +1,9 @@
-# version 0.2.2.9000
+# version 0.2.3
 
 * Internal fixes
   * Fix plot_zc
   * Fix calculation of Hann window
+  * Fix compiler warnings
 
 # version 0.2.2
 
