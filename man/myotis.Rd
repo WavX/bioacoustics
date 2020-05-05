@@ -5,7 +5,11 @@
 \alias{myotis}
 \alias{zc}
 \title{Audio recording of myotis species from United-Kingdom}
-\format{\link[tuneR]{Wave} object}
+\format{
+\link[tuneR]{Wave} object
+
+Zero-Crossing object
+}
 \usage{
 myotis
 
