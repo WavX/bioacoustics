@@ -256,7 +256,7 @@ if test x"${lsr_ok}" = x"no"; then
   ## Compile libsoxr source code and clean up
   AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
   $(set -e; \
-    export PATH = ${CMAKE_SEARCH_PATH}
+    PATH=${CMAKE_SEARCH_PATH}
     cd soxr-${LSR_VERSION}; \
     CC="${CC}" \
     cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \

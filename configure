@@ -4248,7 +4248,7 @@ $as_echo "$as_me: Need to download and build libsoxr" >&6;}
   { $as_echo "$as_me:${as_lineno-$LINENO}: Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}" >&5
 $as_echo "$as_me: Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}" >&6;}
   $(set -e; \
-    export PATH = ${CMAKE_SEARCH_PATH}
+    PATH=${CMAKE_SEARCH_PATH}
     cd soxr-${LSR_VERSION}; \
     CC="${CC}" \
     cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \
