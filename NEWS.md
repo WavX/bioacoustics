@@ -1,3 +1,7 @@
+# version 0.2.4
+
+* Fix install failure on mac
+
 # version 0.2.3
 
 * Internal fixes

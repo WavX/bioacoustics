@@ -1,5 +1,5 @@
 ## Release summary
-* This is a maintenance release to fix various minor issues.
+* This is a maintenance release to fix an installation issue on mac.
 
 ## Test environments
 * OS X install (on travis-ci), R release
