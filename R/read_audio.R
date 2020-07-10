@@ -123,7 +123,11 @@ read_wac <- function(file, time_exp = 1, write_wav = NULL, ...)
 
   # Extract the date time info from the filename
   date_time <- strptime(
-    substr( fpse, nchar(fpse) - 14, nchar(fpse) ),
+    sub(
+      substr( fpse, nchar(fpse) - 14, nchar(fpse) ),
+      pattern = "[$]",
+      replacement = ""
+    ),
     "%Y%m%d_%H%M%S"
   )
 
