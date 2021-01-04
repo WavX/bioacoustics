@@ -1,6 +1,6 @@
 [![CRAN](http://www.r-pkg.org/badges/version/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/bioacoustics)](https://cran.r-project.org/package=bioacoustics)
-[![Travis-CI Build Status](https://travis-ci.org/WavX/bioacoustics.svg?branch=master)](https://travis-ci.org/WavX/bioacoustics)
+[![R build status](https://github.com/WavX/bioacoustics/workflows/R-CMD-check/badge.svg)](https://github.com/WavX/bioacoustics/actions?workflow=R-CMD-check)
 
 # bioacoustics: detect and extract automatically acoustic features in audio recordings
 
