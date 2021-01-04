@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.2.4) dnl package name, version
+AC_INIT([bioacoustics], 0.2.5) dnl package name, version
 
 # require at least autoconf 2.62
 AC_PREREQ(2.62)
@@ -68,11 +68,9 @@ AC_LANG([C++])
 AC_OPENMP
 AC_LANG([C])
 AC_OPENMP
-LSR_OPENMP="DWITH_OPENMP=OFF"
 
 if test x"${OPENMP_CFLAGS}" != "x"; then
 	FFTW_OPENMP="--enable-openmp"
-	LSR_OPENMP="DWITH_OPENMP=ON"
 fi
 
 #
@@ -183,111 +181,9 @@ else
   AC_MSG_NOTICE([Suitable fftw3 library found.])
 fi
 
-
-#
-# libsoxr-lsr
-#
-
-dnl Select an optional path to the header file of the LSR library
-AC_ARG_WITH([lsr-include],
-            AC_HELP_STRING([--with-lsr-include=LSR_INCL],
-                           [the location of libsoxr-lsr header file]),
-            [lsr_incl_path=$withval])
-if test [ -n "$lsr_incl_path" ] ; then
-   LSR_INCL="-I${lsr_incl_path}"
-else
-  if test [ -n "${LIB_LSR}" ] ; then
-     LSR_INCL="-I${LIB_LSR}/include"
-  fi
-fi
-
-AC_CHECK_HEADERS(soxr-lsr.h, [lsr_ok="yes"], [lsr_ok="no"])
-
-# dnl ditto for a library path
-AC_ARG_WITH([lsr-lib],
-            AC_HELP_STRING([--with-lsr-lib=LSR_LIB],
-                           [the location of libsoxr-lsr library]),
-            [lsr_lib_path=$withval])
-if test [ -n "$lsr_lib_path" ] ; then
-   LSR_LIB="-L$lsr_lib_path"
-else
-  if test [ -n "${LIB_LSR}" ] ; then
-     LSR_LIB="-L${LIB_LSR}/lib"
-  else
-    if test -n "${LSR_CONFIG}"; then
-      lsr_lib_path=$(lsr_config --libs)
-      LSR_LIB="${lsr_lib_path}"
-    fi
-  fi
-fi
-
-AC_SEARCH_LIBS(src_simple, soxr-lsr, [lsr_ok="yes"], [lsr_ok="no"])
-
-## If libsoxr-lsr is not found, download libsoxr and build it locally
-if test x"${lsr_ok}" = x"no"; then
-  AC_MSG_NOTICE([Need to download and build libsoxr])
-
-  ## define LSR version
-  LSR_VERSION=0.1.3.9003
-
-  ## define LSR file and download URL
-  LSR_TGZ="${LSR_VERSION}.tar.gz"
-  LSR_URL="https://github.com/WavX/soxr/archive/${LSR_TGZ}"
-
-  ## C Compiler options
-  LSR_CFLAGS=
-
-  ## additional C Compiler options for linking
-  LSR_CLINKFLAGS=
-
-  ## Libraries necessary to link with the package
-  LSR_LIB="-L\"$(pwd)/soxr-${LSR_VERSION}/lib\""
-
-  ## Necessary Include dirs
-  LSR_INCL="-I$(pwd)/soxr-${LSR_VERSION}/include"
-
-  ## Download libsoxr source code
-  $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${LSR_URL}', destfile='${LSR_TGZ}')")
-
-  ## Extract libsoxr source code and remove .tar.gz
-  $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${LSR_TGZ}', exdir='$(pwd)')")
-  $(rm -rf ${LSR_TGZ})
-
-  ## Compile libsoxr source code and clean up
-  AC_MSG_NOTICE([Starting to install soxr-lsr library to $(pwd)/soxr-${LSR_VERSION}])
-  $(set -e; \
-    PATH=${CMAKE_SEARCH_PATH}
-    cd soxr-${LSR_VERSION}; \
-    CC="${CC}" \
-    cmake $(pwd) -DCMAKE_BUILD_TYPE=Release \
-                 -DCMAKE_INSTALL_PREFIX=$(pwd) \
-                 -DBUILD_SHARED_LIBS=OFF \
-                 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-                 -Wno-dev \
-                 -${LSR_OPENMP} > /dev/null;
-    ${MAKE} > /dev/null; \
-    ${MAKE} install > /dev/null;
-  )
-
-  LSR_INSTALL=$?
-
-  if test x"${LSR_INSTALL}" != x"0" ; then
-    AC_MSG_ERROR([Could not install soxr-lsr, try to install it manually?])
-  fi
-
-  if [[ "$LIBS" != *"lsoxr-lsr"* ]]; then
-      LIBS="$LIBS -lsoxr-lsr -lsoxr"
-  fi
-
-  AC_MSG_NOTICE([Done installing soxr-lsr library])
-
-else
-   AC_MSG_NOTICE([Suitable libsoxr-lsr library found.])
-fi
-
-LIBS="${FFTW_LIB} ${LSR_LIB} ${LIBS}"
-CFLAGS="${CFLAGS} ${FFTW_INCL} ${LSR_INCL} -O3 -march=native -mtune=native"
-CXXFLAGS="${CXXFLAGS} ${FFTW_INCL} ${LSR_INCL} ${CXX11STD}"
+LIBS="${FFTW_LIB} ${LIBS}"
+CFLAGS="${CFLAGS} ${FFTW_INCL} -O3 -march=native -mtune=native"
+CXXFLAGS="${CXXFLAGS} ${FFTW_INCL} ${CXX11STD}"
 
 dnl substitute C/CXXFLAGS and LIBS
 AC_SUBST(CFLAGS)

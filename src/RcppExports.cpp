@@ -72,18 +72,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// resample_impl
-std::vector<float> resample_impl(std::vector<float>& audio_samples, double ratio);
-RcppExport SEXP _bioacoustics_resample_impl(SEXP audio_samplesSEXP, SEXP ratioSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<float>& >::type audio_samples(audio_samplesSEXP);
-    Rcpp::traits::input_parameter< double >::type ratio(ratioSEXP);
-    rcpp_result_gen = Rcpp::wrap(resample_impl(audio_samples, ratio));
-    return rcpp_result_gen;
-END_RCPP
-}
 // fspec_impl
 Rcpp::NumericMatrix fspec_impl(const std::vector<int>& audio_samples, const size_t& fft_size, const double& fft_overlap, const std::string& win, const size_t& HPF_bin, const size_t& LPF_bin, const size_t& FLL_bin, const size_t& FUL_bin, const bool& rotate);
 RcppExport SEXP _bioacoustics_fspec_impl(SEXP audio_samplesSEXP, SEXP fft_sizeSEXP, SEXP fft_overlapSEXP, SEXP winSEXP, SEXP HPF_binSEXP, SEXP LPF_binSEXP, SEXP FLL_binSEXP, SEXP FUL_binSEXP, SEXP rotateSEXP) {
@@ -108,7 +96,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bioacoustics_threshold_detection_impl", (DL_FUNC) &_bioacoustics_threshold_detection_impl, 20},
     {"_bioacoustics_blob_detection_impl", (DL_FUNC) &_bioacoustics_blob_detection_impl, 15},
     {"_bioacoustics_read_wac_impl", (DL_FUNC) &_bioacoustics_read_wac_impl, 2},
-    {"_bioacoustics_resample_impl", (DL_FUNC) &_bioacoustics_resample_impl, 2},
     {"_bioacoustics_fspec_impl", (DL_FUNC) &_bioacoustics_fspec_impl, 9},
     {NULL, NULL, 0}
 };

@@ -1,7 +1,7 @@
 Package: bioacoustics
 Type: Package
 Title: Analyse Audio Recordings and Automatically Extract Animal Vocalizations
-Version: 0.2.4.9000
+Version: 0.2.5
 Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c("aut","cre")),
              person("Francois", "Fabianek", email = "francois.fabianek@wavx.ca", role = "aut"),
              person("Christopher", "Scott", role = "aut"),
@@ -18,7 +18,7 @@ Description: Contains all the necessary tools to process audio recordings of
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-SystemRequirements: C++11, cmake, fftw3, GNU make, soxr-lsr
+SystemRequirements: C++11, fftw3, GNU make
 Depends: R (>= 3.3.0)
 LinkingTo: Rcpp
 Imports: 
@@ -35,6 +35,6 @@ Suggests: knitr, rmarkdown
 URL: https://github.com/wavx/bioacoustics/
 BugReports: https://github.com/wavx/bioacoustics/issues/
 NeedsCompilation: yes
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Biarch: TRUE

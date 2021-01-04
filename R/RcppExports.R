@@ -13,10 +13,6 @@ read_wac_impl <- function(filepath, filename) {
     .Call(`_bioacoustics_read_wac_impl`, filepath, filename)
 }
 
-resample_impl <- function(audio_samples, ratio) {
-    .Call(`_bioacoustics_resample_impl`, audio_samples, ratio)
-}
-
 .fspec_impl <- function(audio_samples, fft_size, fft_overlap, win, HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate) {
     .Call(`_bioacoustics_fspec_impl`, audio_samples, fft_size, fft_overlap, win, HPF_bin, LPF_bin, FLL_bin, FUL_bin, rotate)
 }
