@@ -13,7 +13,7 @@ for further analysis such as species identification based on classification of a
 It can be subdivided into three main components:
 
 * Read, extract data (not yet implemented), display, and write Zero-Crossing files.
-* Stand-alone tools to convert or resample MP3, WAV, and WAC files.
+* Stand-alone tools to convert MP3, WAV, and WAC files.
 * Read, display, MP3, WAV or WAC files, filter, and extract automatically acoustic features.
 
 
@@ -36,7 +36,7 @@ Installing bioacoustics from source works under windows when [Rtools](https://cr
 
 ### Linux
 
-For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1), [libsoxr-lsr](https://github.com/WavX/soxr) (>= 0.1.3.9003, forked from https://sourceforge.net/p/soxr/wiki/Home/) are required.
+For Unix-alikes, [FFTW](http://www.fftw.org/) (>= 3.3.1) is required.
 
 ### Contributing
 
