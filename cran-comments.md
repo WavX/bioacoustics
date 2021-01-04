@@ -2,8 +2,8 @@
 * This is a maintenance release to remove some code that is not maintained anymore.
 
 ## Test environments
-* OS X install (on travis-ci), R release
-* Ubuntu 16.04.6 (on travis-ci), R devel and release
+* OS X install (on GitHub workflows), R release
+* Ubuntu 20.04 (on GitHub workflows), R devel and release
 * win-builder (devel and release)
 
 ## R CMD check results
