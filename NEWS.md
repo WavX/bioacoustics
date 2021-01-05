@@ -1,3 +1,7 @@
+# version 0.2.5
+
+* Delete the code that is no longer maintained
+
 # version 0.2.4
 
 * Fix install failure on mac
