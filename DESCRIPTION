@@ -31,7 +31,7 @@ Imports:
   stringr,
   tools,
   tuneR (>= 1.3.0)
-Suggests: knitr, rmarkdown
+Suggests: knitr, markdown, rmarkdown
 URL: https://github.com/wavx/bioacoustics/
 BugReports: https://github.com/wavx/bioacoustics/issues/
 NeedsCompilation: yes
