@@ -311,7 +311,7 @@ The zc dataset is a Zero-Crossing file of 16384 dots containing a sequence of 24
 
 > Chang, F., Chen, C.-J., & Lu, C.J. (2004). A linear-time component-labeling algorithm using contour tracing technique. computer vision and image understanding, 93(2), 206-220. [Link](https://www.iis.sinica.edu.tw/papers/fchang/1362-F.pdf)
 
-> Gabor, D. (1946). Theory of communication. Part 1: The analysis of information. Engineers-Part III: Radio and Communication. [Link](http://ieeexplore.ieee.org/xpl/tocresult.jsp?isnumber=5298484)
+> Gabor, D. (1946). Theory of communication. Part 1: The analysis of information. Engineers-Part III: Radio and Communication.
 
 > Harris, F. J. (1978). On then use of windows with the discrete for harmonic analysis Fourier transform. Proceedings of the IEEE, 66(1), 51-83. [Link](https://www.ak.tu-berlin.de/fileadmin/a0135/Unterrichtsmaterial/EDS_WS0910/Harris_1978_On_the_use_of_windows_for_harmonic_analysis_with_the_discrete_fourier_transform_IEEE.pdf)
 
