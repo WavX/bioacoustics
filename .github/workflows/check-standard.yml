@@ -41,6 +41,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: Make executable
+        run: |
+          chmod +x ./cleanup
+          chmod +x ./configure
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
