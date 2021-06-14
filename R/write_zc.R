@@ -42,7 +42,7 @@ update_header.zc <- function(md_file)
         FUN = function(w, lg)
         {
           if (is.null(w)) w <- ""
-          charToRaw(stringr::str_pad(w, width = lg, side = "right"))
+          charToRaw(substr(stringr::str_pad(w, width = lg, side = "right"), 1, lg))
         }
       )
     )
