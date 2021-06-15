@@ -1,3 +1,7 @@
+# version 0.2.5.9000
+
+* Fix a warning in write_zc(). Reported by @abfleishman.  
+
 # version 0.2.5
 
 * Delete the code that is no longer maintained
