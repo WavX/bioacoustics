@@ -9,6 +9,7 @@ Authors@R: c(person("Jean", "Marchal", email = "jean.marchal@wavx.ca", role = c(
              person("David", "Riggs", role = c("ctb", "cph"), email = "driggs@myotisoft.com", comment = "Read GUANO metadata, original R code"),
              person("Peter", "Wilson", role = c("ctb", "cph"), email = "peter@peterwilson.id.au", comment = "Read ZC files, original R code"),
              person(family = "Wildlife Acoustics, inc.", role = c("ctb", "cph"), comment = "Read WAC files, original C code"),
+             person("Jordan", "Biserkov", role = "ctb"),
              person(family = "WavX, inc.", role = "cph"))
 Maintainer: Jean Marchal <jean.marchal@wavx.ca>
 Description: Contains all the necessary tools to process audio recordings of
