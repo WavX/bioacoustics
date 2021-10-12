@@ -8,7 +8,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
 * checking installed package size ... NOTE
 * checking for GNU extensions in Makefiles ... NOTE
