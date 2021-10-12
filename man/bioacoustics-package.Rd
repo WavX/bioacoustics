@@ -45,6 +45,7 @@ Other contributors:
   \item David Riggs \email{driggs@myotisoft.com} (Read GUANO metadata, original R code) [contributor, copyright holder]
   \item Peter Wilson \email{peter@peterwilson.id.au} (Read ZC files, original R code) [contributor, copyright holder]
   \item  Wildlife Acoustics, inc. (Read WAC files, original C code) [contributor, copyright holder]
+  \item Jordan Biserkov [contributor]
   \item  WavX, inc. [copyright holder]
 }
 
