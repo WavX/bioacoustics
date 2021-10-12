@@ -1,9 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([bioacoustics], 0.2.5.9000) dnl package name, version
+AC_INIT([bioacoustics],[0.2.6]) dnl package name, version
 
 # require at least autoconf 2.62
-AC_PREREQ(2.62)
+AC_PREREQ([2.69])
 
 dnl Now find the compiler and compiler flags to use
 : ${R_HOME=$(R RHOME)}
@@ -87,8 +87,7 @@ fi
 
 dnl Select an optional path to the header file of the FFTW library
 AC_ARG_WITH([fftw-include],
-            AC_HELP_STRING([--with-fftw-include=FFTW_INCL],
-                           [the location of fftw3 header file]),
+            AS_HELP_STRING([--with-fftw-include=FFTW_INCL],[the location of fftw3 header file]),
             [fftw_incl_path=$withval])
 if test [ -n "$fftw_incl_path" ] ; then
    FFTW_INCL="-I${fftw_incl_path}"
@@ -103,8 +102,7 @@ AC_CHECK_HEADERS(fftw3.h, [fftw_ok="yes"], [fftw_ok="no"])
 
 # dnl ditto for a library path
 AC_ARG_WITH([fftw-lib],
-            AC_HELP_STRING([--with-fftw-lib=FFTW_LIB],
-                           [the location of fftw3 library]),
+            AS_HELP_STRING([--with-fftw-lib=FFTW_LIB],[the location of fftw3 library]),
             [fftw_lib_path=$withval])
 if test [ -n "$fftw_lib_path" ] ; then
    FFTW_LIB="-L$fftw_lib_path"
