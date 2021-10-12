@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // threshold_detection_impl
 Rcpp::List threshold_detection_impl(const std::vector<int>& audio_samples, size_t sample_rate, size_t threshold, double min_d, double max_d, double min_TBE, double max_TBE, double EDG, size_t LPF, size_t HPF, double dur_t, double snr_t, double angl_t, size_t FFT_size, double FFT_overlap, double start_t, double end_t, const size_t NWS, double KPE, double KME);
 RcppExport SEXP _bioacoustics_threshold_detection_impl(SEXP audio_samplesSEXP, SEXP sample_rateSEXP, SEXP thresholdSEXP, SEXP min_dSEXP, SEXP max_dSEXP, SEXP min_TBESEXP, SEXP max_TBESEXP, SEXP EDGSEXP, SEXP LPFSEXP, SEXP HPFSEXP, SEXP dur_tSEXP, SEXP snr_tSEXP, SEXP angl_tSEXP, SEXP FFT_sizeSEXP, SEXP FFT_overlapSEXP, SEXP start_tSEXP, SEXP end_tSEXP, SEXP NWSSEXP, SEXP KPESEXP, SEXP KMESEXP) {
