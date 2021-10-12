@@ -1,6 +1,7 @@
-# version 0.2.5.9000
+# version 0.2.6
 
 * Fix a warning in write_zc(). Reported by @abfleishman.  
+* Fix autoconf deprecated function
 
 # version 0.2.5
 
