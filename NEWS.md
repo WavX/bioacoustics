@@ -1,3 +1,7 @@
+# version 0.2.7
+
+* Fix broken web links.
+
 # version 0.2.6
 
 * Fix a warning in write_zc(). Reported by @abfleishman.  
