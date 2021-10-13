@@ -1,5 +1,5 @@
 ## Release summary
-* This is a maintenance release to fix a minor bug and fix a warning caused by a now deprecated autoconf macro.
+* This is a maintenance release to fix a minor bug, fix a warning caused by a now deprecated autoconf macro and broken web links.
 
 ## Test environments
 * OS X install (on GitHub workflows), R release
