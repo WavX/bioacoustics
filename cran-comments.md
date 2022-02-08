@@ -1,5 +1,5 @@
 ## Release summary
-* This is a maintenance release to fix a minor bug, fix a warning caused by a now deprecated autoconf macro and broken web links.
+* This is a maintenance release for R 4.2.0.
 
 ## Test environments
 * OS X install (on GitHub workflows), R release
