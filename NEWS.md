@@ -1,3 +1,7 @@
+# verrsion 0.2.8
+
+* Support for R 4.2
+
 # version 0.2.7
 
 * Fix broken web links.
