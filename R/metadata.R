@@ -17,11 +17,11 @@ metadata <- function(x, ...)
 #' @rdname metadata
 metadata.character <- function(x, file_type = c(file_type_guess(x), "wav", "zc"), ...)
 {
-  if (x == "wav")
+  if (file_type == "wav")
   {
     return( guano_md(x) )
   }
-  else if (x == "zc")
+  else if (file_type == "zc")
   {
     return( read_zc(x)$metadata )
   }
