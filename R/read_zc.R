@@ -424,26 +424,26 @@ read_gps_data.zc <- function(p, raw)
   # 0x0147-0x014b 5 bytes for decimal Degrees
   # 0x014c-0x014f 4 bytes for Altitude in metres (-999 to 9999)
 
-  DATUM <- stringr::str_trim(rawToChar(as.raw(raw[p + 22:31])))
-  UTM_OR_DEGREE <- rawToChar(as.raw(raw[p + 32]))
+  DATUM <- stringr::str_trim(paste(rawToChar(as.raw(raw[p + 22:31]), multiple = TRUE), collapse = ""))
+  UTM_OR_DEGREE <- paste(rawToChar(as.raw(raw[p + 32]), multiple = TRUE), collapse = "")
 
   if (UTM_OR_DEGREE %in% c('N', 'S'))
   {
-    LAT_DEG <- as.integer(rawToChar(as.raw(raw[p + 33:34])))
-    LAT_DEC_DEG <- rawToChar(as.raw(raw[p + 35:39]))
+    LAT_DEG <- as.integer(paste(rawToChar(as.raw(raw[p + 33:34]), multiple = TRUE), collapse = ""))
+    LAT_DEC_DEG <- paste(rawToChar(as.raw(raw[p + 35:39]), multiple = TRUE), collapse = "")
     LAT <- paste0(as.integer(LAT_DEG), ".", LAT_DEC_DEG, " ", UTM_OR_DEGREE)
-    W_OR_E <- rawToChar(as.raw(raw[p + 41]))
-    LONG_DEG <- as.integer(rawToChar(as.raw(raw[p + 42:44])))
-    LONG_DEC_DEG <- rawToChar(as.raw(raw[p + 45:49]))
+    W_OR_E <- paste(rawToChar(as.raw(raw[p + 41]), multiple = TRUE), collapse = "")
+    LONG_DEG <- as.integer(paste(rawToChar(as.raw(raw[p + 42:44]), multiple = TRUE), collapse = ""))
+    LONG_DEC_DEG <- paste(rawToChar(as.raw(raw[p + 45:49]), multiple = TRUE), collapse = "")
     LONG <- paste0(LONG_DEG, ".", LONG_DEC_DEG, " ", W_OR_E)
     GPS <- paste0(DATUM, " ", LAT, ", ", LONG)
 
   }
   else
   {
-    ZONE <- rawToChar(as.raw(raw[p + 32:34]))
-    EASTING <- rawToChar(as.raw(raw[p + 36:41]))
-    NORTHING <- rawToChar(as.raw(raw[p + 43:49]))
+    ZONE <- paste(rawToChar(as.raw(raw[p + 32:34]), multiple = TRUE), collapse = "")
+    EASTING <- paste(rawToChar(as.raw(raw[p + 36:41]), multiple = TRUE), collapse = "")
+    NORTHING <- paste(rawToChar(as.raw(raw[p + 43:49]), multiple = TRUE), collapse = "")
     GPS <- paste0(DATUM, " ", ZONE, " ", EASTING, ", ", NORTHING)
   }
 
