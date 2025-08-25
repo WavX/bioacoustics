@@ -4,14 +4,14 @@ author: "Jean Marchal, Francois Fabianek, Christopher Scott"
 date: '`r Sys.Date()`'
 output:
   rmarkdown::pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
+    fig_caption: true
+    number_sections: true
+    toc: true
     toc_depth: 4
   rmarkdown::html_vignette:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
+    fig_caption: true
+    number_sections: true
+    toc: true
     toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{Introduction to bioacoustics} 
