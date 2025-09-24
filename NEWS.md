@@ -1,3 +1,7 @@
+# version 0.2.10
+
+* Drop C++11 support to comply with CRAN requirements
+
 # version 0.2.9
 
 ## Bug fixes

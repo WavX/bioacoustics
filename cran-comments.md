@@ -1,12 +1,10 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
+0 errors | 0 warnings | 0 note
 
-## Changes in version 0.2.9
+## Changes in version 0.2.10
 
-* Fixed missing package anchors in Rd documentation files
-* Updated `\link{Wave}` references to `\link[tuneR]{Wave}` to properly reference the tuneR package
-* All cross-package documentation links now include proper package anchors as required by CRAN policies
+* Drop C++11 support to comply with CRAN requirements
 
 ## Test environments
 
