@@ -111,7 +111,7 @@ ___________________
 
 # Extract GUANO metadata
 
-[GUANO](https://guano-md.org/) stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (ultrasonic) and non-bat (audible, infrasonic) acoustic recordings [more here](https://github.com/riggsd/guano-r). GUANO format is now embeded directly in the WAV files generated from most Pettersson, Wildlife Acoustics, Titley Scientific acoustic recorders. It is possible to extract the metadata and GUANO embedded in the WAV file by using the `metadata()` function.
+GUANO stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (ultrasonic) and non-bat (audible, infrasonic) acoustic recordings [more here](https://github.com/riggsd/guano-r). GUANO format is now embeded directly in the WAV files generated from most Pettersson, Wildlife Acoustics, Titley Scientific acoustic recorders. It is possible to extract the metadata and GUANO embedded in the WAV file by using the `metadata()` function.
 
 ```{r metadata,eval=FALSE}
 
@@ -471,7 +471,7 @@ ___________________
 # Deep learning classification with the R interface to Keras
 
 We will use Keras in R which requires to install several packages in [Python](https://www.python.org/downloads/)
-Guidelines to install Keras properly in R are available [here](https://keras.rstudio.com/)
+Guidelines to install Keras properly in R are available [here](https://keras3.posit.co/)
 
 Let's now explore a ConvNet approach available on Keras. We will follow the approach of [Hatami et al. (2017)](https://arxiv.org/pdf/1710.00886.pdf) to analyze time series as images with 2D ConvNets. The difference is that we will only perform max pooling at the last layer before activation and add batch normalization with dropouts at each layer.
 
@@ -553,7 +553,7 @@ This tutorial is now complete. Comments and feedback are welcome:
 
 Francois: francois.fabianek@wavx.ca  
 Jean: jean.marchal@wavx.ca  
-[www.wavx.ca](https://www.wavx.ca)
+www.wavx.ca
 
 
 _______
