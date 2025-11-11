@@ -1,9 +1,9 @@
 #' Decode audio files
 #'
-#' Read audio files into a \link{Wave} object. WAV, WAC and MP3 files are
+#' Read audio files into a  \link[tuneR]{Wave} object. WAV, WAC and MP3 files are
 #' currently supported.
 #'
-#' @param file a \link{Wave}, WAC or MP3 recording containing animal vocalizations.
+#' @param file a  \link[tuneR]{Wave}, WAC or MP3 recording containing animal vocalizations.
 #'
 #' @param time_exp integer. Time expansion factor of the recording.
 #' Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.
@@ -12,7 +12,7 @@
 #'
 #' @param to optional. Numeric. Where to end reading the recording, in seconds (s).
 #'
-#' @return A \link{Wave} object.
+#' @return A  \link[tuneR]{Wave} object.
 #'
 #' @export
 #'

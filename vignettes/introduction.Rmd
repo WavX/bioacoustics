@@ -4,17 +4,17 @@ author: "Jean Marchal, Francois Fabianek, Christopher Scott"
 date: '`r Sys.Date()`'
 output:
   rmarkdown::pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
+    fig_caption: true
+    number_sections: true
+    toc: true
     toc_depth: 4
   rmarkdown::html_vignette:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
+    fig_caption: true
+    number_sections: true
+    toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{Introduction to bioacoustics} 
+  %\VignetteIndexEntry{Introduction to bioacoustics}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::knitr} 
 ---
@@ -60,7 +60,7 @@ The `read_audio` function loads into R mono and stereo audio recordings with MP3
 
 ## Metadata
 
-The `metadata` function automatically extracts metadata (if present) embedded in audio recordings that were previously loaded into R with the `read_audio` function. It can also extract metadata from objects generated with the `threshold_detection` or `blob_detection` functions. The `metadata` function also extract [GUANO](https://guano-md.org/) metadata. [GUANO](https://guano-md.org/) stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (and non-bat) acoustic recordings. The R code necessary to extract GUANO metadata was originally provided by David Riggs under the MIT licence and is available [here](https://github.com/riggsd/guano-r).
+The `metadata` function automatically extracts metadata (if present) embedded in audio recordings that were previously loaded into R with the `read_audio` function. It can also extract metadata from objects generated with the `threshold_detection` or `blob_detection` functions. The `metadata` function also extract GUANO metadata. GUANO stands for the "Grand Unified Acoustic Notation Ontology" and means to be a universal, extensible, open metadata format for bat (and non-bat) acoustic recordings. The R code necessary to extract GUANO metadata was originally provided by David Riggs under the MIT licence and is available [here](https://github.com/riggsd/guano-r).
 
 ## Display
 

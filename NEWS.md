@@ -1,4 +1,22 @@
-# verrsion 0.2.8
+# version 0.2.10
+
+* Drop C++11 support to comply with CRAN requirements
+
+# version 0.2.9
+
+## Bug fixes
+
+* Fixed missing package anchors in documentation files
+* Updated `\link{Wave}` references to properly link to `tuneR::Wave` class
+* All cross-package documentation links now comply with CRAN requirements
+
+## Documentation
+
+* Enhanced README.md with comprehensive system requirements section
+* Added detailed installation instructions for system dependencies across different platforms (Windows, Linux, macOS)
+* Improved system dependency installation guidance for Ubuntu/Debian, CentOS/RHEL, Fedora, and macOS users
+
+# version 0.2.8
 
 * Support for R 4.2
 

@@ -7,7 +7,7 @@
 read_audio(file, time_exp = 1, from = NULL, to = NULL)
 }
 \arguments{
-\item{file}{a \link{Wave}, WAC or MP3 recording containing animal vocalizations.}
+\item{file}{a  \link[tuneR]{Wave}, WAC or MP3 recording containing animal vocalizations.}
 
 \item{time_exp}{integer. Time expansion factor of the recording.
 Set to 1 for real-time recording or above for time expanded recording. Default setting is 1.}
@@ -17,10 +17,10 @@ Set to 1 for real-time recording or above for time expanded recording. Default s
 \item{to}{optional. Numeric. Where to end reading the recording, in seconds (s).}
 }
 \value{
-A \link{Wave} object.
+A  \link[tuneR]{Wave} object.
 }
 \description{
-Read audio files into a \link{Wave} object. WAV, WAC and MP3 files are
+Read audio files into a  \link[tuneR]{Wave} object. WAV, WAC and MP3 files are
 currently supported.
 }
 \examples{
