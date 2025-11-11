@@ -1,123 +1,105 @@
-dnl Process this file with autoconf to produce a configure script.
-
-AC_INIT([bioacoustics],[0.2.9]) dnl package name, version
-
-# require at least autoconf 2.62
 AC_PREREQ([2.69])
+AC_INIT([bioacoustics], [0.2.10])
+AC_CONFIG_SRCDIR([src])   dnl adjust if you have a different top-level file
+AC_CONFIG_MACRO_DIR([m4])
 
-dnl Now find the compiler and compiler flags to use
-: ${R_HOME=$(R RHOME)}
-if test -z "${R_HOME}"; then
-  echo "could not determine R_HOME"
-  exit 1
-fi
-
-RBIN="${R_HOME}/bin/R"
-RVER=$("${R_HOME}/bin/Rscript" -e 'cat((R.version)$major, (R.version)$minor, sep=".")')
-
-: ${CC=$("${RBIN}" CMD config CC)}
-: ${CFLAGS=$("${RBIN}" CMD config CFLAGS)}
-: ${LDFLAGS=$("${RBIN}" CMD config LDFLAGS)}
-
-if test [ -z "$CXX" ] ; then
-	CXX11=CXX11
-	AS_VERSION_COMPARE([${RVER}], [3.4.0], [CXX11=CXX1X], [], [])
-	CXX11=$("${RBIN}" CMD config "${CXX11}")
-fi
-
-if test [ -z "$CXX11STD" ] ; then
-	if test [ -z "$CXX1XSTD"]
-	then
-		CXX11STD=CXX11STD
-		AS_VERSION_COMPARE([${RVER}], [3.4.0], [CXX11STD=CXX1XSTD], [], [])
-		CXX11STD=$("${RBIN}" CMD config "${CXX11STD}")
-	else
-		CXX11STD=CXX1XSTD
-	fi
-fi
-
-: ${CXXPICFLAGS=$("${RBIN}" CMD config CXXPICFLAGS)}
-: ${CXX="${CXX11} ${CXX11STD} ${CXXPICFLAGS}"}
-
-
+dnl -- basic checks
 AC_PROG_CC
 AC_PROG_CXX
 
-#
-# Check if compiler supports C++11 features
-#
-AX_CXX_COMPILE_STDCXX_11()
+dnl -- Find R_HOME and R executables
+: ${R_HOME:=$(R RHOME)}
+if test -z "${R_HOME}"; then
+  AC_MSG_ERROR([could not determine R_HOME])
+fi
+
+RBIN="${R_HOME}/bin/R"
+RVER="$("${R_HOME}/bin/Rscript" -e 'cat(R.version$major, ".", R.version$minor)')"
+
+: ${CC:=$("${RBIN}" CMD config CC)}
+: ${CFLAGS:=$("${RBIN}" CMD config CFLAGS)}
+: ${LDFLAGS:=$("${RBIN}" CMD config LDFLAGS)}
+: ${CXX:=$("${RBIN}" CMD config CXX)}
+: ${CXXFLAGS:=$("${RBIN}" CMD config CXXFLAGS)}
+: ${CXXPICFLAGS:=$("${RBIN}" CMD config CXXPICFLAGS)}
 
 AC_MSG_NOTICE([CC: ${CC}])
 AC_MSG_NOTICE([CXX: ${CXX}])
 
-#
-# Check for cmake
-#
+dnl -- Check for cmake
 CMAKE_SEARCH_PATH="${PATH}:/Applications/CMake.app/Contents/bin"
-AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found], ${CMAKE_SEARCH_PATH})
-
+AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found], ["$CMAKE_SEARCH_PATH"])
 if test x"${CMAKE_FOUND}" != x"cmake" ; then
-  AC_MSG_ERROR(Could not find cmake)
+  AC_MSG_ERROR([Could not find cmake])
 fi
 
-#
-# Check for OpenMP
-#
-AC_LANG([C++])
-AC_OPENMP
-AC_LANG([C])
-AC_OPENMP
+dnl -- simple OpenMP feature test (portable)
+AC_MSG_CHECKING([for OpenMP support])
+save_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fopenmp"
+AC_COMPILE_IFELSE(
+  [AC_LANG_PROGRAM([], [])],
+  [openmp_supported=yes],
+  [openmp_supported=no]
+)
+CFLAGS="$save_CFLAGS"
+if test "$openmp_supported" = "yes"; then
+  OPENMP_CFLAGS="-fopenmp"
+  OPENMP_LIBS="-fopenmp"
+  AC_MSG_RESULT([yes])
+else
+  OPENMP_CFLAGS=""
+  OPENMP_LIBS=""
+  AC_MSG_RESULT([no])
+fi
 
 if test x"${OPENMP_CFLAGS}" != "x"; then
-	FFTW_OPENMP="--enable-openmp"
+  FFTW_OPENMP="--enable-openmp"
+else
+  FFTW_OPENMP=""
 fi
 
-#
-# Check if MAKE is set, if not set to make
-#
+dnl -- Ensure MAKE has a sensible default
 if test -z "${MAKE}"; then
-  MAKE = make
+  MAKE=make
 fi
 
-
 #
-# fftw
+# fftw selection
 #
-
-dnl Select an optional path to the header file of the FFTW library
 AC_ARG_WITH([fftw-include],
-            AS_HELP_STRING([--with-fftw-include=FFTW_INCL],[the location of fftw3 header file]),
-            [fftw_incl_path=$withval])
-if test [ -n "$fftw_incl_path" ] ; then
-   FFTW_INCL="-I${fftw_incl_path}"
+            AS_HELP_STRING([--with-fftw-include=DIR], [location of fftw3 header file]),
+            [fftw_incl_path=$withval],
+            [fftw_incl_path=""])
+
+if test -n "${fftw_incl_path}"; then
+  FFTW_INCL="-I${fftw_incl_path}"
+elif test -n "${LIB_FFTW}"; then
+  FFTW_INCL="-I${LIB_FFTW}/include"
 else
-  if test [ -n "${LIB_FFTW}" ] ; then
-     FFTW_INCL="-I${LIB_FFTW}/include"
-  fi
+  FFTW_INCL=""
 fi
 
-AC_CHECK_HEADERS(fftw3.h, [fftw_ok="yes"], [fftw_ok="no"])
+AC_CHECK_HEADERS([fftw3.h],
+                 [fftw_ok="yes"],
+                 [fftw_ok="no"])
 
-
-# dnl ditto for a library path
 AC_ARG_WITH([fftw-lib],
-            AS_HELP_STRING([--with-fftw-lib=FFTW_LIB],[the location of fftw3 library]),
-            [fftw_lib_path=$withval])
-if test [ -n "$fftw_lib_path" ] ; then
-   FFTW_LIB="-L$fftw_lib_path"
+            AS_HELP_STRING([--with-fftw-lib=DIR], [location of fftw3 library]),
+            [fftw_lib_path=$withval],
+            [fftw_lib_path=""])
+
+if test -n "${fftw_lib_path}"; then
+  FFTW_LIB="-L${fftw_lib_path}"
+elif test -n "${LIB_FFTW}"; then
+  FFTW_LIB="-L${LIB_FFTW}/lib"
 else
-  if test [ -n "${LIB_FFTW}" ] ; then
-     FFTW_LIB="-L${LIB_FFTW}/lib"
-  else
-    if test -n "${FFTW_CONFIG}"; then
-      fftw_lib_path=$(fftw_config --libs)
-      FFTW_LIB="${fftw_lib_path}"
-    fi
-  fi
+  FFTW_LIB=""
 fi
 
-AC_SEARCH_LIBS(fftw_plan_r2r_1d, fftw3, [fftw_ok="yes"], [fftw_ok="no"])
+AC_SEARCH_LIBS([fftw_plan_r2r_1d], [fftw3],
+               [fftw_ok="yes"],
+               [fftw_ok="no"])
 
 ## If fftw3 is not found, download fftw3 and build it locally
 if test x"${fftw_ok}" = x"no"; then
@@ -142,53 +124,50 @@ if test x"${fftw_ok}" = x"no"; then
   ## Necessary Include dirs
   FFTW_INCL="-I$(pwd)/fftw-${FFTW_VERSION}/include"
 
-  ## Download fftw3 source code
-  $("${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')")
+  AC_MSG_NOTICE([Downloading ${FFTW_URL}])
+  "${R_HOME}/bin/Rscript" --vanilla -e "download.file(url='${FFTW_URL}', destfile='${FFTW_TGZ}')"
 
-  ## Extract fftw3 source code and remove .tar.gz
-  $("${R_HOME}/bin/Rscript" --vanilla -e "untar(tarfile='${FFTW_TGZ}', exdir='$(pwd)')")
-  $(rm -rf ${FFTW_TGZ})
+  AC_MSG_NOTICE([Extracting ${FFTW_TGZ}])
+  tar xzf "${FFTW_TGZ}"
 
-  ## Compile fftw3 source code and clean up
+  rm -f "${FFTW_TGZ}"
+
   AC_MSG_NOTICE([Starting to install fftw3 library to $(pwd)/fftw-${FFTW_VERSION}])
-
-  $(set -e; \
-    cd fftw-${FFTW_VERSION}; \
-    ./configure --prefix=$(pwd) \
-                --enable-static \
-                --disable-shared \
-                ${FFTW_OPENMP} \
-                CFLAGS=-fPIC > /dev/null; \
-    ${MAKE} > /dev/null; \
-    ${MAKE} install > /dev/null;
+  ( set -e
+    cd "fftw-${FFTW_VERSION}"
+    ./configure --prefix="$(pwd)" --enable-static --disable-shared ${FFTW_OPENMP} CFLAGS=-fPIC > /dev/null
+    ${MAKE} > /dev/null
+    ${MAKE} install > /dev/null
   )
-
   FFTW3_INSTALL=$?
 
   if test x"${FFTW3_INSTALL}" != x"0" ; then
     AC_MSG_ERROR([Could not install fftw3 library, try to install it manually?])
   fi
 
-  if [[ "$LIBS" != *"lfftw3"* ]]; then
+  case " $LIBS " in
+    *" lfftw3"*)
+      ;;
+    *)
       LIBS="$LIBS -lfftw3"
-  fi
+      ;;
+  esac
 
   AC_MSG_NOTICE([Done installing fftw3 library])
-
 else
   AC_MSG_NOTICE([Suitable fftw3 library found.])
 fi
 
-LIBS="${FFTW_LIB} ${LIBS}"
-CFLAGS="${CFLAGS} ${FFTW_INCL} -O3 -march=native -mtune=native"
-CXXFLAGS="${CXXFLAGS} ${FFTW_INCL} ${CXX11STD}"
+dnl -- Compose final flags and libs
+LIBS="${FFTW_LIB} ${LIBS} ${OPENMP_LIBS}"
+CFLAGS="${CFLAGS} ${FFTW_INCL} -O3 -march=native -mtune=native ${OPENMP_CFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${FFTW_INCL} ${CXXPICFLAGS}"
 
-dnl substitute C/CXXFLAGS and LIBS
-AC_SUBST(CFLAGS)
-AC_SUBST(LIBS)
-AC_SUBST(CXXFLAGS)
-AC_SUBST(OPENMP_CXXFLAGS)
-dnl and do substitution in the src/Makevars.in
+dnl substitute variables for Makevars.in
+AC_SUBST([CFLAGS])
+AC_SUBST([LIBS])
+AC_SUBST([CXXFLAGS])
+AC_SUBST([OPENMP_CXXFLAGS])
+
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
-
