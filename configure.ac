@@ -26,12 +26,50 @@ RVER="$("${R_HOME}/bin/Rscript" -e 'cat(R.version$major, ".", R.version$minor)')
 AC_MSG_NOTICE([CC: ${CC}])
 AC_MSG_NOTICE([CXX: ${CXX}])
 
-dnl -- Check for cmake
-CMAKE_SEARCH_PATH="${PATH}:/Applications/CMake.app/Contents/bin"
-AC_CHECK_PROG([CMAKE_FOUND], [cmake], [cmake], [not found], ["$CMAKE_SEARCH_PATH"])
-if test x"${CMAKE_FOUND}" != x"cmake" ; then
-  AC_MSG_ERROR([Could not find cmake])
+dnl ---------- CMake detection ----------
+AC_ARG_WITH([cmake],
+  AS_HELP_STRING([--with-cmake=PATH], [path to cmake executable]),
+  [with_cmake_path=$withval],
+  [with_cmake_path=""])
+
+dnl If user supplied an explicit path, use it (and verify)
+if test -n "${with_cmake_path}"; then
+  if test -x "${with_cmake_path}"; then
+    CMAKE_PROG="${with_cmake_path}"
+    CMAKE_FOUND=yes
+  else
+    AC_MSG_WARN([--with-cmake specified but '${with_cmake_path}' is not executable. Ignoring.])
+    CMAKE_PROG=""
+    CMAKE_FOUND=no
+  fi
+else
+  CMAKE_PROG=""
+  CMAKE_FOUND=no
+
+  dnl Try common names/locations. Prefer cmake then cmake3.
+  AC_PATH_PROG([CMAKE_PROG], [cmake], [none])
+  if test "x$CMAKE_PROG" = "xnone"; then
+    AC_PATH_PROG([CMAKE_PROG], [cmake3], [none])
+  fi
+
+  if test "x$CMAKE_PROG" != "xnone"; then
+    CMAKE_FOUND=yes
+  else
+    CMAKE_PROG=""
+    CMAKE_FOUND=no
+  fi
 fi
+
+if test x"${CMAKE_FOUND}" = x"yes"; then
+  AC_MSG_NOTICE([Found cmake: ${CMAKE_PROG}])
+else
+  AC_MSG_WARN([cmake not found. cmake-dependent components will be skipped. If you need cmake, install it or run configure with --with-cmake=/path/to/cmake])
+fi
+
+AC_SUBST([CMAKE_PROG])
+AC_SUBST([CMAKE_FOUND])
+dnl ---------- end cmake detection ----------
+
 
 dnl -- simple OpenMP feature test (portable)
 AC_MSG_CHECKING([for OpenMP support])
