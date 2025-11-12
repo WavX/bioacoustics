@@ -1,7 +1,6 @@
 AC_PREREQ([2.69])
 AC_INIT([bioacoustics], [0.2.10])
 AC_CONFIG_SRCDIR([src])   dnl adjust if you have a different top-level file
-AC_CONFIG_MACRO_DIR([m4])
 
 dnl -- basic checks
 AC_PROG_CC
