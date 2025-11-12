@@ -552,8 +552,7 @@ Using only 26 acoustic features as model inputs instead of the whole spectrogram
 This tutorial is now complete. Comments and feedback are welcome:
 
 Francois: francois.fabianek@wavx.ca  
-Jean: jean.marchal@wavx.ca  
-www.wavx.ca
+Jean: jean.marchal@wavx.ca
 
 
 _______
